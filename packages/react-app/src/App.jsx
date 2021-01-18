@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { useStateValue } from './state';
 import "antd/dist/antd.css";
 import {  JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import "./App.css";
@@ -56,6 +57,7 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 
 
 function App(props) {
+  const [{ dapp }, dispatch] = useStateValue();
   const [injectedProvider, setInjectedProvider] = useState();
   /* 💵 this hook will get the price of ETH from 🦄 Uniswap: */
   const price = useExchangePrice(mainnetProvider); //1 for xdai
