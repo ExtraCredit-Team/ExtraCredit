@@ -1,0 +1,156 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
+      "lastModificationDate": 1611052976823,
+      "contentHash": "e9eadbceec8b8e413f002dbcd70518f4",
+      "sourceName": "contracts/CreditPool.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol",
+        "contracts/Interfaces.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "CreditPool"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1610972159388,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
+      "lastModificationDate": 1611052647354,
+      "contentHash": "ac7b0e28474bccb8c430ded3095f7e6e",
+      "sourceName": "contracts/Interfaces.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Libraries.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20",
+        "ILendingPool",
+        "ILendingPoolAddressesProvider",
+        "IProtocolDataProvider",
+        "IStableDebtToken"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
+      "lastModificationDate": 1611052647354,
+      "contentHash": "243de9f2a43a994d3490d47f272db0e3",
+      "sourceName": "contracts/Libraries.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Interfaces.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Address",
+        "DataTypes",
+        "SafeERC20",
+        "SafeMath"
+      ]
+    }
+  }
+}

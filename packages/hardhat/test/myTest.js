@@ -4,23 +4,21 @@ const { solidity } = require("ethereum-waffle");
 
 use(solidity);
 
-describe("My Dapp", function () {
-  let myContract;
+describe("My Dapp",  () => {
+  let MyContract, myContract, addr1, addr2, addr3;
+
+
+  beforeEach(async () => {
+    MyContract = await ethers.getContractFactory('CreditPool');
+    myContract = await MyContract.deploy();
+    [addr1, addr1, addr3, _] = await ethers.getSigners();
+  });
+
 
   describe("YourContract", function () {
-    it("Should deploy YourContract", async function () {
-      const YourContract = await ethers.getContractFactory("YourContract");
+    it("should be able to deposit and reflect balances of contract and depositor accordingly", async function () {
 
-      myContract = await YourContract.deploy();
-    });
-
-    describe("setPurpose()", function () {
-      it("Should be able to set a new purpose", async function () {
-        const newPurpose = "Test Purpose";
-
-        await myContract.setPurpose(newPurpose);
-        expect(await myContract.purpose()).to.equal(newPurpose);
-      });
     });
   });
+
 });
