@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add prop-types --dev
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add reactstrap
 
 PATH: 
   C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Go\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;F:\Programs\Git\cmd;F:\Programs\WinSCP\;C:\Program Files\dotnet\;F:\Programs\k6\;C:\Users\frede\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\frede\AppData\Local\Programs\Python\Python38-32\;C:\Users\frede\AppData\Local\Microsoft\WindowsApps;C:\Users\frede\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\frede\go\bin;C:\glide-runner-0.9.2\glide-0.9.2\bin;C:\Program Files\Java\jdk1.8.0_241\bin;C:\Program Files\Factom\;C:\Users\frede\AppData\Roaming\npm;C:\Users\frede\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\frede\AppData\Local\GitHubDesktop\bin

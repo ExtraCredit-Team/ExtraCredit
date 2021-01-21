@@ -4,6 +4,10 @@ import {Contract} from "../index";
 import {ExampleUI, Hints, Subgraph} from "../../views";
 import React from "react";
 import * as PropTypes from "prop-types";
+import Sidebar from "../sidebar/Sidebar.component";
+import AdminNavbar from "../adminnavbar/AdminNavBar.component";
+import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
+import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -27,10 +31,8 @@ AppRoutes.propTypes = {
 };
 
 export function AppRoutes(props) {
-    return <BrowserRouter>
+    return <>
 
-        <AppMenu route={props.route} onClick={props.onClick} onClick1={props.onClick1} onClick2={props.onClick2}
-                 onClick3={props.onClick3}/>
         <Switch>
             <Route exact path="/">
                 {/*
@@ -56,6 +58,15 @@ export function AppRoutes(props) {
               blockExplorer={blockExplorer}
             />
             */}
+            </Route>
+            <Route path="/borrower">
+                <BorrowerDashboard/>
+            </Route>
+            <Route path="/delegate">
+                <DelegateCredit/>
+            </Route>
+            <Route path={"/old-menu"}>
+                <AppMenu route={props.route}/>
             </Route>
             <Route path="/hints">
                 <Hints
@@ -89,5 +100,5 @@ export function AppRoutes(props) {
                 />
             </Route>
         </Switch>
-    </BrowserRouter>;
+    </>;
 }

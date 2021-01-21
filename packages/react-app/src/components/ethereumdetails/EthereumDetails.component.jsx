@@ -15,7 +15,7 @@ EthereumDetails.propTypes = {
 };
 
 export function EthereumDetails(props) {
-    return <div style={{position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10}}>
+    return <div style={{position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10, marginLeft: "250px"}}>
         <Row align="middle" gutter={[4, 4]}>
             <Col span={8}>
                 <Ramp price={props.price} address={props.address}/>

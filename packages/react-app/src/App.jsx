@@ -1,9 +1,16 @@
 import React, {useCallback, useEffect, useState} from "react";
 import "antd/dist/antd.css";
+import {Router} from 'react-router-dom';
+import {Button, Container} from "reactstrap";
 import {JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import "./App.css";
 import {web3Modal} from "./components/web3modals/web3Modals.component"
 import {Header} from "./components";
+import history from "./components/browserHistory";
+import "./theme/plugins/nucleo/css/nucleo.css";
+// import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./theme/scss/argon-dashboard-react.scss";
+
 //import Hints from "./Hints";
 /*
     Welcome to 🏗 scaffold-eth !
@@ -29,6 +36,7 @@ import {EthereumDetails} from "./components/ethereumdetails/EthereumDetails.comp
 import {EthereumAccount} from "./components/ethereumaccount/EthereumAccount.component";
 import LoadEthersHooks from "./helpers/loadEthersHooks";
 import {AppRoutes} from "./components/approutes/AppRoutes.component";
+import Sidebar from "./components/sidebar/Sidebar.component";
 
 
 // 😬 Sorry for all the console logging 🤡
@@ -38,68 +46,71 @@ const DEBUG = true
 const blockExplorer = "https://etherscan.io/" // for xdai: "https://blockscout.com/poa/xdai/"
 
 // 🛰 providers
-if(DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
+if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
 //const mainnetProvider = getDefaultProvider("mainnet", { infura: INFURA_ID, etherscan: ETHERSCAN_KEY, quorum: 1 });
 // const mainnetProvider = new InfuraProvider("mainnet",INFURA_ID);
-const mainnetProvider = new JsonRpcProvider("https://mainnet.infura.io/v3/"+INFURA_ID)
+const mainnetProvider = new JsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
 // ( ⚠️ Getting "failed to meet quorum" errors? Check your INFURA_ID)
 
 // 🏠 Your local provider is usually pointed at your local blockchain
 const localProviderUrl = "http://localhost:8545"; // for xdai: https://dai.poa.network
 // as you deploy to other networks you can set REACT_APP_PROVIDER=https://dai.poa.network in packages/react-app/.env
 const localProviderUrlFromEnv = process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : localProviderUrl;
-if(DEBUG) console.log("🏠 Connecting to provider:", localProviderUrlFromEnv);
+if (DEBUG) console.log("🏠 Connecting to provider:", localProviderUrlFromEnv);
 const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 
 function App(props) {
-  const [injectedProvider, setInjectedProvider] = useState();
-  const {price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents} = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
+    const [injectedProvider, setInjectedProvider] = useState();
+    const [showEthereumTools, setShowEthereumTools] = useState(false);
+    const {price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents} = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
 
-  const loadWeb3Modal = useCallback(async () => {
-    const provider = await web3Modal.connect();
-    setInjectedProvider(new Web3Provider(provider));
-  }, [setInjectedProvider]);
+    const loadWeb3Modal = useCallback(async () => {
+        const provider = await web3Modal.connect();
+        setInjectedProvider(new Web3Provider(provider));
+    }, [setInjectedProvider]);
 
-  useEffect(() => {
-    if (web3Modal.cachedProvider) {
-      loadWeb3Modal();
+    useEffect(() => {
+        if (web3Modal.cachedProvider) {
+            loadWeb3Modal();
+        }
+    }, [loadWeb3Modal]);
+
+
+    const toggle = () => {
+        setShowEthereumTools(!showEthereumTools);
     }
-  }, [loadWeb3Modal]);
 
-  const [route, setRoute] = useState();
-  useEffect(() => {
-    setRoute(window.location.pathname)
-  }, [setRoute]);
+    return (
+        <Router history={history}>
+            <Sidebar/>
+            <Container className="main-content">
 
-  return (
-    <div className="App">
+                <Container className="pt-7" fluid>
+                {/* ✏️ Edit the header and change the title to your project name */}
+                <Header/>
+                <Button onClick={() => toggle()}>Show Eth Tools</Button>
+                <AppRoutes localProvider={localProvider} mainnetProvider={mainnetProvider} blockExplorer={blockExplorer}
+                           userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance}
+                           price={price} tx={tx}
+                           writeContracts={writeContracts} readContracts={readContracts} purpose={purpose}
+                           purposeEvents={setPurposeEvents} subgraphUri={props.subgraphUri}/>
 
-      {/* ✏️ Edit the header and change the title to your project name */}
-      <Header/>
+                {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
+                {showEthereumTools && <>  <EthereumAccount localProvider={localProvider} mainnetProvider={mainnetProvider}
+                                                          blockExplorer={blockExplorer}
+                                                          address={address} userProvider={userProvider} price={price}
+                                                          loadWeb3Modal={loadWeb3Modal}/>
 
-      <AppRoutes route={route} onClick={() => {
-        setRoute("/")
-      }} onClick1={() => {
-        setRoute("/hints")
-      }} onClick2={() => {
-        setRoute("/exampleui")
-      }} onClick3={() => {
-        setRoute("/subgraph")
-      }} localProvider={localProvider} mainnetProvider={mainnetProvider} blockExplorer={blockExplorer} userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance} price={price} tx={tx}
-                 writeContracts={writeContracts} readContracts={readContracts} purpose={purpose}
-                 purposeEvents={setPurposeEvents} subgraphUri={props.subgraphUri}/>
-
-      {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      <EthereumAccount localProvider={localProvider} mainnetProvider={mainnetProvider} blockExplorer={blockExplorer}
-                       address={address} userProvider={userProvider} price={price} loadWeb3Modal={loadWeb3Modal}/>
-
-      {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-      <EthereumDetails localProvider={localProvider} mainnetProvider={mainnetProvider} blockExplorer={blockExplorer}
-                       price={price} address={address} gasPrice={gasPrice} onClick={() => {
-        window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
-      }}/>
-    </div>
-  );
+                    {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
+                    <EthereumDetails localProvider={localProvider} mainnetProvider={mainnetProvider}
+                                     blockExplorer={blockExplorer}
+                                     price={price} address={address} gasPrice={gasPrice} onClick={() => {
+                        window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
+                    }}/></>}
+                </Container>
+            </Container>
+        </Router>
+    );
 }
 
 export default App;
