@@ -23,9 +23,9 @@ const main = async () => {
   //If you want to send some ETH to a contract on deploy (make your constructor payable!)
 
   const yourContract = await deploy("YourContract", [], {
-  value: ethers.utils.parseEther("0.05")
+    value: ethers.utils.parseEther("0.05")
   });
-  */
+*/
 
 
   /*

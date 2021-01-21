@@ -5,18 +5,22 @@ import "hardhat/console.sol";
 
 contract YourContract {
 
-  event SetPurpose(address sender, string purpose);
+    event SetPurpose(address sender, string purpose);
 
-  string public purpose = "🛠 Programming Unstoppable Money";
+    string public purpose = "🛠 Programming Unstoppable Money";
 
-  constructor() public {
-    // what should we do on deploy?
-  }
+    constructor() public {
+        // what should we do on deploy?
+    }
 
-  function setPurpose(string memory newPurpose) public {
-    purpose = newPurpose;
-    console.log(msg.sender,"set purpose to",purpose);
-    emit SetPurpose(msg.sender, purpose);
-  }
+    function setPurpose(string memory newPurpose) public {
+        purpose = newPurpose;
+        console.log(msg.sender, "set purpose to", purpose);
+        emit SetPurpose(msg.sender, purpose);
+    }
+
+fallback() external payable {
+console.log(msg.sender, "just deposited",msg.value);
+}
 
 }

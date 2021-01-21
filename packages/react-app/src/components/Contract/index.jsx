@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Card } from "antd";
 import { useContractLoader, useContractExistsAtAddress } from "../../hooks";
-import Account from "../Account";
+import Account from "../scafoldcomponents/Account";
 import DisplayVariable from "./DisplayVariable";
 import FunctionForm from "./FunctionForm";
 
