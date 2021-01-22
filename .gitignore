@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 .idea/
 node_modules/
 packages/react-app/node_modules
+=======
+/node_modules/
+/packages/hardhat/node_modules
+/packages/react-app/node_modules
+.idea/
+>>>>>>> smartcontracts
