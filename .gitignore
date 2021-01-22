@@ -1,0 +1,4 @@
+/node_modules/
+/packages/hardhat/node_modules
+/packages/react-app/node_modules
+.idea/
