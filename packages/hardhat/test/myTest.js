@@ -17,7 +17,7 @@ describe("My Dapp",  () => {
 
   describe("YourContract", function () {
     it("should be able to deposit and reflect balances of contract and depositor accordingly", async function () {
-
+      await myContract.depositOnLendingPool(, "", 50)
     });
   });
 

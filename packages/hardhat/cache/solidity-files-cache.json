@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611052976823,
-      "contentHash": "e9eadbceec8b8e413f002dbcd70518f4",
+      "lastModificationDate": 1611221403147,
+      "contentHash": "4872841eada2b91127f50e0a4fd673d6",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -40,7 +40,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1610972159388,
+      "lastModificationDate": 1611054814605,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
@@ -74,7 +74,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611052647354,
+      "lastModificationDate": 1611054816837,
       "contentHash": "ac7b0e28474bccb8c430ded3095f7e6e",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
@@ -114,7 +114,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611052647354,
+      "lastModificationDate": 1611054816837,
       "contentHash": "243de9f2a43a994d3490d47f272db0e3",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
@@ -151,6 +151,38 @@
         "SafeERC20",
         "SafeMath"
       ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
+      "lastModificationDate": 1611294545995,
+      "contentHash": "7a4169feccf00d28132927946f80bd74",
+      "sourceName": "contracts/UtilizationBasedReward.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": []
     }
   }
 }
