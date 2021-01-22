@@ -26,7 +26,7 @@ contract CreditPool {
     emit Deposited(_amount, _aToken);
   }
 
-  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external {
+  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external payable {
     IERC20(_asset).safeApprove(address(lendingPool), _amount);
     lendingPool.deposit(_asset, _amount, msg.sender, 0);
   }
