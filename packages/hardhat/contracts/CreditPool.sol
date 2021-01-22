@@ -18,7 +18,7 @@ contract CreditPool {
   /**
     * @param _debtToken The asset allowed to borrow
   */
-  function deposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken) external {
+  function deposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken) external payable {
     depositBalances[msg.sender] += _amount;
     totalDeposit += _amount;
     IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
@@ -39,7 +39,7 @@ contract CreditPool {
     IStableDebtToken(stableDebtTokenAddress).approveDelegation(_borrower, _amount);
   }
 
-  function borrow(uint256 _amount, address _debtToken, uint256 _interestRateMode, uint16 _referralCode, address _onBehalfOf) external {
+  function borrow(uint256 _amount, address _debtToken, uint256 _interestRateMode, uint16 _referralCode, address _onBehalfOf) external payable {
     lendingPool.borrow(_debtToken, _amount, _interestRateMode, _referralCode, _onBehalfOf);
   }
 
