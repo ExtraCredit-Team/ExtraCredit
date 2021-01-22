@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611221403147,
-      "contentHash": "4872841eada2b91127f50e0a4fd673d6",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
+      "lastModificationDate": 1611324519173,
+      "contentHash": "499a23421c935d3156537e301ea79d28",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -39,9 +39,9 @@
         "CreditPool"
       ]
     },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1611054814605,
-      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1611324457773,
+      "contentHash": "1f481d21fa74d2937414fe6b27fa5a57",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -73,9 +73,9 @@
         "console"
       ]
     },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611054816837,
-      "contentHash": "ac7b0e28474bccb8c430ded3095f7e6e",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
+      "lastModificationDate": 1611324519174,
+      "contentHash": "4425002261e32cd3468809f47cf533b5",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -113,9 +113,9 @@
         "IStableDebtToken"
       ]
     },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611054816837,
-      "contentHash": "243de9f2a43a994d3490d47f272db0e3",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
+      "lastModificationDate": 1611324519176,
+      "contentHash": "3b69d99262c45ce6fd8b3a8d30939d7a",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -152,9 +152,9 @@
         "SafeMath"
       ]
     },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
-      "lastModificationDate": 1611294545995,
-      "contentHash": "7a4169feccf00d28132927946f80bd74",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
+      "lastModificationDate": 1611324519178,
+      "contentHash": "5f2836e9a5e630c6e58fed277e4e34ea",
       "sourceName": "contracts/UtilizationBasedReward.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -183,6 +183,42 @@
         "^0.8.0"
       ],
       "artifacts": []
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
+      "lastModificationDate": 1611328164805,
+      "contentHash": "b3dd01379e4d2a9bf0b6d876619b17bf",
+      "sourceName": "contracts/YourContract.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "YourContract"
+      ]
     }
   }
 }

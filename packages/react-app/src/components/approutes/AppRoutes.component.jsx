@@ -1,14 +1,13 @@
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
+import React from "react";
+import * as PropTypes from "prop-types";
 import {AppMenu} from "../appmenu/AppMenu.component";
 import {Contract} from "../index";
 import {ExampleUI, Hints, Subgraph} from "../../views";
-import React from "react";
-import * as PropTypes from "prop-types";
-import Sidebar from "../sidebar/Sidebar.component";
-import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import {DepositCredit} from "../depositcredit/DepositCredit.component";
+import ExampleUI2 from "../../views/ExampleUI2";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -29,28 +28,30 @@ AppRoutes.propTypes = {
     subgraphUri: PropTypes.any,
     mainnetProvider: PropTypes.any,
     localProvider: PropTypes.any,
-    blockExplorer: PropTypes.any
+    blockExplorer: PropTypes.any,
+    purpose: PropTypes.any,
+    setPurpose: PropTypes.any
 };
 
 export function AppRoutes(props) {
-    return <>
-
-        <Switch>
-            <Route exact path="/">
-                {/*
+    return (
+        <>
+            <Switch>
+                <Route exact path="/">
+                    {/*
                 🎛 this scaffolding is full of commonly used components
                 this <Contract/> component will automatically parse your ABI
                 and give you a form to interact with it locally
             */}
-                <Contract
-                    name="YourContract"
-                    signer={props.userProvider.getSigner()}
-                    provider={props.localProvider}
-                    address={props.address}
-                    blockExplorer={props.blockExplorer}
-                />
+                    <Contract
+                        name="YourContract"
+                        signer={props.userProvider.getSigner()}
+                        provider={props.localProvider}
+                        address={props.address}
+                        blockExplorer={props.blockExplorer}
+                    />
 
-                { /* Uncomment to display and interact with an external contract (DAI on mainnet):
+                    {/* Uncomment to display and interact with an external contract (DAI on mainnet):
             <Contract
               name="DAI"
               customContract={mainnetDAIContract}
@@ -60,52 +61,72 @@ export function AppRoutes(props) {
               blockExplorer={blockExplorer}
             />
             */}
-            </Route>
-            <Route path="/borrower">
-                <BorrowerDashboard/>
-            </Route>
-            <Route path="/delegate">
-                <DelegateCredit/>
-            </Route>
-            <Route path={"/deposit"}>
-                <DepositCredit signer={props.userProvider.getSigner()}
-                                                   provider={props.localProvider}
-                                                   address={props.address}
-                                                   blockExplorer={props.blockExplorer}/>
-            </Route>
-            <Route path={"/old-menu"}>
-                <AppMenu route={props.route}/>
-            </Route>
-            <Route path="/hints">
-                <Hints
-                    address={props.address}
-                    yourLocalBalance={props.yourLocalBalance}
-                    mainnetProvider={props.mainnetProvider}
-                    price={props.price}
-                />
-            </Route>
-            <Route path="/exampleui">
-                <ExampleUI
-                    address={props.address}
-                    userProvider={props.userProvider}
-                    mainnetProvider={props.mainnetProvider}
-                    localProvider={props.localProvider}
-                    yourLocalBalance={props.yourLocalBalance}
-                    price={props.price}
-                    tx={props.tx}
-                    writeContracts={props.writeContracts}
-                    readContracts={props.readContracts}
-                    depositBalances={props.depositBalances} totalDeposit={props.totalDeposit} setDeposit={props.setDeposit}
-                />
-            </Route>
-            <Route path="/subgraph">
-                <Subgraph
-                    subgraphUri={props.subgraphUri}
-                    tx={props.tx}
-                    writeContracts={props.writeContracts}
-                    mainnetProvider={props.mainnetProvider}
-                />
-            </Route>
-        </Switch>
-    </>;
+                </Route>
+                <Route path="/borrower">
+                    <BorrowerDashboard/>
+                </Route>
+                <Route path="/delegate">
+                    <DelegateCredit/>
+                </Route>
+                <Route path="/deposit">
+                    <DepositCredit
+                        signer={props.userProvider.getSigner()}
+                        provider={props.localProvider}
+                        address={props.address}
+                        blockExplorer={props.blockExplorer}
+                    />
+                </Route>
+                <Route path="/old-menu">
+                    <AppMenu route={props.route}/>
+                </Route>
+                <Route path="/hints">
+                    <Hints
+                        address={props.address}
+                        yourLocalBalance={props.yourLocalBalance}
+                        mainnetProvider={props.mainnetProvider}
+                        price={props.price}
+                    />
+                </Route>
+                <Route path="/exampleui">
+                    <ExampleUI
+                        address={props.address}
+                        userProvider={props.userProvider}
+                        mainnetProvider={props.mainnetProvider}
+                        localProvider={props.localProvider}
+                        yourLocalBalance={props.yourLocalBalance}
+                        price={props.price}
+                        tx={props.tx}
+                        writeContracts={props.writeContracts}
+                        readContracts={props.readContracts}
+                        purpose={props.purpose}
+                        setPurposeEvents={props.setPurposeEvents}
+                    />
+                </Route>
+                <Route path="/exampleui2">
+                    <ExampleUI2
+                        address={props.address}
+                        userProvider={props.userProvider}
+                        mainnetProvider={props.mainnetProvider}
+                        localProvider={props.localProvider}
+                        yourLocalBalance={props.yourLocalBalance}
+                        price={props.price}
+                        tx={props.tx}
+                        writeContracts={props.writeContracts}
+                        readContracts={props.readContracts}
+                        depositBalances={props.depositBalances}
+                        totalDeposit={props.totalDeposit}
+                        setDeposit={props.setDeposit}
+                    />
+                </Route>
+                <Route path="/subgraph">
+                    <Subgraph
+                        subgraphUri={props.subgraphUri}
+                        tx={props.tx}
+                        writeContracts={props.writeContracts}
+                        mainnetProvider={props.mainnetProvider}
+                    />
+                </Route>
+            </Switch>
+        </>
+    );
 }
