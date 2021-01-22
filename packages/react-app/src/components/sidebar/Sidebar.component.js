@@ -60,6 +60,11 @@ const routes = [
         icon: "far fa-handshake text-orange",
     },
     {
+        path: "/deposit",
+        name: "Deposit",
+        icon: "far fa-equals text-orange",
+    },
+    {
         path: "/ethereum",
         name: "Show eth tools",
         icon: "fab fa-ethereum text-orange",

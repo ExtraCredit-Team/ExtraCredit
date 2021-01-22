@@ -53,12 +53,28 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //
 
     // keep track of a variable from the contract in the local React state:
-    const purpose = useContractReader(readContracts, "YourContract", "purpose")
-    console.log("🤗 purpose:", purpose)
+    //const purpose = useContractReader(readContracts, "YourContract", "purpose")
+    //console.log("🤗 purpose:", purpose)
 
     //📟 Listen for broadcast events
-    const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
-    console.log("📟 SetPurpose events:", setPurposeEvents)
+    //const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
+    //console.log("📟 SetPurpose events:", setPurposeEvents)
+
+
+    //Credit Pool Smart contract parser
+
+    //track deposits
+    const depositBalances = useContractReader(readContracts, "YourContract", "depositBalances")
+    console.log("🤗 deposit Balances:", depositBalances);
+
+    //track totalDeposit
+    const totalDeposit = useContractReader(readContracts, "YourContract", "totalDeposit")
+    console.log("🤗 total Deposit:", totalDeposit);
+
+    //📟 Listen for broadcast events
+    const setDepositEvent = useEventListener(readContracts, "YourContract", "Deposited", localProvider, 1);
+    console.log("📟 setDeposit events:", setDepositEvent);
+
 
     /*
     const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -74,7 +90,8 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         yourLocalBalance,
         readContracts,
         writeContracts,
-        purpose,
-        setPurposeEvents
+        depositBalances,
+        totalDeposit,
+        setDepositEvent
     };
 }

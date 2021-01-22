@@ -8,6 +8,7 @@ import Sidebar from "../sidebar/Sidebar.component";
 import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
+import {DepositCredit} from "../depositcredit/DepositCredit.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -22,8 +23,9 @@ AppRoutes.propTypes = {
     tx: PropTypes.any,
     writeContracts: PropTypes.any,
     readContracts: PropTypes.any,
-    purpose: PropTypes.any,
-    purposeEvents: PropTypes.any,
+    totalDeposit: PropTypes.any,
+    setDeposit: PropTypes.any,
+    depositBalances: PropTypes.any,
     subgraphUri: PropTypes.any,
     mainnetProvider: PropTypes.any,
     localProvider: PropTypes.any,
@@ -65,6 +67,12 @@ export function AppRoutes(props) {
             <Route path="/delegate">
                 <DelegateCredit/>
             </Route>
+            <Route path={"/deposit"}>
+                <DepositCredit signer={props.userProvider.getSigner()}
+                                                   provider={props.localProvider}
+                                                   address={props.address}
+                                                   blockExplorer={props.blockExplorer}/>
+            </Route>
             <Route path={"/old-menu"}>
                 <AppMenu route={props.route}/>
             </Route>
@@ -87,8 +95,7 @@ export function AppRoutes(props) {
                     tx={props.tx}
                     writeContracts={props.writeContracts}
                     readContracts={props.readContracts}
-                    purpose={props.purpose}
-                    setPurposeEvents={props.purposeEvents}
+                    depositBalances={props.depositBalances} totalDeposit={props.totalDeposit} setDeposit={props.setDeposit}
                 />
             </Route>
             <Route path="/subgraph">

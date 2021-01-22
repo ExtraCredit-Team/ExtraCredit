@@ -6,7 +6,9 @@ import { SyncOutlined } from '@ant-design/icons';
 import { Address, Balance } from "../components";
 import { parseEther, formatEther } from "@ethersproject/units";
 
-export default function ExampleUI({purpose, setPurposeEvents, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts }) {
+export default function ExampleUI({        depositBalances,
+                                    totalDeposit,
+                                    setDepositEvent, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts }) {
 
   const [newPurpose, setNewPurpose] = useState("loading...");
 
@@ -27,7 +29,7 @@ export default function ExampleUI({purpose, setPurposeEvents, address, mainnetPr
           <Button onClick={()=>{
             console.log("newPurpose",newPurpose)
             /* look how you call setPurpose on your contract: */
-            tx( writeContracts.YourContract.setPurpose(newPurpose) )
+            tx( writeContracts.YourContract.setDeposit(newPurpose) )
           }}>Set Purpose</Button>
         </div>
 

@@ -62,7 +62,11 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 function App(props) {
     const [injectedProvider, setInjectedProvider] = useState();
     const [showEthereumTools, setShowEthereumTools] = useState(false);
-    const {price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents} = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
+    const {
+        price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, depositBalances,
+        totalDeposit,
+        setDepositEvent
+    } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
 
     const loadWeb3Modal = useCallback(async () => {
         const provider = await web3Modal.connect();
@@ -86,27 +90,30 @@ function App(props) {
             <Container className="main-content">
 
                 <Container className="pt-7" fluid>
-                {/* ✏️ Edit the header and change the title to your project name */}
-                <Header/>
-                <Button onClick={() => toggle()}>Show Eth Tools</Button>
-                <AppRoutes localProvider={localProvider} mainnetProvider={mainnetProvider} blockExplorer={blockExplorer}
-                           userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance}
-                           price={price} tx={tx}
-                           writeContracts={writeContracts} readContracts={readContracts} purpose={purpose}
-                           purposeEvents={setPurposeEvents} subgraphUri={props.subgraphUri}/>
+                    {/* ✏️ Edit the header and change the title to your project name */}
+                    <Header/>
+                    <Button onClick={() => toggle()}>Show Eth Tools</Button>
+                    <AppRoutes localProvider={localProvider} mainnetProvider={mainnetProvider}
+                               blockExplorer={blockExplorer}
+                               userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance}
+                               price={price} tx={tx}
+                               writeContracts={writeContracts} readContracts={readContracts}
+                               depositBalances={depositBalances} totalDeposit={totalDeposit} setDepositEvent={setDepositEvent} subgraphUri={props.subgraphUri}/>
 
-                {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-                {showEthereumTools && <>  <EthereumAccount localProvider={localProvider} mainnetProvider={mainnetProvider}
-                                                          blockExplorer={blockExplorer}
-                                                          address={address} userProvider={userProvider} price={price}
-                                                          loadWeb3Modal={loadWeb3Modal}/>
+                    {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
+                    {showEthereumTools && <>  <EthereumAccount localProvider={localProvider}
+                                                               mainnetProvider={mainnetProvider}
+                                                               blockExplorer={blockExplorer}
+                                                               address={address} userProvider={userProvider}
+                                                               price={price}
+                                                               loadWeb3Modal={loadWeb3Modal}/>
 
-                    {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-                    <EthereumDetails localProvider={localProvider} mainnetProvider={mainnetProvider}
-                                     blockExplorer={blockExplorer}
-                                     price={price} address={address} gasPrice={gasPrice} onClick={() => {
-                        window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
-                    }}/></>}
+                        {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
+                        <EthereumDetails localProvider={localProvider} mainnetProvider={mainnetProvider}
+                                         blockExplorer={blockExplorer}
+                                         price={price} address={address} gasPrice={gasPrice} onClick={() => {
+                            window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
+                        }}/></>}
                 </Container>
             </Container>
         </Router>
