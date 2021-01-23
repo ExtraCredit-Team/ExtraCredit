@@ -1,7 +1,8 @@
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 import 'hardhat/console.sol';
-import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
+import { ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
+import { IERC20 } from "contracts/IERC20.sol";
 import { SafeERC20} from "contracts/Libraries.sol";
 
 contract CreditPool {
@@ -26,7 +27,7 @@ contract CreditPool {
     emit Deposited(_amount, _aToken);
   }
 
-  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external payable {
+  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external {
     IERC20(_asset).safeApprove(address(lendingPool), _amount);
     lendingPool.deposit(_asset, _amount, msg.sender, 0);
   }

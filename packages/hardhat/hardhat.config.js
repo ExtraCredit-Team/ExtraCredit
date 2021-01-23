@@ -18,7 +18,7 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "localhost";
+const defaultNetwork = "hardhat";
 
 function mnemonic() {
   try {
@@ -93,7 +93,7 @@ module.exports = {
     },
   },
   solidity: {
-    version: "0.8.0",
+    version: "0.6.11",
     settings: {
       optimizer: {
         enabled: true,

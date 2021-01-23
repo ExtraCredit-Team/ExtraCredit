@@ -14,11 +14,4 @@ describe("My Dapp",  () => {
     [addr1, addr1, addr3, _] = await ethers.getSigners();
   });
 
-
-  describe("YourContract", function () {
-    it("should be able to deposit and reflect balances of contract and depositor accordingly", async function () {
-      await myContract.depositOnLendingPool(, "", 50)
-    });
-  });
-
 });

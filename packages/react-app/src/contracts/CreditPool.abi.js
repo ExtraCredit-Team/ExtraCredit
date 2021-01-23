@@ -123,7 +123,7 @@ module.exports = [
     ],
     "name": "depositOnLendingPool",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
