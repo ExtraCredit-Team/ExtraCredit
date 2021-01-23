@@ -14,11 +14,12 @@ contract CreditPool {
   IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
 
   event Deposited(uint256 amount, address aToken);
+  event Withdrawn(uint256 amount, address aToken);
 
   /**
     * @param _debtToken The asset allowed to borrow
   */
-  function deposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken) external payable {
+  function deposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken) external {
     depositBalances[msg.sender] += _amount;
     totalDeposit += _amount;
     IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
@@ -26,7 +27,10 @@ contract CreditPool {
     emit Deposited(_amount, _aToken);
   }
 
-  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external payable {
+  /**
+    * To allow a direct deposit of the collateral in Aave lending pool
+  */
+  function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external {
     IERC20(_asset).safeApprove(address(lendingPool), _amount);
     lendingPool.deposit(_asset, _amount, msg.sender, 0);
   }
@@ -39,7 +43,7 @@ contract CreditPool {
     IStableDebtToken(stableDebtTokenAddress).approveDelegation(_borrower, _amount);
   }
 
-  function borrow(uint256 _amount, address _debtToken, uint256 _interestRateMode, uint16 _referralCode, address _onBehalfOf) external payable {
+  function borrow(uint256 _amount, address _debtToken, uint256 _interestRateMode, uint16 _referralCode, address _onBehalfOf) external {
     lendingPool.borrow(_debtToken, _amount, _interestRateMode, _referralCode, _onBehalfOf);
   }
 
@@ -48,5 +52,16 @@ contract CreditPool {
     depositBalances[msg.sender] -= _amount;
     totalDeposit -= _amount;
     IERC20(_aToken).transfer(msg.sender, _amount);
+    emit Withdrawn(_amount, _aToken);
   }
+
+  function getDepositPerUser(address _depositor) public view returns(uint256) {
+    return depositBalances[_depositor];
+  }
+
+  function getTotalDeposit() public view returns(uint256) {
+    return totalDeposit;
+  }
+
+
 }

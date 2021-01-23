@@ -11,6 +11,7 @@ const main = async () => {
 
 
   const yourContract = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
+  const marginPool = await deploy ("MarginPool", [yourContract.address])
 
 
 
