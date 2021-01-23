@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 import 'hardhat/console.sol';
 import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
