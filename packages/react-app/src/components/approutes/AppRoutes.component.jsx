@@ -8,6 +8,7 @@ import Sidebar from "../sidebar/Sidebar.component";
 import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
+import ExampleUI2 from "../../views/CreditPool.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -27,7 +28,10 @@ AppRoutes.propTypes = {
     subgraphUri: PropTypes.any,
     mainnetProvider: PropTypes.any,
     localProvider: PropTypes.any,
-    blockExplorer: PropTypes.any
+    blockExplorer: PropTypes.any,
+    depositBalances: PropTypes.any,
+    setDepositEvent: PropTypes.any,
+    totalDeposit: PropTypes.any
 };
 
 export function AppRoutes(props) {
@@ -89,6 +93,22 @@ export function AppRoutes(props) {
                     readContracts={props.readContracts}
                     purpose={props.purpose}
                     setPurposeEvents={props.purposeEvents}
+                />
+            </Route>
+            <Route path="/creditpool-ui">
+                <ExampleUI2
+                    address={props.address}
+                    userProvider={props.userProvider}
+                    mainnetProvider={props.mainnetProvider}
+                    localProvider={props.localProvider}
+                    yourLocalBalance={props.yourLocalBalance}
+                    price={props.price}
+                    tx={props.tx}
+                    writeContracts={props.writeContracts}
+                    readContracts={props.readContracts}
+                    depositBalances={props.depositBalances}
+                    setDepositEvent={props.setDepositEvent}
+                    totalDeposit={props.totalDeposit}
                 />
             </Route>
             <Route path="/subgraph">

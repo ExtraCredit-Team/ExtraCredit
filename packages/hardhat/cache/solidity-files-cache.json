@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
-      "lastModificationDate": 1611338485758,
+      "lastModificationDate": 1611340321985,
       "contentHash": "cb373c97b62d53c130d15e9809b4dc51",
       "sourceName": "contracts/YourContract.sol",
       "solcConfig": {
@@ -38,7 +38,7 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1611338637820,
+      "lastModificationDate": 1611340752806,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
@@ -70,6 +70,155 @@
       "artifacts": [
         "console"
       ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
+      "lastModificationDate": 1611341500301,
+      "contentHash": "0f718278def8ef77c1b424e95d201efa",
+      "sourceName": "contracts/CreditPool.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol",
+        "contracts/Interfaces.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "CreditPool"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
+      "lastModificationDate": 1611341500293,
+      "contentHash": "c8e9320066a37573e414bbf7143a5808",
+      "sourceName": "contracts/Interfaces.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "IERC20",
+        "ILendingPool",
+        "ILendingPoolAddressesProvider",
+        "IProtocolDataProvider",
+        "IStableDebtToken"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
+      "lastModificationDate": 1611341500285,
+      "contentHash": "f08d6c339fc6835cf429ae9f2cd5c447",
+      "sourceName": "contracts/Libraries.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Interfaces.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "Address",
+        "DataTypes",
+        "SafeERC20",
+        "SafeMath"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
+      "lastModificationDate": 1611341500277,
+      "contentHash": "11601c37a2d7e2e98e61e11a107c9a63",
+      "sourceName": "contracts/UtilizationBasedReward.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": []
     }
   }
 }

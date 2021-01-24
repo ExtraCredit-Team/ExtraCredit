@@ -60,10 +60,22 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
     console.log("📟 SetPurpose events:", setPurposeEvents)
 
+    // track deposits
+    const depositBalances = useContractReader(readContracts, "CreditPool", "depositBalances");
+    console.log("🤗 deposit Balances:", depositBalances);
+
+    // track totalDeposit
+    const totalDeposit = useContractReader(readContracts, "CreditPool", "totalDeposit");
+    console.log("🤗 total Deposit:", totalDeposit);
+
+    // 📟 Listen for broadcast events
+    const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
+    console.log("📟 setDeposit events:", setDepositEvent);
+
     /*
-    const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-    console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
-    */
+      const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
+      console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
+      */
 
     return {
         price,
@@ -74,6 +86,9 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         yourLocalBalance,
         readContracts,
         writeContracts,
+        depositBalances,
+        totalDeposit,
+        setDepositEvent,
         purpose,
         setPurposeEvents
     };

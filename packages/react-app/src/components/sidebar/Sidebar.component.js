@@ -67,7 +67,17 @@ const routes = [
     {
         path: "/old-menu",
         name: "Plain Scaffold App",
-        icon: "fas fa-hand-holding text-orange",
+        icon: "fas fa-bolt text-black",
+    },
+    {
+        path: "/exampleui",
+        name: "Plain Scaffold App",
+        icon: "fas fa-hand-holding text-green",
+    },
+    {
+        path: "/creditpool-ui",
+        name: "Credit Pool ui",
+        icon: "fas fa-coins text-yellow",
     }
 ];
 
