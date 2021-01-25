@@ -72,6 +72,19 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
     console.log("📟 setDeposit events:", setDepositEvent);
 
+    // 📟 Listen for broadcast events
+    const withdrawnEvent = useEventListener(readContracts, "CreditPool", "Withdrawn", localProvider, 1);
+    console.log("📟 withdrawnEvent events:", withdrawnEvent);
+
+
+    // track minSolvencyRatio address
+    const minSolvencyRatio = useContractReader(readContracts, "MarginPool", "minSolvencyRatio");
+    console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
+
+    // track minSolvencyRatio address
+    const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
+    console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
+
     /*
       const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
       console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
@@ -90,6 +103,9 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         totalDeposit,
         setDepositEvent,
         purpose,
-        setPurposeEvents
+        setPurposeEvents,
+        withdrawnEvent,
+        minSolvencyRatio,
+        totalBorrowedAmount
     };
 }

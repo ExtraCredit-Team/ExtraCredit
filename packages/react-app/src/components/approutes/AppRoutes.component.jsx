@@ -31,7 +31,10 @@ AppRoutes.propTypes = {
     blockExplorer: PropTypes.any,
     depositBalances: PropTypes.any,
     setDepositEvent: PropTypes.any,
-    totalDeposit: PropTypes.any
+    totalDeposit: PropTypes.any,
+    withdrawnEvent: PropTypes.any,
+    minSolvencyRatio: PropTypes.any,
+    totalBorrowedAmount: PropTypes.any
 };
 
 export function AppRoutes(props) {
@@ -109,6 +112,9 @@ export function AppRoutes(props) {
                     depositBalances={props.depositBalances}
                     setDepositEvent={props.setDepositEvent}
                     totalDeposit={props.totalDeposit}
+                    withdrawnEvent={props.withdrawnEvent}
+                    minSolvencyRatio={props.minSolvencyRatio}
+                    totalBorrowedAmount={props.totalBorrowedAmount}
                 />
             </Route>
             <Route path="/subgraph">

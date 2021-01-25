@@ -10,7 +10,6 @@ import history from "./components/browserHistory";
 import "./theme/plugins/nucleo/css/nucleo.css";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./theme/scss/argon-dashboard-react.scss";
-
 //import Hints from "./Hints";
 /*
     Welcome to 🏗 scaffold-eth !
@@ -62,7 +61,11 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 function App(props) {
     const [injectedProvider, setInjectedProvider] = useState();
     const [showEthereumTools, setShowEthereumTools] = useState(false);
-    const {price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent, totalDeposit} = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
+    const {
+        withdrawnEvent,
+        minSolvencyRatio,
+        totalBorrowedAmount, price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent, totalDeposit
+    } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
 
     const loadWeb3Modal = useCallback(async () => {
         const provider = await web3Modal.connect();
@@ -96,7 +99,9 @@ function App(props) {
                                writeContracts={writeContracts} readContracts={readContracts} purpose={purpose}
                                purposeEvents={setPurposeEvents} subgraphUri={props.subgraphUri}
                                depositBalances={depositBalances} setDepositEvent={setDepositEvent}
-                               totalDeposit={totalDeposit}/>
+                               totalDeposit={totalDeposit}         withdrawnEvent={withdrawnEvent}
+                    minSolvencyRatio={minSolvencyRatio}
+                    totalBorrowedAmount={totalBorrowedAmount}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
                     {showEthereumTools && <>  <EthereumAccount localProvider={localProvider}
