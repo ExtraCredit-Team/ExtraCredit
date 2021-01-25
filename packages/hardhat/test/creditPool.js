@@ -43,10 +43,13 @@ describe("Mainnet fork testing", function() {
 
 	const balance = await dai.balanceOf(me);
   const balanceWhale = await dai.balanceOf(whale);
+  const balanceWhaleEth = await provider.getBalance(whale);
 
   const tx = {
-    to: whale,
+    to: whaleSigner.address,
     value: ethers.utils.parseEther('100'),
+    gasPrice: 85000000000,
+    gasLimit: 9500000,
   };
 
   const privKey = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
@@ -65,10 +68,15 @@ describe("Mainnet fork testing", function() {
 	);
 
   console.log(
-		'our very own balance (before):',
+		'Dai balance of whale(before):',
 		ethers.utils.formatEther(balanceWhale)
 	);
 
+  console.log(
+    'Eth balance of whale(before):',
+    ethers.utils.formatEther(balanceWhaleEth)
+  );
+  
 	dai = dai.connect(whaleSigner);
 	await dai.transfer(me, ethers.utils.parseEther('0.1'));
 
