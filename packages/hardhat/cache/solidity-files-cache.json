@@ -75,8 +75,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611417003039,
-      "contentHash": "f722cb2069405e879f25b6f11bcd1c34",
+      "lastModificationDate": 1611570296792,
+      "contentHash": "81fc1a9fa9fc26b404c10d21cbdb2c89",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
         "version": "0.6.11",
@@ -104,13 +104,15 @@
         "./Libraries.sol"
       ],
       "versionPragmas": [
-        ">=0.6.0 <0.8.0"
+        ">=0.6.0 <0.7.0"
       ],
       "artifacts": [
+        "IERC20",
         "ILendingPool",
         "ILendingPoolAddressesProvider",
         "IProtocolDataProvider",
-        "IStableDebtToken"
+        "IStableDebtToken",
+        "YearnVault"
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
@@ -216,6 +218,113 @@
       ],
       "artifacts": [
         "IERC20"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
+      "lastModificationDate": 1611551990422,
+      "contentHash": "7da4636cc79180b00154556bd2cf797f",
+      "sourceName": "contracts/MarginPool.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "contracts/Interfaces.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "MarginPool"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/@openzeppelin/contracts/math/SafeMath.sol": {
+      "lastModificationDate": 1611330630060,
+      "contentHash": "168f50d923a8f64094d8e761ca2e5fe6",
+      "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+      "lastModificationDate": 1611330630060,
+      "contentHash": "d7295fcfe1e67e8b5e0099bdba192e19",
+      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
       ]
     }
   }
