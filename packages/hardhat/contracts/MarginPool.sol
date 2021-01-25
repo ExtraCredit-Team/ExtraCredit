@@ -2,12 +2,14 @@ pragma solidity >=0.6.0 <0.7.0;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken, YearnVault } from "contracts/Interfaces.sol";
+import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken, YearnVault, AggregatorInterface } from "contracts/Interfaces.sol";
 import { SafeERC20} from "contracts/Libraries.sol";
 
 contract MarginPool {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
+
+    AggregatorInterface internal fiatDaiRef;
 
     address public creditPool;
     uint256 public minSolvencyRatio;
@@ -29,6 +31,10 @@ contract MarginPool {
     constructor(address _creditPool, uint256 _minSolvencyRatio) public {
         creditPool = _creditPool;
         minSolvencyRatio = _minSolvencyRatio;
+        // mainnet dai usd price feed contract to get dai usd rate
+        // check https://docs.chain.link/docs/using-chainlink-reference-contracts
+        // to get conversion rate from usd to dai call fiatDaiRef.latestAnswer() this would give rate for 1 usd
+        fiatDaiRef = AggregatorInterface(address(0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9));
     }
     // to be called by a borrower with the duration in seconds and amount they wish to borrow
     // margin amount will be 10 % of _amount calculated on front end to avoid soldity decimal issue

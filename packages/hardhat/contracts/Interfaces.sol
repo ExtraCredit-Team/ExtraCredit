@@ -571,6 +571,11 @@ interface YearnVault {
     function withdraw(uint256 _shares) external;
 }
 
+interface AggregatorInterface {
+  // returns rates
+  function latestAnswer() external view returns (int256);
+}
+
 
 //code: https://github.com/aave/protocol-v2/blob/ice/mainnet-deployment-03-12-2020/contracts/protocol/tokenization/StableDebtToken.sol
 interface IStableDebtToken {

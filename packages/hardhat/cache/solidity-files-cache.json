@@ -75,8 +75,8 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611541847248,
-      "contentHash": "981a0570ac09b501e33b3e7788b308a9",
+      "lastModificationDate": 1611590414511,
+      "contentHash": "6eff47606b69a70a0e5ae742f507072a",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -107,6 +107,7 @@
         ">=0.6.0 <0.7.0"
       ],
       "artifacts": [
+        "AggregatorInterface",
         "IERC20",
         "ILendingPool",
         "ILendingPoolAddressesProvider",
@@ -189,8 +190,8 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1611541706073,
-      "contentHash": "1653b499cb930ed055d85b310353850f",
+      "lastModificationDate": 1611590824360,
+      "contentHash": "1d2e339aa178af7f0b7aa04983d93750",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",
