@@ -1,8 +1,7 @@
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 import 'hardhat/console.sol';
-import { ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
-import { IERC20 } from "contracts/IERC20.sol";
+import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
 import { SafeERC20} from "contracts/Libraries.sol";
 
 contract CreditPool {
@@ -15,6 +14,7 @@ contract CreditPool {
   IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
 
   event Deposited(uint256 amount, address aToken);
+  event Withdrawn(uint256 amount, address aToken);
 
   /**
     * @param _debtToken The asset allowed to borrow
@@ -27,6 +27,9 @@ contract CreditPool {
     emit Deposited(_amount, _aToken);
   }
 
+  /**
+    * To allow a direct deposit of the collateral in Aave lending pool
+  */
   function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external {
     IERC20(_asset).safeApprove(address(lendingPool), _amount);
     lendingPool.deposit(_asset, _amount, msg.sender, 0);
@@ -49,5 +52,16 @@ contract CreditPool {
     depositBalances[msg.sender] -= _amount;
     totalDeposit -= _amount;
     IERC20(_aToken).transfer(msg.sender, _amount);
+    emit Withdrawn(_amount, _aToken);
   }
+
+  function getDepositPerUser(address _depositor) public view returns(uint256) {
+    return depositBalances[_depositor];
+  }
+
+  function getTotalDeposit() public view returns(uint256) {
+    return totalDeposit;
+  }
+
+
 }
