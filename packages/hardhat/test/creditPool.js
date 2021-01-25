@@ -2,10 +2,10 @@ const { ethers } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
 //const contract = require("packages/hardhat/artifacts/contracts/IERC20.sol/IERC20.json");
-var Token = require('packages/hardhat/artifacts/contracts/Interfaces.sol/IERC20.json');
+var Token = require("../artifacts/contracts/IERC20.sol/IERC20.json");
 use(solidity);
 
-const url = "https://127.0.0.1:8545";
+const url = "http://127.0.0.1:8545/";
 const provider = ethers.providers.getDefaultProvider(url);
 const contractAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 
