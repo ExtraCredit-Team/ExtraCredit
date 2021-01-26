@@ -1,1 +1,1 @@
-module.exports = ["CreditPool","YourContract"];
+module.exports = ["CreditPool","MarginPool","YourContract"];
