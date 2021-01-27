@@ -1,0 +1,24 @@
+Utilisation Rate U = Total Borrows / Total Liquidity
+
+U optimal of DAI is 80%.
+
+R(t) = R(0) + Rslope1*[U(t)/U(optimal)] for U(t) < 80%
+R(t) = R(0) + Rslope1 + (Rslope2*[(U(t)-U(optimal))/(1-U(optimal))]) for U(t) > 80%
+
+When U(t) > 80%, interest increases sharply
+When U(t) < 80%, interest rate increases slowly
+
+
+Asset DAI
+Uoptimal 80%
+Base 4%
+Slope 1 2%
+Slope 2 75%
+
+
+Reward split based on pool utilization, the depositor reward goes to a reward pool inside creditpool.
+The harvesting for the depositor side is based on delegateAmount and duration.
+
+Problems: when to compute and are we computing stable or variable?
+
+pragma solidity >=0.6.0 <0.7.0;

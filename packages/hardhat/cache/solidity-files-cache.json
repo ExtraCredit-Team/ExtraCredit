@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611417078580,
-      "contentHash": "2aaf4ce37185b98b1d93ed93c68cf530",
+      "lastModificationDate": 1611660822284,
+      "contentHash": "2b943483ee097df07847ccb9e5fe22c4",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.11",
@@ -30,11 +30,10 @@
       "imports": [
         "hardhat/console.sol",
         "contracts/Interfaces.sol",
-        "contracts/IERC20.sol",
         "contracts/Libraries.sol"
       ],
       "versionPragmas": [
-        ">=0.6.0 <0.8.0"
+        ">=0.6.0 <0.7.0"
       ],
       "artifacts": [
         "CreditPool"
@@ -75,7 +74,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611570296792,
+      "lastModificationDate": 1611591949090,
       "contentHash": "81fc1a9fa9fc26b404c10d21cbdb2c89",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
@@ -116,8 +115,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611417113788,
-      "contentHash": "e08bafc08bca64244e518ac0893d4e39",
+      "lastModificationDate": 1611741486239,
+      "contentHash": "c22b3ae5cfd1cec303c8b26ffbebfbb0",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
         "version": "0.6.11",
@@ -142,7 +141,7 @@
         }
       },
       "imports": [
-        "./IERC20.sol"
+        "./Interfaces.sol"
       ],
       "versionPragmas": [
         ">=0.6.0 <0.8.0"
@@ -154,74 +153,8 @@
         "SafeMath"
       ]
     },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
-      "lastModificationDate": 1611404671369,
-      "contentHash": "c5c92e74197e44aa4caad94f3b965c7d",
-      "sourceName": "contracts/UtilizationBasedReward.sol",
-      "solcConfig": {
-        "version": "0.6.11",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.6.0 <0.8.0"
-      ],
-      "artifacts": []
-    },
-    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/IERC20.sol": {
-      "lastModificationDate": 1611417003039,
-      "contentHash": "2a5b33fb4cf5e9c8a26ee83726bdc5c9",
-      "sourceName": "contracts/IERC20.sol",
-      "solcConfig": {
-        "version": "0.6.11",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.6.0 <0.8.0"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1611551990422,
+      "lastModificationDate": 1611591949090,
       "contentHash": "7da4636cc79180b00154556bd2cf797f",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
@@ -325,6 +258,184 @@
       ],
       "artifacts": [
         "ReentrancyGuard"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
+      "lastModificationDate": 1611741998631,
+      "contentHash": "6f3578bc9031dbafbd988440c1d2c6b1",
+      "sourceName": "contracts/InterestRateStrategy.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./WadRayMath.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "InterestRateStrategy"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/WadRayMath.sol": {
+      "lastModificationDate": 1611741620189,
+      "contentHash": "f241db1fb07c038554f2e7bade224870",
+      "sourceName": "contracts/WadRayMath.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Errors.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "WadRayMath"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1611330630040,
+      "contentHash": "140e80ebd07ed05e7fe907c531e6746f",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../GSN/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Errors.sol": {
+      "lastModificationDate": 1611741749399,
+      "contentHash": "81869372e8633c1128534927ccd9d2e8",
+      "sourceName": "contracts/Errors.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "Errors"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/node_modules/@openzeppelin/contracts/GSN/Context.sol": {
+      "lastModificationDate": 1611330630036,
+      "contentHash": "af1b36323856d0d1550abc7f878a8208",
+      "sourceName": "@openzeppelin/contracts/GSN/Context.sol",
+      "solcConfig": {
+        "version": "0.6.11",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "Context"
       ]
     }
   }

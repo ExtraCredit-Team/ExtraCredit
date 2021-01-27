@@ -21,7 +21,7 @@ const impersonateAddress = async (address) => {
 
 
 //const contract = require("packages/hardhat/artifacts/contracts/IERC20.sol/IERC20.json");
-var Token = require("../artifacts/contracts/IERC20.sol/IERC20.json");
+var Token = require("../artifacts/contracts/Interfaces.sol/IERC20.json");
 use(solidity);
 const url = "http://127.0.0.1:8545/";
 const provider = ethers.providers.getDefaultProvider(url);
@@ -76,7 +76,7 @@ describe("Mainnet fork testing", function() {
     'Eth balance of whale(before):',
     ethers.utils.formatEther(balanceWhaleEth)
   );
-  
+
 	dai = dai.connect(whaleSigner);
 	await dai.transfer(me, ethers.utils.parseEther('0.1'));
 
