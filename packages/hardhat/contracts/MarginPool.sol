@@ -2,7 +2,7 @@ pragma solidity >=0.6.0 <0.7.0;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken, YearnVault, AggregatorInterface } from "contracts/Interfaces.sol";
+import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken, YearnVault, AggregatorInterface, YearnController } from "contracts/Interfaces.sol";
 import { SafeERC20} from "contracts/Libraries.sol";
 
 contract MarginPool {
@@ -56,6 +56,7 @@ contract MarginPool {
       // checking if the borrower already exists
       Borrower memory borrower = delegateeDeposits[msg.sender];
       require(!borrower.hasBorrowed, "MarginPool: borrower has borrowed previously");
+
       // strong borrowe details in storage
       delegateeDeposits[msg.sender] = Borrower(duration, _marginAmount, _amount.add(_marginAmount), solvencyRatio, true);
       // setting total borrowed amount in storage
@@ -83,7 +84,35 @@ contract MarginPool {
         YearnVault(_vault).withdraw(investment);
         // repaying credit  pool the borrowed funds
         lendingPool.repay(_asset, investment.sub(margin), 1, creditPool);
+        IERC20(_asset).safeTransfer(msg.sender, delegateeDeposits[msg.sender].margin);
     }
 
+     // this function takes in the vault address which is dai vault currently for the hack https://etherscan.io/address/0xACd43E627e64355f1861cEC6d3a6688B31a6F952#code
+     // the 2nd param is the ytoken balance  which is calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api
+     function getYearnVaultLiquidityValue(
+        address _vault,
+        uint256 _ytokenBalance
+    ) internal returns (uint256) {
+        address controller = YearnVault(_vault).controller();
+        address token = YearnVault(_vault).token();
+        uint256 _userReturns = (
+            YearnVault(_vault).balance().mul(_ytokenBalance)
+        )
+            .div(YearnVault(_vault).totalSupply());
 
+        // Check balance
+        uint256 vaultBalance = IERC20(token).balanceOf(address(this));
+        if (vaultBalance < _userReturns) {
+            uint256 _withdraw = _userReturns.sub(vaultBalance);
+            YearnController(controller).withdraw(address(token), _withdraw);
+            uint256 _after = IERC20(token).balanceOf(address(this));
+            uint256 _diff = _after.sub(vaultBalance);
+            if (_diff < _withdraw) {
+                _userReturns = _userReturns.add(_diff);
+            }
+        }
+        uint256 usdQuote = uint256(fiatDaiRef.latestAnswer());
+        usdQuote = usdQuote.mul(_userReturns);
+        return usdQuote;
+    }
 }

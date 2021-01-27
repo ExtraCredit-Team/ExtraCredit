@@ -566,9 +566,24 @@ interface ILendingPool {
 interface YearnVault {
     // deposit to yearn
     function deposit(uint256 _amount) external;
-    
     // withdraw
     function withdraw(uint256 _shares) external;
+
+    function controller() external view returns (address);
+
+    function token() external view returns (address);
+
+    function totalSupply() external view returns (uint256);
+
+    function balance() external view returns (uint256);
+}
+
+interface YearnController {
+    function withdraw(address, uint256) external;
+
+    function balanceOf(address) external view returns (uint256);
+
+    function earn(address, uint256) external;
 }
 
 interface AggregatorInterface {
