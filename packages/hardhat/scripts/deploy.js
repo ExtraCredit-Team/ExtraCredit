@@ -12,7 +12,7 @@ const main = async () => {
 
   const yourContract = await deploy("YourContract") // <-- add in constructor args like line 16 vvvv
   const creditPool = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
-  const marginPool = await deploy("MarginPool", [creditPool.address, 10]) // <-- add in constructor args like line 16 vvvv
+  const marginPool = await deploy("MarginPool", [creditPool.address, 115]) // <-- add in constructor args like line 16 vvvv
 
 
   // const exampleToken = await deploy("ExampleToken")
@@ -26,6 +26,7 @@ const main = async () => {
   const yourContract = await deploy("YourContract", [], {
     value: ethers.utils.parseEther("0.05")
   });
+
 */
 
 

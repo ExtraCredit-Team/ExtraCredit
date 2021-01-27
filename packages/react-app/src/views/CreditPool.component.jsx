@@ -5,18 +5,21 @@ import {Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, 
 import {SyncOutlined} from '@ant-design/icons';
 import {Address, Balance} from "../components";
 import {formatEther, parseEther} from "@ethersproject/units";
-// import {marginAccountAddress} from "../contracts/MarginAccount.address"
+import marginPoolAddress from "../contracts/MarginPool.address"
 
-export default function ExampleUI2({
+export default function CreditPool({getDepositPerUser,
                                        withdrawnEvent,
                                        minSolvencyRatio,
-                                       totalBorrowedAmount, depositBalances,
+                                       totalBorrowedAmount,
                                        setDepositEvent,
                                        totalDeposit, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
 
     const [amountToDeposit, setNewAmountToDeposit] = useState("loading...");
     const [amountToWithdraw, setNewAmountToWithdraw] = useState("loading...");
+
+
+    const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
 
     return (
         <div>
@@ -26,11 +29,11 @@ export default function ExampleUI2({
             <div style={{border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64}}>
                 <h2>Example UI:</h2>
 
-                <h4>depositBalances: {depositBalances}</h4>
+                <div>depositBalances: {getDepositPerUser && getDepositPerUser}</div>
 
                 <Divider/>
 
-                <h4>totalDeposit: {totalDeposit}</h4>
+                <div>totalDeposit: {totalDeposit && totalDeposit}</div>
 
                 <Divider/>
 
@@ -38,15 +41,27 @@ export default function ExampleUI2({
                     <Input onChange={(e) => {
                       setNewAmountToDeposit(e.target.value)
                     }}/>
+                    <Input onChange={(e) => {
+                        setNewAmountToDelegate(e.target.value)
+                    }}/>
                     <Button onClick={() => {
                         console.log(" amount to deposit", amountToDeposit);
                         /* look how you call setDeposit on your contract: */
                         let amount = 10;
                         let aTokenAddress = "0x028171bCA77440897B824Ca71D1c56caC55b68A3";
                         let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
-                        tx(writeContracts.CreditPool.setDeposit(amountToDeposit, aTokenAddress, "marginAccountAddress", debtToken))
+                        console.log("amountToDelegate", parseEther(amountToDelegate));
+                        console.log("amountToDeposit", parseEther(amountToDeposit));
+                        console.log("marginPoolAddress:", marginPoolAddress);
+                        console.log(typeof marginPoolAddress);
+                        tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress,marginPoolAddress, parseEther(amountToDelegate) ,debtToken))
                     }}>Set Deposit</Button>
                 </div>
+
+                <Divider/>
+
+                <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
+
 
 
                 <Divider/>
@@ -54,17 +69,6 @@ export default function ExampleUI2({
 
               <Divider/>
 
-              <div style={{margin: 8}}>
-                <Input onChange={(e) => {
-                  setNewAmountToWithdraw(e.target.value)
-                }}/>
-                <Button onClick={() => {
-                  console.log(" amount to withdraw", amountToWithdraw);
-                  /* look how you call setDeposit on your contract: */
-                  let amount = 10;
-                  tx(writeContracts.CreditPool.withdraw(amountToWithdraw))
-                }}>Set Deposit</Button>
-              </div>
 
 
               <Divider/>
@@ -114,14 +118,6 @@ export default function ExampleUI2({
                     fontSize={16}
                 />
 
-                <Divider/>
-
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /* look how you call setDeposit on your contract: */
-                        tx(writeContracts.CreditPool.setDeposit("🍻 Cheers"))
-                    }}>Set Purpose to "🍻 Cheers"</Button>
-                </div>
 
                 <div style={{margin: 8}}>
                     <Button onClick={() => {
@@ -135,16 +131,6 @@ export default function ExampleUI2({
                         });
                         /* this should throw an error about "no fallback nor receive function" until you add it */
                     }}>Send Value</Button>
-                </div>
-
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /* look how we call setDeposit AND send some value along */
-                        tx(writeContracts.CreditPool.setDeposit("💵 Paying for this one!", {
-                            value: parseEther("0.001")
-                        }))
-                        /* this will fail until you make the setDeposit function payable */
-                    }}>Set Purpose With Value</Button>
                 </div>
 
 

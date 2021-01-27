@@ -8,7 +8,7 @@ import Sidebar from "../sidebar/Sidebar.component";
 import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
-import ExampleUI2 from "../../views/CreditPool.component";
+import CreditPool from "../../views/CreditPool.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -34,7 +34,8 @@ AppRoutes.propTypes = {
     totalDeposit: PropTypes.any,
     withdrawnEvent: PropTypes.any,
     minSolvencyRatio: PropTypes.any,
-    totalBorrowedAmount: PropTypes.any
+    totalBorrowedAmount: PropTypes.any,
+    getDepositPerUser: PropTypes.any
 };
 
 export function AppRoutes(props) {
@@ -99,7 +100,7 @@ export function AppRoutes(props) {
                 />
             </Route>
             <Route path="/creditpool-ui">
-                <ExampleUI2
+                <CreditPool
                     address={props.address}
                     userProvider={props.userProvider}
                     mainnetProvider={props.mainnetProvider}
@@ -115,6 +116,7 @@ export function AppRoutes(props) {
                     withdrawnEvent={props.withdrawnEvent}
                     minSolvencyRatio={props.minSolvencyRatio}
                     totalBorrowedAmount={props.totalBorrowedAmount}
+                    getDepositPerUser={props.getDepositPerUser}
                 />
             </Route>
             <Route path="/subgraph">
