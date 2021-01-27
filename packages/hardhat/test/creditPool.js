@@ -22,11 +22,15 @@ const impersonateAddress = async (address) => {
 
 //const contract = require("packages/hardhat/artifacts/contracts/IERC20.sol/IERC20.json");
 var Token = require("../artifacts/contracts/Interfaces.sol/IERC20.json");
+var AaveWETH = require("../artifacts/contracts/Interfaces.sol/IWETHGateway.json");
+
 use(solidity);
 const url = "http://127.0.0.1:8545/";
 const provider = ethers.providers.getDefaultProvider(url);
 const daiContractAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 const aDaiContractAddress = '0x028171bCA77440897B824Ca71D1c56caC55b68A3';
+//const wEthGateway = '0xDcD33426BA191383f1c9B431A342498fdac73488';
+
 
 describe("Mainnet fork testing", function() {
 
@@ -42,6 +46,7 @@ describe("Mainnet fork testing", function() {
 	const whaleSigner = await impersonateAddress(whale);
 
 	const balance = await dai.balanceOf(me);
+  const balanceEth = await provider.getBalance(me);
   const balanceWhale = await dai.balanceOf(whale);
   const balanceWhaleEth = await provider.getBalance(whale);
 
@@ -68,6 +73,11 @@ describe("Mainnet fork testing", function() {
 	);
 
   console.log(
+		'our very own ETH balance (before):',
+		ethers.utils.formatEther(balanceEth)
+	);
+
+  console.log(
 		'Dai balance of whale(before):',
 		ethers.utils.formatEther(balanceWhale)
 	);
@@ -78,7 +88,7 @@ describe("Mainnet fork testing", function() {
   );
 
 	dai = dai.connect(whaleSigner);
-	await dai.transfer(me, ethers.utils.parseEther('0.1'));
+	await dai.transfer(me, ethers.utils.parseEther('50000'));
 
 	balance = await dai.balanceOf(me);
 	console.log(
@@ -95,6 +105,7 @@ describe("Credit Delegation flow", function() {
 	let depositor, borrower1, borrower2;
 	let whalePax = '0x5F7dc48Fe7396e7CE64a40195BEA153702fC118f';
 	let daiAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
+  const me = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'; //first account
 
 	before('connect to signers', async () => {
 		([_, depositor, borrower1, borrower2] = await ethers.getSigners());
@@ -106,7 +117,8 @@ describe("Credit Delegation flow", function() {
     creditPool = await CreditPool.deploy();
     MarginPool = await ethers.getContractFactory('MarginPool');
     marginPool = await MarginPool.deploy(creditPool.address, '10');
-		lendingPool = await ethers.getContractAt('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9');
+		const lendingPool = await ethers.getContractAt('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9');
+    const wEthGateway = await ethers.getContractAt('IWETHGateway', '0xDcD33426BA191383f1c9B431A342498fdac73488');
 		let dai = new ethers.Contract(daiContractAddress, Token.abi, provider);
 	});
 
@@ -133,4 +145,9 @@ describe("Credit Delegation flow", function() {
 
 		await creditPool.deposit('50000', '0x028171bCA77440897B824Ca71D1c56caC55b68A3', marginPool.address, '20000', '0x778A13D3eeb110A4f7bb6529F99c000119a08E92');
 	});
+
+  it("should deposit ETH into LendingPoolUpdated", async function () {
+      wEthGateway = wEthGateway.connect(depositor);
+      await wEthGateway.depositETH(depositor, 0).value;
+  });
 });
