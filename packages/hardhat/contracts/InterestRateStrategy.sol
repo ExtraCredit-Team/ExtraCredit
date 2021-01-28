@@ -48,7 +48,7 @@ function getUtilisation(uint256 _totalBorrowed, uint256 _totalCreditAvailable) p
   * @param _totalCreditAvailable The total amount of credit delegated in the CreditPool
 */
 function computeBorrowingRewardRate(uint256 _totalBorrowed, uint256 _totalCreditAvailable) public view returns(uint256) {
-  return WadRayMath.ray().sub(computeBorrowingRewardRate(_totalBorrowed, _totalCreditAvailable));
+  return WadRayMath.ray().sub(computeDepositRewardRate(_totalBorrowed, _totalCreditAvailable));
 }
 
 /**

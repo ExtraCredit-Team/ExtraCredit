@@ -2,7 +2,7 @@
 pragma solidity >=0.6.0 <0.7.0;
 
 import {Errors} from './Errors.sol';
-
+import { SafeMath} from "contracts/Libraries.sol";
 /**
  * @title WadRayMath library
  * @author Aave
