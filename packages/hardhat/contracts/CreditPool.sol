@@ -3,7 +3,6 @@ import 'hardhat/console.sol';
 import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
 import { SafeERC20} from "contracts/Libraries.sol";
 
-
 contract CreditPool {
   using SafeERC20 for IERC20;
   //mapping(address => uint256) public depositBalances;

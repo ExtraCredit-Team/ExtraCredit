@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611660822284,
-      "contentHash": "2b943483ee097df07847ccb9e5fe22c4",
+      "lastModificationDate": 1611848184642,
+      "contentHash": "36ad4d254a4caa5ce9c3d971681a5a5b",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.11",
@@ -74,8 +74,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611591949090,
-      "contentHash": "81fc1a9fa9fc26b404c10d21cbdb2c89",
+      "lastModificationDate": 1611848118869,
+      "contentHash": "0363978ed24f359439fe60e701c4c353",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
         "version": "0.6.11",
@@ -111,11 +111,12 @@
         "ILendingPoolAddressesProvider",
         "IProtocolDataProvider",
         "IStableDebtToken",
+        "IWETHGateway",
         "YearnVault"
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611741486239,
+      "lastModificationDate": 1611848236871,
       "contentHash": "c22b3ae5cfd1cec303c8b26ffbebfbb0",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
@@ -154,7 +155,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1611591949090,
+      "lastModificationDate": 1611848184642,
       "contentHash": "7da4636cc79180b00154556bd2cf797f",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
@@ -261,7 +262,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
-      "lastModificationDate": 1611741998631,
+      "lastModificationDate": 1611742051380,
       "contentHash": "6f3578bc9031dbafbd988440c1d2c6b1",
       "sourceName": "contracts/InterestRateStrategy.sol",
       "solcConfig": {
