@@ -10,9 +10,9 @@ const main = async () => {
   console.log("\n\n 📡 Deploying...\n");
 
 
-  const yourContract = await deploy("YourContract") // <-- add in constructor args like line 16 vvvv
-  const creditPool = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
-  const marginPool = await deploy("MarginPool", [creditPool.address, 115]) // <-- add in constructor args like line 16 vvvv
+  const yourContract = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
+  const marginPool = await deploy("MarginPool", [yourContract.address, 115])
+  const interestRateStrategy = await deploy("InterestRateStrategy", [80, 4, 2, 75])
 
 
   // const exampleToken = await deploy("ExampleToken")
