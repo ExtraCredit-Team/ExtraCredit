@@ -9,8 +9,6 @@ contract MarginPool {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    AggregatorInterface internal fiatDaiRef;
-
     address public creditPool;
     uint256 public minSolvencyRatio;
     uint256 public totalBorrowedAmount;
@@ -20,6 +18,7 @@ contract MarginPool {
         uint256 margin;
         uint256 investment;
         uint256 solvencyRatio;
+        uint256 interestAmount;
         bool hasBorrowed;
     }
 
@@ -27,6 +26,9 @@ contract MarginPool {
 
     ILendingPool constant lendingPool = ILendingPool(address(0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9)); // on mainnet
     IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
+    YearnVault constant daiVault = YearnVault(address(0xACd43E627e64355f1861cEC6d3a6688B31a6F952)); // on mainnet
+    AggregatorInterface constant fiatDaiRef = AggregatorInterface(address(0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9)); // on mainnet
+
 
     constructor(address _creditPool, uint256 _minSolvencyRatio) public {
         creditPool = _creditPool;
@@ -34,14 +36,18 @@ contract MarginPool {
         // mainnet dai usd price feed contract to get dai usd rate
         // check https://docs.chain.link/docs/using-chainlink-reference-contracts
         // to get conversion rate from usd to dai call fiatDaiRef.latestAnswer() this would give rate for 1 usd
-        fiatDaiRef = AggregatorInterface(address(0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9));
     }
-    // to be called by a borrower with the duration in seconds and amount they wish to borrow
-    // margin amount will be 10 % of _amount calculated on front end to avoid soldity decimal issue
-    // _vault can be dai vault address to start off
-    // _asset is the stable coin they wish to borrow
-    // borrow for a particular borrower will be allowed once for a particular borrower
-    function invest(uint256 _amount, address _asset, address _vault, uint256 _marginAmount, uint256 _duration) public {
+
+    /**
+     * @dev invest which borrows dai and invest to vault.
+     * @param _amount  delgated amount to be borrowed.
+     * @param _asset  asset to borrow.
+     * @param _marginAmount  margin amount will be 10 % of _amount calculated on front end to avoid soldity decimal issue.
+     * @param _interestAmount  aave dai interest amount to be calculated with aave's subgraph.
+     * @param _duration  borrow duration.
+     // Note the borrower needs to approve the margin pool to spend _interestAmount + _marginAmount
+    */
+    function invest(uint256 _amount, address _asset, uint256 _marginAmount, uint256 _interestAmount, uint256 _duration) public {
       // get atoken address
       (address _debtToken, ,) =  dataProvider.getReserveTokensAddresses(_asset);
       // get the borrowing allowance
@@ -49,7 +55,7 @@ contract MarginPool {
       require(_delegatedAmount >= totalBorrowedAmount, "MarginPool: insufficient debt allowance");
       // compute the solvency ratio added this buffere 10^5 since solidity does not handle decimal places
       // so to render solvency ratio on ui we need to divide by 10^5 in the js code 
-      uint256 solvencyRatio = (_amount.mul(100000)).add(_marginAmount).div(_amount);
+      uint256 solvencyRatio = (_amount.mul(100000)).add(_marginAmount.add(_interestAmount)).div(_amount);
       require(solvencyRatio >= minSolvencyRatio.mul(100000), "MarginPool: insufficient margin amount");
       // getting the actual timestamp for the duration
       uint256 duration = block.timestamp.add(_duration);
@@ -58,47 +64,53 @@ contract MarginPool {
       require(!borrower.hasBorrowed, "MarginPool: borrower has borrowed previously");
 
       // strong borrowe details in storage
-      delegateeDeposits[msg.sender] = Borrower(duration, _marginAmount, _amount.add(_marginAmount), solvencyRatio, true);
+      delegateeDeposits[msg.sender] = Borrower(duration, _marginAmount, _amount.add(_marginAmount.add(_interestAmount)), solvencyRatio, _interestAmount, true);
       // setting total borrowed amount in storage
       totalBorrowedAmount += _amount;
       // getting the delgated credit amount from aave
       lendingPool.borrow(_asset, _amount, 1, 0, creditPool);
+      // approve yearn vault to spend dai
+      IERC20(_asset).approve(address(daiVault), _amount.add(_marginAmount.add(_interestAmount)));
       // investing to yearn vault
-      YearnVault(_vault).deposit(_amount.add(_marginAmount));
+      YearnVault(daiVault).deposit(_amount.add(_marginAmount.add(_interestAmount)));
     }
-    // to be called by borrower to repay the borrowed
-    //NOTE - this does not include reward distribution currently
-    // to be called before the duration ends to avoid chances of liquidation
-    // every time repay will be called it will be to repay the complete amount
-    function repay(address _asset, address _vault) public {
+
+    /**
+     * @dev repay which withdraw invested dai from yearn vault and repay the delgated credit.
+     * @param _asset  asset borrowed.
+    */
+    function repay(address _asset) public {
         Borrower storage borrower = delegateeDeposits[msg.sender];
         require(borrower.duration > block.timestamp, "MarginPool: borrow duration has exceeded you will be liquidated");
         borrower.duration = 0;
         uint256 margin = borrower.margin;
         borrower.margin = 0;
         uint256 investment = borrower.investment;
+        uint256 interestAmount = borrower.interestAmount;
+        borrower.interestAmount = 0;
         borrower.investment = 0;
         borrower.solvencyRatio = 0;
         borrower.hasBorrowed = false;
         // withdrawing yield amount from yearn
-        YearnVault(_vault).withdraw(investment);
+        YearnVault(daiVault).withdraw(investment);
         // repaying credit  pool the borrowed funds
         lendingPool.repay(_asset, investment.sub(margin), 1, creditPool);
-        IERC20(_asset).safeTransfer(msg.sender, delegateeDeposits[msg.sender].margin);
+        IERC20(_asset).safeTransfer(msg.sender, margin);
     }
 
-     // this function takes in the vault address which is dai vault currently for the hack https://etherscan.io/address/0xACd43E627e64355f1861cEC6d3a6688B31a6F952#code
-     // the 2nd param is the ytoken balance  which is calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api
+    /**
+     * @dev getYearnVaultLiquidityValue which returns the invested liquidity
+     * @param _ytokenBalance  alculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
+    */
      function getYearnVaultLiquidityValue(
-        address _vault,
         uint256 _ytokenBalance
-    ) internal returns (uint256) {
-        address controller = YearnVault(_vault).controller();
-        address token = YearnVault(_vault).token();
+    ) external returns (uint256) {
+        address controller = YearnVault(daiVault).controller();
+        address token = YearnVault(daiVault).token();
         uint256 _userReturns = (
-            YearnVault(_vault).balance().mul(_ytokenBalance)
+            YearnVault(daiVault).balance().mul(_ytokenBalance)
         )
-            .div(YearnVault(_vault).totalSupply());
+            .div(YearnVault(daiVault).totalSupply());
 
         // Check balance
         uint256 vaultBalance = IERC20(token).balanceOf(address(this));
