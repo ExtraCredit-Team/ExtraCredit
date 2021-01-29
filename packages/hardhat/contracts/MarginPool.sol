@@ -86,11 +86,11 @@ contract MarginPool {
         uint256 margin = borrower.margin;
         borrower.margin = 0;
         uint256 investment = borrower.investment;
-        uint256 interestAmount = borrower.interestAmount;
         borrower.interestAmount = 0;
         borrower.investment = 0;
         borrower.solvencyRatio = 0;
         borrower.hasBorrowed = false;
+        totalBorrowedAmount -= investment.sub(margin);
         // withdrawing yield amount from yearn
         YearnVault(daiVault).withdraw(investment);
         // repaying credit  pool the borrowed funds
