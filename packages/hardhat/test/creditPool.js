@@ -149,7 +149,8 @@ describe("Credit Delegation flow", function() {
 			ethers.utils.formatEther(aEthBalance)
 		);
     */
-		expect(await(aweth.balanceOf(depositor.address))).to.be.gt('40');
+		//expect(await(aweth.balanceOf(depositor.address))).to.be.BigNumber.gt(ethers.utils.parseEther('40'));
+    expect(aEthBalance).to.be.BigNumber.gt(ethers.utils.parseEther('40'));
 
 		creditPool = creditPool.connect(depositor);
 
