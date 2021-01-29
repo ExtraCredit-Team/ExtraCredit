@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611848184642,
-      "contentHash": "36ad4d254a4caa5ce9c3d971681a5a5b",
+      "lastModificationDate": 1611939800717,
+      "contentHash": "7d034613ea0388e365e3cfc61cfe4e1c",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.11",

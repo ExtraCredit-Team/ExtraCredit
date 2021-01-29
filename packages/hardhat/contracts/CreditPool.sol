@@ -1,18 +1,22 @@
 pragma solidity >=0.6.0 <0.7.0;
 import 'hardhat/console.sol';
 import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
-import { SafeERC20} from "contracts/Libraries.sol";
+import { SafeERC20, SafeMath } from "contracts/Libraries.sol";
 
 contract CreditPool {
   using SafeERC20 for IERC20;
+  using SafeMath for uint256;
   //mapping(address => uint256) public depositBalances;
 
   struct Depositor {
 	   uint256 delegatedAmount;
 	   uint256 depositAmount;
+     uint256 start_timestamp;
+     uint256 end_timestamp;
   }
 
   mapping(address => Depositor) public depositors;
+  mapping(address => uint256) public checkpoints;
 
   //mapping(address => mapping(uint256 => uint256)) public delegatedAmounts;
   //mapping(address => uint256) public delegatedAmounts;
@@ -29,6 +33,20 @@ contract CreditPool {
     Depositor storage depositor = depositors[msg.sender];
 	  depositor.depositAmount += _amount;
 	  depositor.delegatedAmount += _delegatedAmount;
+	  //depositBalances[msg.sender] += _amount;
+    totalDeposit += _amount;
+    checkpoints[msg.sender] = block.timestamp;
+    IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
+    delegateCredit(_delegatee, _delegatedAmount, _debtToken);
+    emit Deposited(_amount, _aToken);
+  }
+
+  function lockDeposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken, uint256 secs) external {
+    Depositor storage depositor = depositors[msg.sender];
+	  depositor.depositAmount += _amount;
+	  depositor.delegatedAmount += _delegatedAmount;
+    depositor.start_timestamp = block.timestamp;
+    depositor.end_timestamp = block.timestamp.add(secs);
 	  //depositBalances[msg.sender] += _amount;
     totalDeposit += _amount;
     IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
