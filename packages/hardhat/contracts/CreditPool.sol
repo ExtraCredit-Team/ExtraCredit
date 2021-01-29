@@ -18,7 +18,8 @@ contract CreditPool {
   //mapping(address => mapping(uint256 => uint256)) public delegatedAmounts;
   //mapping(address => uint256) public delegatedAmounts;
   uint256 public totalDeposit;
-  //uint256 public totalDelegation;
+  uint256 public totalDelegation;
+
   ILendingPool constant lendingPool = ILendingPool(address(0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9)); // on mainnet
   IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
   event Deposited(uint256 amount, address aToken);
@@ -31,6 +32,7 @@ contract CreditPool {
 	  depositor.depositAmount += _amount;
 	  depositor.delegatedAmount += _delegatedAmount;
 	  //depositBalances[msg.sender] += _amount;
+    totalDelegation += _delegatedAmount;
     totalDeposit += _amount;
     IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
     delegateCredit(_delegatee, _delegatedAmount, _debtToken);
@@ -61,6 +63,8 @@ contract CreditPool {
   function withdraw(uint256 _amount, address _aToken) external {
     require(depositors[msg.sender].depositAmount > _amount, "you didnt deposit enough");
     depositors[msg.sender].depositAmount -= _amount;
+    //below is TBD
+    //depositors[msg.sender].delegatedAmount -= 0;
     totalDeposit -= _amount;
     IERC20(_aToken).transfer(msg.sender, _amount);
     emit Withdrawn(_amount, _aToken);
