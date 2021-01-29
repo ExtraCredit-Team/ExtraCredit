@@ -95,9 +95,10 @@ describe("Credit Delegation flow", function() {
 		creditPool = await CreditPool.deploy();
 		MarginPool = await ethers.getContractFactory('MarginPool');
 		marginPool = await MarginPool.deploy(creditPool.address, '10');
-		const lendingPool = await ethers.getContractAt('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9');
 
+		const lendingPool = await ethers.getContractAt('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9');
 		const debtWEth = await ethers.getContractAt('IStableDebtToken', '0x4e977830ba4bd783C0BB7F15d3e243f73FF57121');
+
 		let dai = new ethers.Contract(daiAddress, Token.abi, provider);
 		let weth = new ethers.Contract(wethAddress, Token.abi, provider);
 	});
@@ -133,17 +134,22 @@ describe("Credit Delegation flow", function() {
 		let wEthGateway = await ethers.getContractAt('IWETHGateway', '0xDcD33426BA191383f1c9B431A342498fdac73488');
 		let aweth = new ethers.Contract(awethAddress, Token.abi, provider);
 		wEthGateway = wEthGateway.connect(depositor);
+
+    console.log(
+      'address is:',
+      ethers.utils.getAddress(depositor.address)
+    );
 		await wEthGateway.depositETH(depositor.address, '0', {value: ethers.utils.parseEther('50')});
 
-
+    aweth = aweth.connect(depositor);
 		let aEthBalance = aweth.balanceOf(depositor.address);
-
+    /*
 		console.log(
 			'aweth balance post eth deposit:',
 			ethers.utils.formatEther(aEthBalance)
 		);
-
-		expect(aEthBalance).to.be.gt(depositAmount);
+    */
+		expect(await(aweth.balanceOf(depositor.address))).to.be.gt('40');
 
 		creditPool = creditPool.connect(depositor);
 
