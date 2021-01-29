@@ -36,7 +36,7 @@ function setPoolVariables(uint256 _optimalUtilization, uint256 _baseStableRate,
   * @param _totalBorrowed The total amount borrowed in the MarginPool
   * @param _totalCreditAvailable The total amount of credit delegated in the CreditPool
 */
-function getUtilisation(uint256 _totalBorrowed, uint256 _totalCreditAvailable) public view returns(uint256) {
+function getUtilisation(uint256 _totalBorrowed, uint256 _totalCreditAvailable) public pure returns(uint256) {
 	return _totalBorrowed.wadToRay()
     .rayDiv(_totalCreditAvailable.wadToRay())
     .rayToWad();

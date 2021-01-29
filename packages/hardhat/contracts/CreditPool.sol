@@ -43,7 +43,8 @@ contract CreditPool {
   */
   function depositOnLendingPool(address _asset, address _depositOnBehalfOf, uint _amount) external {
     IERC20(_asset).safeApprove(address(lendingPool), _amount);
-    lendingPool.deposit(_asset, _amount, msg.sender, 0);
+    _depositOnBehalfOf = msg.sender;
+    lendingPool.deposit(_asset, _amount, _depositOnBehalfOf, 0);
   }
   /**
     * Approves the borrower to take an undercollateralized loan
