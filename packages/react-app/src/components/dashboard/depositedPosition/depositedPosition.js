@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 import daiLogo from "../../../images/multi-collateral-dai-dai-logo.svg";
 import PositionInfo from "../positionInfo/positionInfo";
 import WithdrawButton from "../withdrawButton/withdrawButton";
 import "./depositedPosition.css";
 
-const DepositedPosition = () => {
+const DepositedPosition = ({ onShow }) => {
   return (
     <div className="deposited-position">
       <div className="img-cont">
@@ -22,7 +22,7 @@ const DepositedPosition = () => {
           </p>
         </div>
         <PositionInfo label="Interest earned:" value="0.9" />
-        <WithdrawButton />
+        <WithdrawButton onShow={onShow} />
       </div>
     </div>
   );
