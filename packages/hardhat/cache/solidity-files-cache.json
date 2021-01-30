@@ -298,8 +298,8 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
-      "lastModificationDate": 1611519579114,
-      "contentHash": "c5c92e74197e44aa4caad94f3b965c7d",
+      "lastModificationDate": 1611998667419,
+      "contentHash": "a9bcde044b096bf7882429dc13577308",
       "sourceName": "contracts/UtilizationBasedReward.sol",
       "solcConfig": {
         "version": "0.6.7",
