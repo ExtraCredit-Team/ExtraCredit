@@ -566,9 +566,24 @@ interface ILendingPool {
 interface YearnVault {
     // deposit to yearn
     function deposit(uint256 _amount) external;
-    
     // withdraw
     function withdraw(uint256 _shares) external;
+
+    function controller() external view returns (address);
+
+    function token() external view returns (address);
+
+    function totalSupply() external view returns (uint256);
+
+    function balance() external view returns (uint256);
+}
+
+interface YearnController {
+    function withdraw(address, uint256) external;
+
+    function balanceOf(address) external view returns (uint256);
+
+    function earn(address, uint256) external;
 }
 
 interface AggregatorInterface {
@@ -709,4 +724,22 @@ interface IStableDebtToken {
    * @return The debt balance of the user since the last burn/mint action
    **/
   function principalBalanceOf(address user) external view returns (uint256);
+}
+
+interface IWETHGateway {
+  function depositETH(address onBehalfOf, uint16 referralCode) external payable;
+
+  function withdrawETH(uint256 amount, address onBehalfOf) external;
+
+  function repayETH(
+    uint256 amount,
+    uint256 rateMode,
+    address onBehalfOf
+  ) external payable;
+
+  function borrowETH(
+    uint256 amount,
+    uint256 interesRateMode,
+    uint16 referralCode
+  ) external;
 }
