@@ -101,6 +101,9 @@ module.exports = {
       }
     }
   },
+  mocha: {
+    timeout: 70000
+  }
 };
 
 const DEBUG = false;

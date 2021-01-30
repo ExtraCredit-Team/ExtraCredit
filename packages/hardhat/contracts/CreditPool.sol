@@ -34,7 +34,7 @@ contract CreditPool {
 	  //depositBalances[msg.sender] += _amount;
     totalDelegation += _delegatedAmount;
     totalDeposit += _amount;
-    IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
+    IERC20(_aToken).transferFrom(msg.sender, address(this), _amount);
     delegateCredit(_delegatee, _delegatedAmount, _debtToken);
     emit Deposited(_amount, _aToken);
   }
