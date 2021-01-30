@@ -65,6 +65,7 @@ function App(props) {
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount, price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent, totalDeposit
+        , getDepositPerUser,mainnetWETHAaveContract
     } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
 
     const loadWeb3Modal = useCallback(async () => {
@@ -99,9 +100,9 @@ function App(props) {
                                writeContracts={writeContracts} readContracts={readContracts} purpose={purpose}
                                purposeEvents={setPurposeEvents} subgraphUri={props.subgraphUri}
                                depositBalances={depositBalances} setDepositEvent={setDepositEvent}
-                               totalDeposit={totalDeposit}         withdrawnEvent={withdrawnEvent}
-                    minSolvencyRatio={minSolvencyRatio}
-                    totalBorrowedAmount={totalBorrowedAmount}/>
+                               totalDeposit={totalDeposit} withdrawnEvent={withdrawnEvent}
+                               minSolvencyRatio={minSolvencyRatio}
+                               totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
                     {showEthereumTools && <>  <EthereumAccount localProvider={localProvider}

@@ -1,4 +1,8 @@
 {
   "_format": "hh-sol-dbg-1",
+<<<<<<< HEAD
   "buildInfo": "../../build-info/4229eb62e4c247a57d05fa1b27b8c69e.json"
+=======
+  "buildInfo": "../../build-info/4c2cafc14c36ab9ec43a083b2d3b394d.json"
+>>>>>>> origin/frontend-ui
 }

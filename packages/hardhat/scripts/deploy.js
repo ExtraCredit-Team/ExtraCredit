@@ -10,10 +10,10 @@ const main = async () => {
   console.log("\n\n 📡 Deploying...\n");
 
 
-  const yourContract = await deploy("YourContract") // <-- add in constructor args like line 16 vvvv
-  const creditPool = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
-  const marginPool = await deploy("MarginPool", [creditPool.address, 10]) // <-- add in constructor args like line 16 vvvv
-
+  const yourContract = await deploy("YourContract"); // <-- add in constructor args like line 16 vvvv
+  const creditPool = await deploy("CreditPool"); // <-- add in constructor args like line 16 vvvv
+  const interestRateStrategy = await deploy("InterestRateStrategy", [80, 4, 2, 75]);
+  const marginPool = await deploy("MarginPool", [creditPool.address, 115, interestRateStrategy.address]);
 
   // const exampleToken = await deploy("ExampleToken")
   // const examplePriceOracle = await deploy("ExamplePriceOracle")
@@ -26,6 +26,7 @@ const main = async () => {
   const yourContract = await deploy("YourContract", [], {
     value: ethers.utils.parseEther("0.05")
   });
+
 */
 
 
