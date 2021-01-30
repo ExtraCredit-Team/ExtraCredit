@@ -9,6 +9,7 @@ import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import CreditPool from "../../views/CreditPool.component";
+import MarginPool from "../marginpool/MarginPool.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -35,7 +36,8 @@ AppRoutes.propTypes = {
     withdrawnEvent: PropTypes.any,
     minSolvencyRatio: PropTypes.any,
     totalBorrowedAmount: PropTypes.any,
-    getDepositPerUser: PropTypes.any
+    getDepositPerUser: PropTypes.any,
+    mainnetWETHAaveContract: PropTypes.any
 };
 
 export function AppRoutes(props) {
@@ -101,6 +103,27 @@ export function AppRoutes(props) {
             </Route>
             <Route path="/creditpool-ui">
                 <CreditPool
+                    address={props.address}
+                    userProvider={props.userProvider}
+                    mainnetProvider={props.mainnetProvider}
+                    localProvider={props.localProvider}
+                    yourLocalBalance={props.yourLocalBalance}
+                    price={props.price}
+                    tx={props.tx}
+                    writeContracts={props.writeContracts}
+                    readContracts={props.readContracts}
+                    depositBalances={props.depositBalances}
+                    setDepositEvent={props.setDepositEvent}
+                    totalDeposit={props.totalDeposit}
+                    withdrawnEvent={props.withdrawnEvent}
+                    minSolvencyRatio={props.minSolvencyRatio}
+                    totalBorrowedAmount={props.totalBorrowedAmount}
+                    getDepositPerUser={props.getDepositPerUser}
+                    mainnetWETHAaveContract={props.mainnetWETHAaveContract}
+                />
+            </Route>
+            <Route path="/marginpool-ui">
+                <MarginPool
                     address={props.address}
                     userProvider={props.userProvider}
                     mainnetProvider={props.mainnetProvider}

@@ -73,50 +73,6 @@
         "console"
       ]
     },
-    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611999786349,
-      "contentHash": "649c2e16706356fcccd28b8847b3b691",
-      "sourceName": "contracts/Interfaces.sol",
-      "solcConfig": {
-        "version": "0.6.7",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Libraries.sol"
-      ],
-      "versionPragmas": [
-        ">=0.6.0 <0.7.0"
-      ],
-      "artifacts": [
-        "AggregatorInterface",
-        "IERC20",
-        "ILendingPool",
-        "ILendingPoolAddressesProvider",
-        "IProtocolDataProvider",
-        "IStableDebtToken",
-        "IWETHGateway",
-        "YearnController",
-        "YearnVault"
-      ]
-    },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
       "lastModificationDate": 1611999777659,
       "contentHash": "485edcb4f53a2e766422074fb6e13462",
@@ -298,6 +254,50 @@
       ],
       "artifacts": [
         "YourContract"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
+      "lastModificationDate": 1611999786349,
+      "contentHash": "649c2e16706356fcccd28b8847b3b691",
+      "sourceName": "contracts/Interfaces.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "AggregatorInterface",
+        "IERC20",
+        "ILendingPool",
+        "ILendingPoolAddressesProvider",
+        "IProtocolDataProvider",
+        "IStableDebtToken",
+        "IWETHGateway",
+        "YearnController",
+        "YearnVault"
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {

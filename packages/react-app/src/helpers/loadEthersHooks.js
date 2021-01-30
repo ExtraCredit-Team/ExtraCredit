@@ -9,6 +9,8 @@ import {
 import {useUserAddress} from "eth-hooks";
 import {Transactor} from "./index";
 import {formatEther} from "@ethersproject/units";
+import useExternalContractLoader from "../hooks/ExternalContractLoader";
+import AaveWETH from "./IWETHGateway";
 
 export default function LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG) {
     /* 💵 this hook will get the price of ETH from 🦄 Uniswap: */
@@ -51,6 +53,11 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     // Then read your DAI balance like:
     //const myMainnetBalance = useContractReader({DAI: mainnetDAIContract},"DAI", "balanceOf",["0x34aA3F359A9D614239015126635CE7732c18fDF3"])
     //
+
+
+    //AAVE WETH
+    const mainnetWETHAaveContract = useExternalContractLoader(mainnetProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
+    console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
 
 
     //SCAFFOLD EXAMPLE
@@ -106,6 +113,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount,
-        getDepositPerUser
+        getDepositPerUser,
+        mainnetWETHAaveContract
     };
 }

@@ -3,12 +3,11 @@
 import React, {useState} from "react";
 import {Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch} from "antd";
 import {SyncOutlined} from '@ant-design/icons';
-import {Address, Balance} from "../components";
+import {Address, Balance} from "../../components";
 import {formatEther, parseEther} from "@ethersproject/units";
-import marginPoolAddress from "../contracts/MarginPool.address"
+import marginPoolAddress from "../../contracts/MarginPool.address"
 
-export default function CreditPool({mainnetWETHAaveContract,
-                                       getDepositPerUser,
+export default function MarginPool({getDepositPerUser,
                                        withdrawnEvent,
                                        minSolvencyRatio,
                                        totalBorrowedAmount,
@@ -18,7 +17,8 @@ export default function CreditPool({mainnetWETHAaveContract,
 
     const [amountToDeposit, setNewAmountToDeposit] = useState("loading...");
     const [amountToWithdraw, setNewAmountToWithdraw] = useState("loading...");
-    const [ethAmountToDepositToAave, setethAmountToDepositToAave] = useState("loading...")
+
+
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
 
     return (
@@ -27,26 +27,17 @@ export default function CreditPool({mainnetWETHAaveContract,
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
             <div style={{border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64}}>
-                <h2>First Step : Deposit ETH to AAVE via WETH:</h2>
 
-                <div style={{margin: 8}}>
-                    <Input onChange={(e) => {
-                        setethAmountToDepositToAave(e.target.value)
-                    }}/>
-                    <Button onClick={() => {
-                        tx({to: mainnetWETHAaveContract.address,
-                            value: parseEther(ethAmountToDepositToAave),
-                        data: mainnetWETHAaveContract.depositETH(address, 0)})
-                    }}>Deposit to AAVE</Button>
-                </div>
+
+                <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
+
+                <div>totalBorrowedAmount: ""</div>
 
                 <Divider/>
 
-                <div>Second Step : Deposit to Credit Pool the Amount you want to delegate</div>
-
                 <div style={{margin: 8}}>
                     <Input onChange={(e) => {
-                        setNewAmountToDeposit(e.target.value)
+                      setNewAmountToDeposit(e.target.value)
                     }}/>
                     <Input onChange={(e) => {
                         setNewAmountToDelegate(e.target.value)
@@ -61,19 +52,24 @@ export default function CreditPool({mainnetWETHAaveContract,
                         console.log("amountToDeposit", parseEther(amountToDeposit));
                         console.log("marginPoolAddress:", marginPoolAddress);
                         console.log(typeof marginPoolAddress);
-                        tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress, marginPoolAddress, parseEther(amountToDelegate), debtToken))
+                        tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress,marginPoolAddress, parseEther(amountToDelegate) ,debtToken))
                     }}>Set Deposit</Button>
                 </div>
 
                 <Divider/>
 
-                <div>depositBalances: {getDepositPerUser && getDepositPerUser}</div>
+                <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
+
+
 
                 <Divider/>
 
-                <div>totalDeposit: {totalDeposit && totalDeposit}</div>
 
-                <Divider/>
+              <Divider/>
+
+
+
+              <Divider/>
 
                 Your Address:
                 <Address
