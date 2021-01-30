@@ -7,7 +7,7 @@ import {Address, Balance} from "../components";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../contracts/MarginPool.address"
 
-export default function CreditPool({mainnetWETHAaveContract,
+export default function CreditPool({signer, mainnetWETHAaveContract,
                                        getDepositPerUser,
                                        withdrawnEvent,
                                        minSolvencyRatio,
@@ -34,9 +34,9 @@ export default function CreditPool({mainnetWETHAaveContract,
                         setethAmountToDepositToAave(e.target.value)
                     }}/>
                     <Button onClick={() => {
-                        tx({to: mainnetWETHAaveContract.address,
-                            value: parseEther(ethAmountToDepositToAave),
-                        data: mainnetWETHAaveContract.depositETH(address, 0)})
+                        tx( mainnetWETHAaveContract.depositETH(address,"0",{
+                            value: parseEther(ethAmountToDepositToAave.toString())
+                        }))
                     }}>Deposit to AAVE</Button>
                 </div>
 
@@ -45,9 +45,11 @@ export default function CreditPool({mainnetWETHAaveContract,
                 <div>Second Step : Deposit to Credit Pool the Amount you want to delegate</div>
 
                 <div style={{margin: 8}}>
+                    <div>Amount of aToken to deposit to Credit Pool</div>
                     <Input onChange={(e) => {
                         setNewAmountToDeposit(e.target.value)
                     }}/>
+                    <div>Amount of aTokens to delegate</div>
                     <Input onChange={(e) => {
                         setNewAmountToDelegate(e.target.value)
                     }}/>
@@ -55,7 +57,7 @@ export default function CreditPool({mainnetWETHAaveContract,
                         console.log(" amount to deposit", amountToDeposit);
                         /* look how you call setDeposit on your contract: */
                         let amount = 10;
-                        let aTokenAddress = "0x028171bCA77440897B824Ca71D1c56caC55b68A3";
+                        let aTokenAddress = "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e";
                         let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
                         console.log("amountToDelegate", parseEther(amountToDelegate));
                         console.log("amountToDeposit", parseEther(amountToDeposit));
@@ -84,12 +86,6 @@ export default function CreditPool({mainnetWETHAaveContract,
 
                 <Divider/>
 
-                ENS Address Example:
-                <Address
-                    value={"0x34aA3F359A9D614239015126635CE7732c18fDF3"} /* this will show as austingriffith.eth */
-                    ensProvider={mainnetProvider}
-                    fontSize={16}
-                />
 
                 <Divider/>
 
@@ -121,32 +117,7 @@ export default function CreditPool({mainnetWETHAaveContract,
                 />
 
 
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /*
-                          you can also just craft a transaction and send it to the tx() transactor
-                          here we are sending value straight to the contract's address:
-                        */
-                        tx({
-                            to: writeContracts.CreditPool.address,
-                            value: parseEther("0.001")
-                        });
-                        /* this should throw an error about "no fallback nor receive function" until you add it */
-                    }}>Send Value</Button>
-                </div>
 
-
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /* you can also just craft a transaction and send it to the tx() transactor */
-                        tx({
-                            to: writeContracts.CreditPool.address,
-                            value: parseEther("0.001"),
-                            data: writeContracts.CreditPool.interface.encodeFunctionData("setDeposit(string)", ["🤓 Whoa so 1337!"])
-                        });
-                        /* this should throw an error about "no fallback nor receive function" until you add it */
-                    }}>Another Example</Button>
-                </div>
 
             </div>
 

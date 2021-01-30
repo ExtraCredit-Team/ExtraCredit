@@ -120,6 +120,7 @@ export function AppRoutes(props) {
                     totalBorrowedAmount={props.totalBorrowedAmount}
                     getDepositPerUser={props.getDepositPerUser}
                     mainnetWETHAaveContract={props.mainnetWETHAaveContract}
+                    signer={props.userProvider.getSigner()}
                 />
             </Route>
             <Route path="/marginpool-ui">

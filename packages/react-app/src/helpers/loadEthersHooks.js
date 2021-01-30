@@ -23,6 +23,8 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
     const userProvider = useUserProvider(injectedProvider, localProvider);
+    console.log("userProvider", userProvider);
+
     const address = useUserAddress(userProvider);
 
     // The transactor wraps transactions and provides notificiations
@@ -56,7 +58,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
 
     //AAVE WETH
-    const mainnetWETHAaveContract = useExternalContractLoader(mainnetProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
+    const mainnetWETHAaveContract = useExternalContractLoader(userProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
     console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
 
 
@@ -72,9 +74,6 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     //CREDIT POOL
 
-    const getDepositPerUser = useContractReader(readContracts,"CreditPool","getDepositPerUser");
-    console.log("getDepositPerUser: ", getDepositPerUser);
-
     // 📟 Listen for broadcast events
     const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
     console.log("📟 setDeposit events:", setDepositEvent);
@@ -86,12 +85,12 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     //MARGIN POOL
     // track minSolvencyRatio address
-    const minSolvencyRatio = useContractReader(readContracts, "MarginPool", "minSolvencyRatio");
-    console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
+     const minSolvencyRatio = useContractReader(readContracts, "MarginPool", "minSolvencyRatio");
+     console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
 
-    // track minSolvencyRatio address
-    const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
-    console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
+     // track minSolvencyRatio address
+     const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
+     console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
 
     /*
       const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -113,7 +112,6 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount,
-        getDepositPerUser,
         mainnetWETHAaveContract
     };
 }
