@@ -53,9 +53,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //
 
 
-    const getDepositPerUser = useContractReader(readContracts,"CreditPool","getDepositPerUser");
-    console.log("getDepositPerUser: ", getDepositPerUser);
-
+    //SCAFFOLD EXAMPLE
     // keep track of a variable from the contract in the local React state:
     const purpose = useContractReader(readContracts, "YourContract", "purpose")
     console.log("🤗 purpose:", purpose)
@@ -63,6 +61,12 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //📟 Listen for broadcast events
     const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
     console.log("📟 SetPurpose events:", setPurposeEvents)
+
+
+    //CREDIT POOL
+
+    const getDepositPerUser = useContractReader(readContracts,"CreditPool","getDepositPerUser");
+    console.log("getDepositPerUser: ", getDepositPerUser);
 
     // 📟 Listen for broadcast events
     const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
@@ -73,6 +77,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     console.log("📟 withdrawnEvent events:", withdrawnEvent);
 
 
+    //MARGIN POOL
     // track minSolvencyRatio address
     const minSolvencyRatio = useContractReader(readContracts, "MarginPool", "minSolvencyRatio");
     console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
