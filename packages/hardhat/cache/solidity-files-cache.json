@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1611607389088,
-      "contentHash": "11d993b3897e6ce4f522769f33e3660f",
+      "lastModificationDate": 1611999786345,
+      "contentHash": "375313828286c0f40a21da632a918e56",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -74,8 +74,8 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611607389091,
-      "contentHash": "af89ba238681379b8eb734544327b44d",
+      "lastModificationDate": 1611999786349,
+      "contentHash": "649c2e16706356fcccd28b8847b3b691",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -112,11 +112,13 @@
         "ILendingPoolAddressesProvider",
         "IProtocolDataProvider",
         "IStableDebtToken",
+        "IWETHGateway",
+        "YearnController",
         "YearnVault"
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611647408652,
+      "lastModificationDate": 1611999777659,
       "contentHash": "485edcb4f53a2e766422074fb6e13462",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
@@ -155,8 +157,8 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1611607389094,
-      "contentHash": "00c696950211d2fabd957ca07d1624b5",
+      "lastModificationDate": 1611999786351,
+      "contentHash": "098e172e482f475e17d047c96d1d3a25",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -184,7 +186,8 @@
         "@openzeppelin/contracts/math/SafeMath.sol",
         "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
         "contracts/Interfaces.sol",
-        "contracts/Libraries.sol"
+        "contracts/Libraries.sol",
+        "./InterestRateStrategy.sol"
       ],
       "versionPragmas": [
         ">=0.6.0 <0.7.0"
@@ -262,8 +265,8 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
-      "lastModificationDate": 1611522204473,
-      "contentHash": "cb373c97b62d53c130d15e9809b4dc51",
+      "lastModificationDate": 1611999786354,
+      "contentHash": "c13892890dc15169a1eefde1c4dde5a6",
       "sourceName": "contracts/YourContract.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -297,10 +300,121 @@
         "YourContract"
       ]
     },
-    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/UtilizationBasedReward.sol": {
-      "lastModificationDate": 1611998667419,
-      "contentHash": "a9bcde044b096bf7882429dc13577308",
-      "sourceName": "contracts/UtilizationBasedReward.sol",
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
+      "lastModificationDate": 1611999786348,
+      "contentHash": "05148077767795ff6c8923a4090dba35",
+      "sourceName": "contracts/InterestRateStrategy.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./WadRayMath.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "InterestRateStrategy"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/WadRayMath.sol": {
+      "lastModificationDate": 1611999786352,
+      "contentHash": "09851d4ea814b2b69c8d3125c2cd8b31",
+      "sourceName": "contracts/WadRayMath.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Errors.sol",
+        "contracts/Libraries.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.7.0"
+      ],
+      "artifacts": [
+        "WadRayMath"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1611607474058,
+      "contentHash": "140e80ebd07ed05e7fe907c531e6746f",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../GSN/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/Errors.sol": {
+      "lastModificationDate": 1611999786346,
+      "contentHash": "f0ebedbaeaef47327f72be6e2444cb74",
+      "sourceName": "contracts/Errors.sol",
       "solcConfig": {
         "version": "0.6.7",
         "settings": {
@@ -325,9 +439,45 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.6.0 <0.8.0"
+        ">=0.6.0 <0.7.0"
       ],
-      "artifacts": []
+      "artifacts": [
+        "Errors"
+      ]
+    },
+    "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/node_modules/@openzeppelin/contracts/GSN/Context.sol": {
+      "lastModificationDate": 1611607474034,
+      "contentHash": "af1b36323856d0d1550abc7f878a8208",
+      "sourceName": "@openzeppelin/contracts/GSN/Context.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
     }
   }
 }
