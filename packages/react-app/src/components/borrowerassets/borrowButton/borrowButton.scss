@@ -1,0 +1,21 @@
+@import "../../../styles/styles.scss";
+.borrow-button {
+  width: 90%;
+  max-width: 300px;
+  cursor: pointer;
+  border-width: 0px;
+  border-style: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background: $gradient-primary;
+  color: #fff;
+}
+
+.borrow-button:hover {
+  background: $gradient-primary-inverted;
+}
+
+.borrow-button:active {
+  background: #3bcfc1;
+}
