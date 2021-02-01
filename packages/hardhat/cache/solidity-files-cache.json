@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1612180309382,
-      "contentHash": "0ab7ec890b4fe66eafb81534668b93ab",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
+      "lastModificationDate": 1612181791877,
+      "contentHash": "7219cda92206def0b04154cbc1d8a65b",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -39,10 +39,10 @@
         "CreditPool"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1611541734877,
-      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
-      "sourceName": "hardhat/console.sol",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1612100991564,
+      "contentHash": "e0a41531d159d3a32f84b7a3ecf9fabb",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
         "version": "0.6.7",
         "settings": {
@@ -67,14 +67,52 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.4.22 <0.9.0"
+        ">=0.6.0 <0.8.0"
       ],
       "artifacts": [
-        "console"
+        "IERC20"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
-      "lastModificationDate": 1611853305116,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+      "lastModificationDate": 1612100991584,
+      "contentHash": "33e22842646d746e5c4124c2fdc051aa",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "../../math/SafeMath.sol",
+        "../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "SafeERC20"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/Interfaces.sol": {
+      "lastModificationDate": 1612165020204,
       "contentHash": "40f4d0f06c8092d7db29b5fbc156250e",
       "sourceName": "contracts/Interfaces.sol",
       "solcConfig": {
@@ -117,8 +155,76 @@
         "YearnVault"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
-      "lastModificationDate": 1611716471882,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/math/SafeMath.sol": {
+      "lastModificationDate": 1612100991584,
+      "contentHash": "4d29a22b28b7ec0e89c3cdf1c5e72b83",
+      "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1612100991524,
+      "contentHash": "72d77402f6854b7ccf9af282e805f292",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/Libraries.sol": {
+      "lastModificationDate": 1612165020204,
       "contentHash": "648f18b4b2b70f02f3cf23eb101141f0",
       "sourceName": "contracts/Libraries.sol",
       "solcConfig": {
@@ -156,8 +262,8 @@
         "SafeMath"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612179304355,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
+      "lastModificationDate": 1612165020204,
       "contentHash": "446d6e0aa44b7d44126918b8ed60aa46",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
@@ -196,43 +302,9 @@
         "MarginPool"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/math/SafeMath.sol": {
-      "lastModificationDate": 1611541736260,
-      "contentHash": "168f50d923a8f64094d8e761ca2e5fe6",
-      "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
-      "solcConfig": {
-        "version": "0.6.7",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.6.0"
-      ],
-      "artifacts": [
-        "SafeMath"
-      ]
-    },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
-      "lastModificationDate": 1611541736264,
-      "contentHash": "d7295fcfe1e67e8b5e0099bdba192e19",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+      "lastModificationDate": 1612100991580,
+      "contentHash": "1c60f58cee45c61469e1aea31e4dd879",
       "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -258,14 +330,14 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.6.0"
+        ">=0.6.0 <0.8.0"
       ],
       "artifacts": [
         "ReentrancyGuard"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
-      "lastModificationDate": 1612179300592,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
+      "lastModificationDate": 1612165020204,
       "contentHash": "b1fef3b8daab4a5e3e3ac76fc80b0dc8",
       "sourceName": "contracts/InterestRateStrategy.sol",
       "solcConfig": {
@@ -302,8 +374,8 @@
         "InterestRateStrategy"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/WadRayMath.sol": {
-      "lastModificationDate": 1612179307971,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/WadRayMath.sol": {
+      "lastModificationDate": 1612165020204,
       "contentHash": "0e25b2447c67a0198e5228d513cfe192",
       "sourceName": "contracts/WadRayMath.sol",
       "solcConfig": {
@@ -339,9 +411,9 @@
         "WadRayMath"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1611541736260,
-      "contentHash": "140e80ebd07ed05e7fe907c531e6746f",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1612100991572,
+      "contentHash": "38c56382c57a9e9dab92cee051155870",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -369,14 +441,14 @@
         "../GSN/Context.sol"
       ],
       "versionPragmas": [
-        "^0.6.0"
+        ">=0.6.0 <0.8.0"
       ],
       "artifacts": [
         "Ownable"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/Errors.sol": {
-      "lastModificationDate": 1612179296613,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/Errors.sol": {
+      "lastModificationDate": 1611851472748,
       "contentHash": "81869372e8633c1128534927ccd9d2e8",
       "sourceName": "contracts/Errors.sol",
       "solcConfig": {
@@ -409,9 +481,9 @@
         "Errors"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/GSN/Context.sol": {
-      "lastModificationDate": 1611541736260,
-      "contentHash": "af1b36323856d0d1550abc7f878a8208",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/node_modules/@openzeppelin/contracts/GSN/Context.sol": {
+      "lastModificationDate": 1612100991528,
+      "contentHash": "2adbd82f6d055a4751566d4671512b03",
       "sourceName": "@openzeppelin/contracts/GSN/Context.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -437,14 +509,14 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.6.0"
+        ">=0.6.0 <0.8.0"
       ],
       "artifacts": [
         "Context"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
-      "lastModificationDate": 1612179311340,
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
+      "lastModificationDate": 1611948195173,
       "contentHash": "7c5ddcd02768f9da4a89851f1bffa462",
       "sourceName": "contracts/YourContract.sol",
       "solcConfig": {
@@ -479,10 +551,10 @@
         "YourContract"
       ]
     },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1611541740987,
-      "contentHash": "95e76adf687e1a31a4b8ece4e9bb757a",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+    "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1612100901760,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.6.7",
         "settings": {
@@ -507,82 +579,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.6.0"
+        ">=0.4.22 <0.9.0"
       ],
       "artifacts": [
-        "IERC20"
-      ]
-    },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
-      "lastModificationDate": 1611541740991,
-      "contentHash": "9ad439345c515e1367ef104675b36e7b",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
-      "solcConfig": {
-        "version": "0.6.7",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "../../math/SafeMath.sol",
-        "../../utils/Address.sol"
-      ],
-      "versionPragmas": [
-        "^0.6.0"
-      ],
-      "artifacts": [
-        "SafeERC20"
-      ]
-    },
-    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1611541736264,
-      "contentHash": "6b0498e1feb1d70edaf0ee5546e07a46",
-      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
-      "solcConfig": {
-        "version": "0.6.7",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.6.2"
-      ],
-      "artifacts": [
-        "Address"
+        "console"
       ]
     }
   }

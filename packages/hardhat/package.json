@@ -25,8 +25,8 @@
   },
   "scripts": {
     "chain": "hardhat node",
-    "fork": "hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/{ypur-alchemy-key}",
-    "test": "hardhat test --network hardhat",
+    "fork": "hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/nCWZmPZ7yBtV_J1rvrg7GkwXkDORxajx",
+    "test": "hardhat test --network localhost",
     "compile": "hardhat compile",
     "deploy": "hardhat run scripts/deploy.js && hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",
