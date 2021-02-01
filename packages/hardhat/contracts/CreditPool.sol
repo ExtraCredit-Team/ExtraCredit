@@ -1,8 +1,8 @@
 pragma solidity >=0.6.0 <0.7.0;
-import 'hardhat/console.sol';
-import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
-import { SafeERC20} from "contracts/Libraries.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
+import { ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
 
 contract CreditPool {
   using SafeERC20 for IERC20;

@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1612002003056,
-      "contentHash": "c00bde190e6b2d84df5cdf1112c701d5",
+      "lastModificationDate": 1612180309382,
+      "contentHash": "0ab7ec890b4fe66eafb81534668b93ab",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -28,9 +28,9 @@
         }
       },
       "imports": [
-        "hardhat/console.sol",
-        "contracts/Interfaces.sol",
-        "contracts/Libraries.sol"
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "contracts/Interfaces.sol"
       ],
       "versionPragmas": [
         ">=0.6.0 <0.7.0"
@@ -157,7 +157,7 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1611942127662,
+      "lastModificationDate": 1612179304355,
       "contentHash": "446d6e0aa44b7d44126918b8ed60aa46",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
@@ -265,7 +265,7 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/InterestRateStrategy.sol": {
-      "lastModificationDate": 1611942108676,
+      "lastModificationDate": 1612179300592,
       "contentHash": "b1fef3b8daab4a5e3e3ac76fc80b0dc8",
       "sourceName": "contracts/InterestRateStrategy.sol",
       "solcConfig": {
@@ -303,7 +303,7 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/WadRayMath.sol": {
-      "lastModificationDate": 1611853305116,
+      "lastModificationDate": 1612179307971,
       "contentHash": "0e25b2447c67a0198e5228d513cfe192",
       "sourceName": "contracts/WadRayMath.sol",
       "solcConfig": {
@@ -376,7 +376,7 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/Errors.sol": {
-      "lastModificationDate": 1611853305113,
+      "lastModificationDate": 1612179296613,
       "contentHash": "81869372e8633c1128534927ccd9d2e8",
       "sourceName": "contracts/Errors.sol",
       "solcConfig": {
@@ -444,7 +444,7 @@
       ]
     },
     "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/packages/hardhat/contracts/YourContract.sol": {
-      "lastModificationDate": 1611978367562,
+      "lastModificationDate": 1612179311340,
       "contentHash": "7c5ddcd02768f9da4a89851f1bffa462",
       "sourceName": "contracts/YourContract.sol",
       "solcConfig": {
@@ -477,6 +477,112 @@
       ],
       "artifacts": [
         "YourContract"
+      ]
+    },
+    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1611541740987,
+      "contentHash": "95e76adf687e1a31a4b8ece4e9bb757a",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+      "lastModificationDate": 1611541740991,
+      "contentHash": "9ad439345c515e1367ef104675b36e7b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "../../math/SafeMath.sol",
+        "../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "SafeERC20"
+      ]
+    },
+    "/Users/virazmalhotra/Development/extra-credit-new/ExtraCredit/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1611541736264,
+      "contentHash": "6b0498e1feb1d70edaf0ee5546e07a46",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.2"
+      ],
+      "artifacts": [
+        "Address"
       ]
     }
   }
