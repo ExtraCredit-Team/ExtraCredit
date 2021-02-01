@@ -6,19 +6,17 @@ import {SyncOutlined} from '@ant-design/icons';
 import {Address, Balance} from "../../components";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
+import {FormGroup, Label} from "reactstrap";
 
-export default function MarginPool({getDepositPerUser,
-                                       withdrawnEvent,
+export default function MarginPool({delegateeDeposits,
                                        minSolvencyRatio,
                                        totalBorrowedAmount,
-                                       setDepositEvent,
-                                       totalDeposit, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
+                                       address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
 
-    const [amountToDeposit, setNewAmountToDeposit] = useState("loading...");
-    const [amountToWithdraw, setNewAmountToWithdraw] = useState("loading...");
-
-
+    const [amountToInvest, setNewAmountToInvest] = useState("loading...");
+    const [marginAmount, setmarginAmount] = useState("loading...");
+    const [investDuration, setInvestDuration] = useState(1);
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
 
     return (
@@ -28,48 +26,77 @@ export default function MarginPool({getDepositPerUser,
       */}
             <div style={{border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64}}>
 
-
+                <h2>Invest credit loans into Vaults</h2>
                 <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
 
-                <div>totalBorrowedAmount: ""</div>
+                <Divider/>
+
+                <div>totalBorrowedAmount: {totalBorrowedAmount && totalBorrowedAmount.toString()}</div>
+
+                <Divider/>
+
+                <div>delegateeDeposits: {delegateeDeposits && delegateeDeposits[0].toString()}</div>
 
                 <Divider/>
 
                 <div style={{margin: 8}}>
+                    <div>Amount to invest in Yearn Vault</div>
                     <Input onChange={(e) => {
-                      setNewAmountToDeposit(e.target.value)
+                      setNewAmountToInvest(e.target.value)
                     }}/>
+                    <div>Margin Amount to add</div>
                     <Input onChange={(e) => {
-                        setNewAmountToDelegate(e.target.value)
+                        setmarginAmount(e.target.value)
                     }}/>
+
+                    <FormGroup>
+                        <Label for="exampleRange">Invest duration</Label>
+                        <Input  defaultValue={investDuration} min="1" max="4" step="1" onChange={(e) => setInvestDuration(e.target.value)} type="range" name="range" id="exampleRange" />
+                        Weeks : {investDuration}
+                    </FormGroup>
                     <Button onClick={() => {
-                        console.log(" amount to deposit", amountToDeposit);
                         /* look how you call setDeposit on your contract: */
                         let amount = 10;
-                        let aTokenAddress = "0x028171bCA77440897B824Ca71D1c56caC55b68A3";
+                        let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
                         let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
+                        console.log("amountToInvest", parseEther(amountToInvest));
                         console.log("amountToDelegate", parseEther(amountToDelegate));
-                        console.log("amountToDeposit", parseEther(amountToDeposit));
                         console.log("marginPoolAddress:", marginPoolAddress);
                         console.log(typeof marginPoolAddress);
-                        tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress,marginPoolAddress, parseEther(amountToDelegate) ,debtToken))
-                    }}>Set Deposit</Button>
+                        tx(writeContracts.MarginPool.invest(parseEther(amountToInvest), daiToken, parseEther(marginAmount), parseEther(amountToDelegate) ,investDuration))
+                    }}>Invest</Button>
                 </div>
 
-                <Divider/>
-
-                <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
-
-
-
-                <Divider/>
-
 
               <Divider/>
 
+                <div style={{margin: 8}}>
+                    <div>Repay investment</div>
+                    <Input onChange={(e) => {
+                        setNewAmountToInvest(e.target.value)
+                    }}/>
+                    <div>Margin Amount to add</div>
+                    <Input onChange={(e) => {
+                        setmarginAmount(e.target.value)
+                    }}/>
 
-
-              <Divider/>
+                    <FormGroup>
+                        <Label for="exampleRange">Invest duration</Label>
+                        <Input  defaultValue={investDuration} min="1" max="4" step="1" onChange={(e) => setInvestDuration(e.target.value)} type="range" name="range" id="exampleRange" />
+                        Weeks : {investDuration}
+                    </FormGroup>
+                    <Button onClick={() => {
+                        /* look how you call setDeposit on your contract: */
+                        let amount = 10;
+                        let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
+                        let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
+                        console.log("amountToInvest", parseEther(amountToInvest));
+                        console.log("amountToDelegate", parseEther(amountToDelegate));
+                        console.log("marginPoolAddress:", marginPoolAddress);
+                        console.log(typeof marginPoolAddress);
+                        tx(writeContracts.MarginPool.repay(daiToken, daiToken, parseEther(marginAmount), parseEther(amountToDelegate) ,investDuration))
+                    }}>Invest</Button>
+                </div>
 
                 Your Address:
                 <Address
@@ -80,158 +107,14 @@ export default function MarginPool({getDepositPerUser,
 
                 <Divider/>
 
-                ENS Address Example:
-                <Address
-                    value={"0x34aA3F359A9D614239015126635CE7732c18fDF3"} /* this will show as austingriffith.eth */
-                    ensProvider={mainnetProvider}
-                    fontSize={16}
-                />
-
-                <Divider/>
-
-                {  /* use formatEther to display a BigNumber: */}
-                <h2>Your Balance: {yourLocalBalance ? formatEther(yourLocalBalance) : "..."}</h2>
-
-                OR
-
-                <Balance
-                    address={address}
-                    provider={localProvider}
-                    dollarMultiplier={price}
-                />
-
-                <Divider/>
-
-
-                {  /* use formatEther to display a BigNumber: */}
-                <h2>Your Balance: {yourLocalBalance ? formatEther(yourLocalBalance) : "..."}</h2>
-
-                <Divider/>
-
-
                 Your Contract Address:
                 <Address
-                    value={readContracts ? readContracts.CreditPool.address : readContracts}
+                    value={readContracts ? readContracts.MarginPool.address : readContracts}
                     ensProvider={mainnetProvider}
                     fontSize={16}
                 />
 
-
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /*
-                          you can also just craft a transaction and send it to the tx() transactor
-                          here we are sending value straight to the contract's address:
-                        */
-                        tx({
-                            to: writeContracts.CreditPool.address,
-                            value: parseEther("0.001")
-                        });
-                        /* this should throw an error about "no fallback nor receive function" until you add it */
-                    }}>Send Value</Button>
-                </div>
-
-
-                <div style={{margin: 8}}>
-                    <Button onClick={() => {
-                        /* you can also just craft a transaction and send it to the tx() transactor */
-                        tx({
-                            to: writeContracts.CreditPool.address,
-                            value: parseEther("0.001"),
-                            data: writeContracts.CreditPool.interface.encodeFunctionData("setDeposit(string)", ["🤓 Whoa so 1337!"])
-                        });
-                        /* this should throw an error about "no fallback nor receive function" until you add it */
-                    }}>Another Example</Button>
-                </div>
-
             </div>
-
-            {/*
-        📑 Maybe display a list of events?
-          (uncomment the event and emit line in CreditPool.sol! )
-      */}
-            <div style={{width: 600, margin: "auto", marginTop: 32, paddingBottom: 32}}>
-                <h2>Events:</h2>
-                <List
-                    bordered
-                    dataSource={setDepositEvent}
-                    renderItem={(item) => {
-                        return (
-                            <List.Item key={item.blockNumber + "_" + item.sender + "_" + item.purpose}>
-                                <Address
-                                    value={item[0]}
-                                    ensProvider={mainnetProvider}
-                                    fontSize={16}
-                                /> =>
-                                {item[1]}
-                            </List.Item>
-                        )
-                    }}
-                />
-            </div>
-
-
-            <div style={{width: 600, margin: "auto", marginTop: 32, paddingBottom: 256}}>
-
-                <Card>
-
-                    Check out all the <a
-                    href="https://github.com/austintgriffith/scaffold-eth/tree/master/packages/react-app/src/components"
-                    target="_blank" rel="noopener noreferrer">📦 components</a>
-
-                </Card>
-
-                <Card style={{marginTop: 32}}>
-
-                    <div>
-                        There are tons of generic components included from <a
-                        href="https://ant.design/components/overview/" target="_blank" rel="noopener noreferrer">🐜
-                        ant.design</a> too!
-                    </div>
-
-                    <div style={{marginTop: 8}}>
-                        <Button type="primary">
-                            Buttons
-                        </Button>
-                    </div>
-
-                    <div style={{marginTop: 8}}>
-                        <SyncOutlined spin/> Icons
-                    </div>
-
-                    <div style={{marginTop: 8}}>
-                        Date Pickers?
-                        <div style={{marginTop: 2}}>
-                            <DatePicker onChange={() => {
-                            }}/>
-                        </div>
-                    </div>
-
-                    <div style={{marginTop: 32}}>
-                        <Slider range defaultValue={[20, 50]} onChange={() => {
-                        }}/>
-                    </div>
-
-                    <div style={{marginTop: 32}}>
-                        <Switch defaultChecked onChange={() => {
-                        }}/>
-                    </div>
-
-                    <div style={{marginTop: 32}}>
-                        <Progress percent={50} status="active"/>
-                    </div>
-
-                    <div style={{marginTop: 32}}>
-                        <Spin/>
-                    </div>
-
-
-                </Card>
-
-
-            </div>
-
-
         </div>
     );
 }

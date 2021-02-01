@@ -1,14 +1,12 @@
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {AppMenu} from "../appmenu/AppMenu.component";
 import {Contract} from "../index";
 import {ExampleUI, Hints, Subgraph} from "../../views";
 import React from "react";
 import * as PropTypes from "prop-types";
-import Sidebar from "../sidebar/Sidebar.component";
-import AdminNavbar from "../adminnavbar/AdminNavBar.component";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
-import CreditPool from "../../views/CreditPool.component";
+import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
 
 AppRoutes.propTypes = {
@@ -37,7 +35,8 @@ AppRoutes.propTypes = {
     minSolvencyRatio: PropTypes.any,
     totalBorrowedAmount: PropTypes.any,
     getDepositPerUser: PropTypes.any,
-    mainnetWETHAaveContract: PropTypes.any
+    mainnetWETHAaveContract: PropTypes.any,
+    delegateeDeposits: PropTypes.any
 };
 
 export function AppRoutes(props) {
@@ -134,13 +133,9 @@ export function AppRoutes(props) {
                     tx={props.tx}
                     writeContracts={props.writeContracts}
                     readContracts={props.readContracts}
-                    depositBalances={props.depositBalances}
-                    setDepositEvent={props.setDepositEvent}
-                    totalDeposit={props.totalDeposit}
-                    withdrawnEvent={props.withdrawnEvent}
                     minSolvencyRatio={props.minSolvencyRatio}
                     totalBorrowedAmount={props.totalBorrowedAmount}
-                    getDepositPerUser={props.getDepositPerUser}
+                    delegateeDeposits={props.delegateeDeposits}
                 />
             </Route>
             <Route path="/subgraph">

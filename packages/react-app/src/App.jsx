@@ -61,7 +61,7 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 function App(props) {
     const [injectedProvider, setInjectedProvider] = useState();
     const [showEthereumTools, setShowEthereumTools] = useState(false);
-    const {
+    const {delegateeDeposits,
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount, price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent, totalDeposit
@@ -102,6 +102,7 @@ function App(props) {
                                depositBalances={depositBalances} setDepositEvent={setDepositEvent}
                                totalDeposit={totalDeposit} withdrawnEvent={withdrawnEvent}
                                minSolvencyRatio={minSolvencyRatio}
+                               delegateeDeposits={delegateeDeposits}
                                totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}

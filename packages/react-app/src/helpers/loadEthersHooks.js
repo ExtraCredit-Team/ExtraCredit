@@ -1,14 +1,14 @@
 import {
     useBalance,
     useContractLoader,
-    useContractReader, useEventListener,
+    useContractReader,
+    useEventListener,
     useExchangePrice,
     useGasPrice,
     useUserProvider
 } from "../hooks";
 import {useUserAddress} from "eth-hooks";
 import {Transactor} from "./index";
-import {formatEther} from "@ethersproject/units";
 import useExternalContractLoader from "../hooks/ExternalContractLoader";
 import AaveWETH from "./IWETHGateway";
 
@@ -23,7 +23,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
     const userProvider = useUserProvider(injectedProvider, localProvider);
-    console.log("userProvider", userProvider);
+    //console.log("userProvider", userProvider);
 
     const address = useUserAddress(userProvider);
 
@@ -32,19 +32,19 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
     const yourLocalBalance = useBalance(localProvider, address);
-    if (DEBUG) console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...")
+    //if (DEBUG) console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...")
 
     // just plug in different 🛰 providers to get your balance on different chains:
     const yourMainnetBalance = useBalance(mainnetProvider, address);
-    if (DEBUG) console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...")
+    //if (DEBUG) console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...")
 
     // Load in your local 📝 contract and read a value from it:
     const readContracts = useContractLoader(localProvider)
-    if (DEBUG) console.log("📝 readContracts", readContracts)
+    //if (DEBUG) console.log("📝 readContracts", readContracts)
 
     // If you want to make 🔐 write transactions to your contracts, use the userProvider:
     const writeContracts = useContractLoader(userProvider)
-    if (DEBUG) console.log("🔐 writeContracts", writeContracts)
+    //if (DEBUG) console.log("🔐 writeContracts", writeContracts)
 
     // EXTERNAL CONTRACT EXAMPLE:
     //
@@ -59,38 +59,41 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     //AAVE WETH
     const mainnetWETHAaveContract = useExternalContractLoader(userProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
-    console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
+    //console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
 
 
     //SCAFFOLD EXAMPLE
     // keep track of a variable from the contract in the local React state:
     const purpose = useContractReader(readContracts, "YourContract", "purpose")
-    console.log("🤗 purpose:", purpose)
+    //console.log("🤗 purpose:", purpose)
 
     //📟 Listen for broadcast events
     const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
-    console.log("📟 SetPurpose events:", setPurposeEvents)
+    //console.log("📟 SetPurpose events:", setPurposeEvents)
 
 
     //CREDIT POOL
 
     // 📟 Listen for broadcast events
     const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
-    console.log("📟 setDeposit events:", setDepositEvent);
+    //console.log("📟 setDeposit events:", setDepositEvent);
 
     // 📟 Listen for broadcast events
     const withdrawnEvent = useEventListener(readContracts, "CreditPool", "Withdrawn", localProvider, 1);
-    console.log("📟 withdrawnEvent events:", withdrawnEvent);
+    //console.log("📟 withdrawnEvent events:", withdrawnEvent);
 
 
     //MARGIN POOL
     // track minSolvencyRatio address
      const minSolvencyRatio = useContractReader(readContracts, "MarginPool", "minSolvencyRatio");
-     console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
+     //console.log("🤗 minSolvencyRatio Balances:", minSolvencyRatio);
 
      // track minSolvencyRatio address
      const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
-     console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
+     //console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
+
+    const delegateeDeposits = useContractReader(readContracts, "MarginPool", "delegateeDeposits", [address]);
+    //console.log("delegateeDeposits: ", delegateeDeposits);
 
     /*
       const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -112,6 +115,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount,
-        mainnetWETHAaveContract
+        mainnetWETHAaveContract,
+        delegateeDeposits
     };
 }
