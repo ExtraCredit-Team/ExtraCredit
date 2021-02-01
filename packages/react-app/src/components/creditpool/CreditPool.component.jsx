@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, {useState} from "react";
-import {Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch} from "antd";
-import {SyncOutlined} from '@ant-design/icons';
+import {Button, Divider, Input, List} from "antd";
 import {Address, Balance} from "../index";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 
-export default function CreditPool({signer, mainnetWETHAaveContract,
-                                       getDepositPerUser,
+export default function CreditPool({mainnetWETHAaveContract,
+                                       totalDelegation,
+                                       depositors,
                                        withdrawnEvent,
-                                       minSolvencyRatio,
-                                       totalBorrowedAmount,
+                                       IERC20Contract,
                                        setDepositEvent,
                                        totalDeposit, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
@@ -53,27 +52,31 @@ export default function CreditPool({signer, mainnetWETHAaveContract,
                     <Input onChange={(e) => {
                         setNewAmountToDelegate(e.target.value)
                     }}/>
-                    <Button onClick={() => {
+                    <Button onClick={async () => {
                         console.log(" amount to deposit", amountToDeposit);
                         /* look how you call setDeposit on your contract: */
                         let amount = 10;
                         let aTokenAddress = "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e";
-                        let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
+                        let debtTokenAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
                         console.log("amountToDelegate", parseEther(amountToDelegate));
                         console.log("amountToDeposit", parseEther(amountToDeposit));
                         console.log("marginPoolAddress:", marginPoolAddress);
-                        console.log(typeof marginPoolAddress);
-                        tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress, marginPoolAddress, parseEther(amountToDelegate), debtToken))
+                        await tx(IERC20Contract.approve(readContracts.CreditPool.address, parseEther(amountToDeposit)));
+                        await tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress, marginPoolAddress, parseEther(amountToDelegate), debtTokenAddress))
                     }}>Set Deposit</Button>
                 </div>
 
                 <Divider/>
-
-                <div>depositBalances: {getDepositPerUser && getDepositPerUser}</div>
+                <div><strong>Your stats : </strong></div>
+                <div>Delegated Amount: {depositors && formatEther(depositors[0].toString())}</div>
+                <div>Deposit Amount: {depositors && formatEther(depositors[1].toString())}</div>
 
                 <Divider/>
 
-                <div>totalDeposit: {totalDeposit && totalDeposit}</div>
+                <div><strong>Total credit pool stats : </strong></div>
+                <div>Total Delegation: {totalDelegation && formatEther(totalDelegation.toString())}</div>
+
+                <div>Total Deposit: {totalDeposit && formatEther(totalDeposit.toString())}</div>
 
                 <Divider/>
 
@@ -117,8 +120,6 @@ export default function CreditPool({signer, mainnetWETHAaveContract,
                 />
 
 
-
-
             </div>
 
             {/*
@@ -133,12 +134,7 @@ export default function CreditPool({signer, mainnetWETHAaveContract,
                     renderItem={(item) => {
                         return (
                             <List.Item key={item.blockNumber + "_" + item.sender + "_" + item.purpose}>
-                                <Address
-                                    value={item[0]}
-                                    ensProvider={mainnetProvider}
-                                    fontSize={16}
-                                /> =>
-                                {item[1]}
+
                             </List.Item>
                         )
                     }}

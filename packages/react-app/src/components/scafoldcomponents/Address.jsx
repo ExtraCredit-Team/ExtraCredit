@@ -30,7 +30,6 @@ export default function Address(props) {
       </span>
     );
   }
-
   let displayAddress = props.value.substr(0, 6);
 
   if (ens && ens.indexOf("0x")<0) {

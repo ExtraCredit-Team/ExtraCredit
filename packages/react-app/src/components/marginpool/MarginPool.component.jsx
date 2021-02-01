@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, {useState} from "react";
-import {Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch} from "antd";
-import {SyncOutlined} from '@ant-design/icons';
-import {Address, Balance} from "../../components";
-import {formatEther, parseEther} from "@ethersproject/units";
+import {Button, Divider, Input} from "antd";
+import {Address} from "../../components";
+import {parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 import {FormGroup, Label} from "reactstrap";
 

@@ -111,15 +111,13 @@ export function AppRoutes(props) {
                     tx={props.tx}
                     writeContracts={props.writeContracts}
                     readContracts={props.readContracts}
-                    depositBalances={props.depositBalances}
                     setDepositEvent={props.setDepositEvent}
                     totalDeposit={props.totalDeposit}
                     withdrawnEvent={props.withdrawnEvent}
-                    minSolvencyRatio={props.minSolvencyRatio}
-                    totalBorrowedAmount={props.totalBorrowedAmount}
-                    getDepositPerUser={props.getDepositPerUser}
                     mainnetWETHAaveContract={props.mainnetWETHAaveContract}
-                    signer={props.userProvider.getSigner()}
+                    IERC20Contract={props.IERC20Contract}
+                    totalDelegation={props.totalDelegation}
+                    depositors={props.depositors}
                 />
             </Route>
             <Route path="/marginpool-ui">

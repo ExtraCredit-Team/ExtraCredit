@@ -11,8 +11,10 @@ import {useUserAddress} from "eth-hooks";
 import {Transactor} from "./index";
 import useExternalContractLoader from "../hooks/ExternalContractLoader";
 import AaveWETH from "./IWETHGateway";
+import IERC20 from "./IERC20"
 
-export default function LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG) {
+export default function LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG, metaMaskAddressChange) {
+
     /* 💵 this hook will get the price of ETH from 🦄 Uniswap: */
     const price = useExchangePrice(mainnetProvider); //1 for xdai
 
@@ -25,10 +27,14 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const userProvider = useUserProvider(injectedProvider, localProvider);
     //console.log("userProvider", userProvider);
 
-    const address = useUserAddress(userProvider);
+    let address = useUserAddress(userProvider);
+    if(metaMaskAddressChange)
+        address = metaMaskAddressChange;
+
+    //console.log(address);
 
     // The transactor wraps transactions and provides notificiations
-    const tx = Transactor(userProvider, gasPrice)
+    const tx = Transactor(userProvider, gasPrice);
 
     // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
     const yourLocalBalance = useBalance(localProvider, address);
@@ -39,11 +45,11 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //if (DEBUG) console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...")
 
     // Load in your local 📝 contract and read a value from it:
-    const readContracts = useContractLoader(localProvider)
+    const readContracts = useContractLoader(localProvider);
     //if (DEBUG) console.log("📝 readContracts", readContracts)
 
     // If you want to make 🔐 write transactions to your contracts, use the userProvider:
-    const writeContracts = useContractLoader(userProvider)
+    const writeContracts = useContractLoader(userProvider);
     //if (DEBUG) console.log("🔐 writeContracts", writeContracts)
 
     // EXTERNAL CONTRACT EXAMPLE:
@@ -61,6 +67,9 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const mainnetWETHAaveContract = useExternalContractLoader(userProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
     //console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
 
+    const IERC20Contract = useExternalContractLoader(userProvider, "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e", IERC20.abi);
+    //console.log("IERC20Contract:", IERC20Contract)
+
 
     //SCAFFOLD EXAMPLE
     // keep track of a variable from the contract in the local React state:
@@ -71,8 +80,10 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
     //console.log("📟 SetPurpose events:", setPurposeEvents)
 
-
     //CREDIT POOL
+
+    const depositors = useContractReader(readContracts, "CreditPool","depositors", [address]);
+    //console.log("depositors mapping", depositors);
 
     // 📟 Listen for broadcast events
     const setDepositEvent = useEventListener(readContracts, "CreditPool", "Deposited", localProvider, 1);
@@ -81,6 +92,18 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     // 📟 Listen for broadcast events
     const withdrawnEvent = useEventListener(readContracts, "CreditPool", "Withdrawn", localProvider, 1);
     //console.log("📟 withdrawnEvent events:", withdrawnEvent);
+
+
+    // track depositBalances address
+    const totalDeposit = useContractReader(readContracts, "CreditPool", "totalDeposit");
+    //console.log("🤗 totalDeposit:", totalDeposit);
+
+    // track minSolvencyRatio address
+    const totalDelegation = useContractReader(readContracts, "CreditPool", "totalDelegation");
+    //console.log("🤗 totalDelegation :", totalDelegation);
+
+
+
 
 
     //MARGIN POOL
@@ -116,6 +139,10 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         minSolvencyRatio,
         totalBorrowedAmount,
         mainnetWETHAaveContract,
-        delegateeDeposits
+        delegateeDeposits,
+        IERC20Contract,
+        totalDeposit,
+        totalDelegation,
+        depositors
     };
 }

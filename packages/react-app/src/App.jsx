@@ -61,15 +61,25 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 function App(props) {
     const [injectedProvider, setInjectedProvider] = useState();
     const [showEthereumTools, setShowEthereumTools] = useState(false);
-    const {delegateeDeposits,
+    const [metaProvider, setmetaProvider] = useState();
+    const [metaMaskAddressChange, setmetaMaskAddressChange] = useState();
+
+    const {
+        totalDelegation,
+        address,
+        totalDeposit,
+        IERC20Contract,
+        depositors,
+        delegateeDeposits,
         withdrawnEvent,
         minSolvencyRatio,
-        totalBorrowedAmount, price, gasPrice, userProvider, address, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent, totalDeposit
+        totalBorrowedAmount, price, gasPrice, userProvider, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent
         , getDepositPerUser,mainnetWETHAaveContract
-    } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG);
+    } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG, metaMaskAddressChange);
 
     const loadWeb3Modal = useCallback(async () => {
         const provider = await web3Modal.connect();
+        setmetaProvider(provider)
         setInjectedProvider(new Web3Provider(provider));
     }, [setInjectedProvider]);
 
@@ -79,6 +89,11 @@ function App(props) {
         }
     }, [loadWeb3Modal]);
 
+    useEffect(() => {
+        metaProvider && metaProvider.on("accountsChanged", (accounts) => {
+            setmetaMaskAddressChange(accounts[0]);
+        });
+    }, [metaProvider]);
 
     const toggle = () => {
         setShowEthereumTools(!showEthereumTools);
@@ -103,6 +118,9 @@ function App(props) {
                                totalDeposit={totalDeposit} withdrawnEvent={withdrawnEvent}
                                minSolvencyRatio={minSolvencyRatio}
                                delegateeDeposits={delegateeDeposits}
+                               IERC20Contract={IERC20Contract}
+                               totalDelegation={totalDelegation}
+                               depositors={depositors}
                                totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}

@@ -1,8 +1,8 @@
 pragma solidity >=0.6.0 <0.7.0;
-import 'hardhat/console.sol';
-import { IERC20, ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
-import { SafeERC20} from "contracts/Libraries.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
+import { ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
 
 contract CreditPool {
   using SafeERC20 for IERC20;
@@ -34,7 +34,7 @@ contract CreditPool {
 	  //depositBalances[msg.sender] += _amount;
     totalDelegation += _delegatedAmount;
     totalDeposit += _amount;
-    IERC20(_aToken).safeTransferFrom(msg.sender, address(this), _amount);
+    IERC20(_aToken).transferFrom(msg.sender, address(this), _amount);
     delegateCredit(_delegatee, _delegatedAmount, _debtToken);
     emit Deposited(_amount, _aToken);
   }
