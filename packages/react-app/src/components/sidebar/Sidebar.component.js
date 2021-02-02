@@ -55,6 +55,11 @@ const routes = [
     icon: "fab fa-bitcoin text-blue",
   },
   {
+    path: "/deposit",
+    name: "Deposit",
+    icon: "fas fa-arrow-to-bottom text-secondary",
+  },
+  {
     path: "/borrower",
     name: "Borrower",
     icon: "far fa-handshake text-orange",

@@ -10,6 +10,7 @@ import { BorrowerDashboard } from "../borrowerdashboard/BorrowerDashboard.compon
 import { DelegateCredit } from "../delegatecredit/DelegateCredit.component";
 import ExampleUI2 from "../../views/CreditPool.component";
 import Dashboard from "../../views/Dashboard";
+import Deposit from "../../views/deposit";
 
 AppRoutes.propTypes = {
   route: PropTypes.any,
@@ -69,6 +70,9 @@ export function AppRoutes(props) {
         </Route>
         <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/deposit">
+          <Deposit />
         </Route>
         <Route path="/borrower">
           <BorrowerDashboard />
