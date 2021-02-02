@@ -263,8 +263,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612165020204,
-      "contentHash": "446d6e0aa44b7d44126918b8ed60aa46",
+      "lastModificationDate": 1612246619254,
+      "contentHash": "60c28a6851286545a4ac44b25f965f81",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",

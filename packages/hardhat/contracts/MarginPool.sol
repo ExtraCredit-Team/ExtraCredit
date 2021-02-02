@@ -80,7 +80,7 @@ contract MarginPool {
         uint256 _duration
     ) public {
         // get atoken address
-        (address _debtToken, , ) = dataProvider.getReserveTokensAddresses(
+        ( , address _debtToken, ) = dataProvider.getReserveTokensAddresses(
             _asset
         );
         // get the borrowing allowance

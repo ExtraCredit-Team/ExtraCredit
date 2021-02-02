@@ -32,6 +32,7 @@ describe("Credit Delegation flow", function() {
   let whaleEthPax = '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B';
 	let daiAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F';
 	let lendingPoolAddress = '0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9';
+  let yearnVault = '0xACd43E627e64355f1861cEC6d3a6688B31a6F952';
   let dataProviderAddress = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d';
 	let wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 	let awethAddress = '0x030ba81f1c18d280636f32af80b9aad02cf0854e';
@@ -52,7 +53,7 @@ describe("Credit Delegation flow", function() {
 		interestRateStrategy = await ethers.getContractFactory('InterestRateStrategy');
 		interestRateStrategy = await interestRateStrategy.deploy(80, 4, 2, 75)
 		marginPool = await ethers.getContractFactory('MarginPool');
-		marginPool = await marginPool.deploy(creditPool.address, '10', interestRateStrategy.address);
+		marginPool = await marginPool.deploy(creditPool.address, '1', interestRateStrategy.address);
 
 		//  debtWEth = await ethers.getContractAt('IStableDebtToken', '0x4e977830ba4bd783C0BB7F15d3e243f73FF57121');
 
@@ -92,7 +93,7 @@ describe("Credit Delegation flow", function() {
 	);
 		// deposit to credit pool
     creditPool = creditPool.connect(whaleSigner);
-		await creditPool.deposit(ethers.utils.parseEther('100'), adai.address, marginPool.address, ethers.utils.parseEther('50'), dai.address);
+		await creditPool.deposit(ethers.utils.parseEther('100'), adai.address, marginPool.address, ethers.utils.parseEther('75'), dai.address);
 
     balance = await adai.balanceOf(whalePax);
 		console.log(
@@ -108,6 +109,14 @@ describe("Credit Delegation flow", function() {
     expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
       .to.be.gt(0);
 
+    await marginPool.invest(
+        ethers.utils.parseEther('50'),
+        dai.address,
+        ethers.utils.parseEther('5'),
+        ethers.utils.parseEther('1'),
+        172800
+    );
+    const userinfo = await marginPool.delegateeDeposits();
 	});
 
 
@@ -157,6 +166,34 @@ describe("Credit Delegation flow", function() {
 	// 	//await marginPool.invest('100', daiAddress, '', '15'
 
 	 });
+
+   it("should be able to withdraw aTokens after delegating", async function () {
+     const whaleSigner = await impersonateAddress(whalePax);
+ 		 let dai = new ethers.Contract(daiAddress, Token.abi, whaleSigner);
+ 		 let lendingPool = new ethers.Contract(lendingPoolAddress, lendingPoolABI.abi, whaleSigner);
+     let dataProvider = new ethers.Contract(dataProviderAddress, dataproviderABI.abi, whaleSigner);
+ 		 let adai = new ethers.Contract(adaiAddress, Token.abi, whaleSigner);
+ 		 await dai.approve(lendingPoolAddress, ethers.utils.parseEther('10000'));
+ 		 await lendingPool.deposit(daiAddress, ethers.utils.parseEther('10000'), whalePax, 0);
+     await adai.approve(creditPool.address, ethers.utils.parseEther('10000'));
+
+     creditPool = creditPool.connect(whaleSigner);
+ 		 await creditPool.deposit(ethers.utils.parseEther('100'), adai.address, marginPool.address, ethers.utils.parseEther('50'), dai.address);
+
+     balance = await adai.balanceOf(whalePax);
+ 		 console.log(
+ 			'atoken balance of depositor: ',
+ 			 ethers.utils.formatEther(balance)
+ 	   );
+
+     const reserveData = await dataProvider.getReserveTokensAddresses(daiAddress);
+
+     const debtTokenAddress = reserveData.stableDebtTokenAddress;
+     debtToken = await ethers.getContractAt('IStableDebtToken', debtTokenAddress);
+
+     expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
+       .to.be.gt(0);
+   });
 
 
 });
