@@ -108,28 +108,45 @@ describe("Credit Delegation flow", function() {
 
     expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
       .to.be.gt(0);
-    /*
+
+    const check = await debtToken.borrowAllowance(creditPool.address, marginPool.address);
+    console.log(
+      check
+    );
+
+    // transferring dai to borrower and changing the signer for margin pool operation
+    //await dai.transfer(borrower1, ethers.utils.parseEther('10'));
+    //signer = await provider.getSigner(me);
+
+    await dai.approve(marginPool.address, ethers.utils.parseEther('10000'));
+    marginPool = marginPool.connect(whaleSigner);
+
+
+
     await marginPool.invest(
-        ethers.utils.parseEther('50'),
+        ethers.utils.parseEther('20'),
         dai.address,
-        ethers.utils.parseEther('5'),
+        ethers.utils.parseEther('2'),
         ethers.utils.parseEther('1'),
         172800
     );
-    const userinfo = await marginPool.delegateeDeposits();
-    */
+
+    //const userinfo = await marginPool.delegateeDeposits();
+
 	});
 
 
 	 it("should deposit ETH, get WETH, deposit WETH, delegates WETH and borrower to borrow DAI", async function () {
     const whaleSigner = await impersonateAddress(whaleEthPax);
 	 	const depositAmount = ethers.utils.parseEther('50');
+
 	 	//const zero = BigNumber.from('0');
 
 	 	//depositor = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
 
 	 	let wEthGateway = await ethers.getContractAt('IWETHGateway', '0xDcD33426BA191383f1c9B431A342498fdac73488');
 	 	let aweth = new ethers.Contract(awethAddress, Token.abi, whaleSigner);
+    let dataProvider = new ethers.Contract(dataProviderAddress, dataproviderABI.abi, whaleSigner);
 	 	wEthGateway = wEthGateway.connect(whaleSigner);
 
      console.log(
@@ -141,27 +158,32 @@ describe("Credit Delegation flow", function() {
     aweth = aweth.connect(whaleSigner);
 	 	let aEthBalance = aweth.balanceOf(whaleEthPax);
 
-		console.log(
-			'aweth balance post eth deposit:',
-			ethers.utils.formatEther(aEthBalance)
-	 	);
-
+    // approve credit pool to spend your aweth
+		await aweth.approve(creditPool.address, ethers.utils.parseEther('10000'));
  	   //expect(await(aweth.balanceOf(depositor.address))).to.be.BigNumber.gt(ethers.utils.parseEther('40'));
      // expect(aEthBalance).to.be.bignumber.gt(ethers.utils.parseEther('40'));
 
-	 	creditPool = creditPool.connect(whaleEthPax);
+	 	creditPool = creditPool.connect(whaleSigner);
 
 	 	// last argument is the debt of aWEth token
-	 	await creditPool.deposit('10', awethAddress, marginPool.address, '5', '0x4e977830ba4bd783C0BB7F15d3e243f73FF57121');
+	 	await creditPool.deposit(ethers.utils.parseEther('10'), awethAddress, marginPool.address, ethers.utils.parseEther('5'), wethAddress);
 
-	 	aEthBalance = aweth.balanceOf(depositor.address);
-	 	expect(aEthBalance).to.be.lt(depositAmount);
+	 	aEthBalance = await aweth.balanceOf(whaleEthPax);
+    console.log(
+      aEthBalance
+    );
+	 	expect(aEthBalance).to.be.lt(ethers.utils.parseEther('50'));
 
 	 	// next can check borrow allowance of margin pool address
 
-	 	let debtAllowanceBefore = await debtWEth.borrowAllowance(depositor.address, marginPool.address);
-	 	expect(debtAllowanceBefore).to.be.gt('0');
 
+    const reserveData = await dataProvider.getReserveTokensAddresses(wethAddress);
+
+    const debtTokenAddress = reserveData.stableDebtTokenAddress;
+    debtToken = await ethers.getContractAt('IStableDebtToken', debtTokenAddress);
+
+    expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
+      .to.be.gt(0);
 	// 	// also let borrower comes and invest
 	// 	//marginPool = marginPool.connect(borrower1);
 	// 	//await marginPool.invest('100', daiAddress, '', '15'
@@ -203,8 +225,6 @@ describe("Credit Delegation flow", function() {
      expect(
        creditPool.withdraw('75', adai.address)
      ).to.be.reverted;
-
-     //await creditPool.withdraw('25', adai.address);
 
      //if address that has not deposited tries to withdraw, should revert
      creditPool = creditPool.connect(depositor.address);

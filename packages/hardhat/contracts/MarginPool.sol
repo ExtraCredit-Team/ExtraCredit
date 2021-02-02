@@ -119,8 +119,10 @@ contract MarginPool {
             _interestAmount,
             true
         );
+        IERC20(_asset).transferFrom(msg.sender, address(this), _marginAmount.add(_interestAmount));
         // setting total borrowed amount in storage
         totalBorrowedAmount += _amount;
+
         // getting the delgated credit amount from aave
         lendingPool.borrow(_asset, _amount, 1, 0, creditPool);
         // approve yearn vault to spend dai
