@@ -122,7 +122,7 @@ contract MarginPool {
         IERC20(_asset).transferFrom(msg.sender, address(this), _marginAmount.add(_interestAmount));
         // setting total borrowed amount in storage
         totalBorrowedAmount += _amount;
-
+    
         // getting the delgated credit amount from aave
         lendingPool.borrow(_asset, _amount, 1, 0, creditPool);
         // approve yearn vault to spend dai
@@ -159,7 +159,7 @@ contract MarginPool {
         // withdrawing yield amount from yearn
         YearnVault(daiVault).withdraw(_ytokenBalance);
         // get reward split
-        (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance);
+        (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
         // repaying credit  pool the borrowed funds
         lendingPool.repay(_asset, creditPoolReward.sub(margin), 1, creditPool);
         IERC20(_asset).safeTransfer(msg.sender, margin.add(borrowerReward));
@@ -169,12 +169,13 @@ contract MarginPool {
      * @dev calculateRewardSplit computes borrower and credit pool rewards.
      * @param _asset  asset borrowed.
      * @param _ytokenBalance  calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
+     * @param _investedAmount  initial invested amount in yearn.
      */
-    function calculateRewardSplit(address _asset, uint256 _ytokenBalance) public returns (uint, uint) {
+    function calculateRewardSplit(address _asset, uint256 _ytokenBalance, uint256 _investedAmount) public returns (uint, uint) {
         uint256 reward = getYearnVaultLiquidityValue(_ytokenBalance);
 
         // get atoken address
-        (address _debtToken, , ) = dataProvider.getReserveTokensAddresses(
+        ( , address _debtToken, ) = dataProvider.getReserveTokensAddresses(
             _asset
         );
         // get the borrowing allowance
@@ -188,7 +189,7 @@ contract MarginPool {
             _delegatedAmount
         );
         uint256 creditPoolReward = reward.mul(uint256(1).sub(borrowRate));
-        uint256 borrowerReward = reward.mul(borrowRate);
+        uint256 borrowerReward = reward.sub(_investedAmount).mul(borrowRate);
         return (creditPoolReward, borrowerReward);
     }
 
