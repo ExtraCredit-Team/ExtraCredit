@@ -108,7 +108,7 @@ describe("Credit Delegation flow", function() {
 
     expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
       .to.be.gt(0);
-
+    /*
     await marginPool.invest(
         ethers.utils.parseEther('50'),
         dai.address,
@@ -117,6 +117,7 @@ describe("Credit Delegation flow", function() {
         172800
     );
     const userinfo = await marginPool.delegateeDeposits();
+    */
 	});
 
 
@@ -167,7 +168,7 @@ describe("Credit Delegation flow", function() {
 
 	 });
 
-   it("should be able to withdraw aTokens after delegating", async function () {
+   it("checking for withdrawal reversions", async function () {
      const whaleSigner = await impersonateAddress(whalePax);
  		 let dai = new ethers.Contract(daiAddress, Token.abi, whaleSigner);
  		 let lendingPool = new ethers.Contract(lendingPoolAddress, lendingPoolABI.abi, whaleSigner);
@@ -193,6 +194,25 @@ describe("Credit Delegation flow", function() {
 
      expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
        .to.be.gt(0);
+
+     //should revert if tries to withdraw higher than deposited
+     expect(
+       creditPool.withdraw('150', adai.address)
+     ).to.be.reverted;
+
+     expect(
+       creditPool.withdraw('75', adai.address)
+     ).to.be.reverted;
+
+     //await creditPool.withdraw('25', adai.address);
+
+     //if address that has not deposited tries to withdraw, should revert
+     creditPool = creditPool.connect(depositor.address);
+     expect(
+       creditPool.withdraw('50', adai.address)
+     ).to.be.reverted;
+
+     //test what would happen if deposit 100, delegates 50 but try to withdraw 75, will borrowAllowance decreases or tx revert?
    });
 
 
