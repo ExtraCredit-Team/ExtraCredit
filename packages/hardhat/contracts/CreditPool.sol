@@ -84,6 +84,10 @@ contract CreditPool {
   function getTotalDeposit() public view returns(uint256) {
     return totalDeposit;
   }
+
+  function getTotalDelegation() public view returns(uint256) {
+    return totalDelegation;
+  }
 	/*
   function getUserInfo(address _user) external view returns(uint256 totalCollateral, ) {
 

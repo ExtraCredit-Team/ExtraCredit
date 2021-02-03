@@ -122,7 +122,7 @@ contract MarginPool {
         IERC20(_asset).transferFrom(msg.sender, address(this), _marginAmount.add(_interestAmount));
         // setting total borrowed amount in storage
         totalBorrowedAmount += _amount;
-    
+
         // getting the delgated credit amount from aave
         lendingPool.borrow(_asset, _amount, 1, 0, creditPool);
         // approve yearn vault to spend dai
@@ -175,7 +175,7 @@ contract MarginPool {
         uint256 reward = getYearnVaultLiquidityValue(_ytokenBalance);
 
         // get atoken address
-        ( , address _debtToken, ) = dataProvider.getReserveTokensAddresses(
+        (, address _debtToken,) = dataProvider.getReserveTokensAddresses(
             _asset
         );
         // get the borrowing allowance
@@ -222,5 +222,9 @@ contract MarginPool {
         uint256 usdQuote = uint256(fiatDaiRef.latestAnswer());
         usdQuote = usdQuote.mul(_userReturns);
         return usdQuote;
+    }
+
+    function getTotalBorrowed() public view returns(uint256) {
+      return totalBorrowedAmount;
     }
 }
