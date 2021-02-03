@@ -133,7 +133,9 @@ export function AppRoutes(props) {
                     readContracts={props.readContracts}
                     minSolvencyRatio={props.minSolvencyRatio}
                     totalBorrowedAmount={props.totalBorrowedAmount}
+                    IERC20Contract={props.IERC20Contract}
                     delegateeDeposits={props.delegateeDeposits}
+                    aaveLendingPool={props.aaveLendingPool}
                 />
             </Route>
             <Route path="/subgraph">

@@ -65,6 +65,7 @@ function App(props) {
     const [metaMaskAddressChange, setmetaMaskAddressChange] = useState();
 
     const {
+        aaveLendingPool,
         totalDelegation,
         address,
         totalDeposit,
@@ -121,6 +122,7 @@ function App(props) {
                                IERC20Contract={IERC20Contract}
                                totalDelegation={totalDelegation}
                                depositors={depositors}
+                               aaveLendingPool={aaveLendingPool}
                                totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}

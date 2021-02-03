@@ -11,6 +11,7 @@ import {useUserAddress} from "eth-hooks";
 import {Transactor} from "./index";
 import useExternalContractLoader from "../hooks/ExternalContractLoader";
 import AaveWETH from "./IWETHGateway";
+import ILendingPool from "./ILendingPool";
 import IERC20 from "./IERC20"
 
 export default function LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG, metaMaskAddressChange) {
@@ -66,6 +67,11 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //AAVE WETH
     const mainnetWETHAaveContract = useExternalContractLoader(userProvider, "0xDcD33426BA191383f1c9B431A342498fdac73488", AaveWETH.abi);
     //console.log("🥇mainnetWETHAaveContract:",mainnetWETHAaveContract);
+
+
+    const aaveLendingPool = useExternalContractLoader(userProvider, "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9", ILendingPool.abi);
+    //console.log("aaveLendingPool :", aaveLendingPool);
+
 
     const IERC20Contract = useExternalContractLoader(userProvider, "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e", IERC20.abi);
     //console.log("IERC20Contract:", IERC20Contract)
@@ -143,6 +149,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         IERC20Contract,
         totalDeposit,
         totalDelegation,
-        depositors
+        depositors,
+        aaveLendingPool
     };
 }
