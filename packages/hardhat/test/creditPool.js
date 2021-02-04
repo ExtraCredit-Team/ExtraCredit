@@ -54,7 +54,7 @@ describe("Credit Delegation flow", function() {
         creditPool = await creditPool.deploy();
         // margin pool takes in interest strategy address now too so need that in constructor
         interestRateStrategy = await ethers.getContractFactory('InterestRateStrategy');
-        interestRateStrategy = await interestRateStrategy.deploy(80, 4, 2, 75)
+        interestRateStrategy = await interestRateStrategy.deploy(ethers.utils.parseEther('0.80'), ethers.utils.parseEther('0.04'), ethers.utils.parseEther('0.02'), ethers.utils.parseEther('0.75'))
         marginPool = await ethers.getContractFactory('MarginPool');
         marginPool = await marginPool.deploy(creditPool.address, '1', interestRateStrategy.address);
 
@@ -138,9 +138,13 @@ describe("Credit Delegation flow", function() {
         );
 
         interestRateStrategy = interestRateStrategy.connect(whaleSigner);
-        const computedRate = await interestRateStrategy.computeBorrowingRewardRate(resultBorrow, result);
+        const computedRate = await interestRateStrategy.computeBorrowingRewardRate(ethers.utils.parseEther('20'), ethers.utils.parseEther('50'));
+        const depositRate = await interestRateStrategy.computeDepositRewardRate(ethers.utils.parseEther('20'), ethers.utils.parseEther('50'));
         console.log(
           computedRate
+        );
+        console.log(
+          depositRate
         );
     });
 

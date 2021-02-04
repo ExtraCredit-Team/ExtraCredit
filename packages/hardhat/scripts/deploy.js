@@ -12,7 +12,7 @@ const main = async () => {
 
   const yourContract = await deploy("YourContract"); // <-- add in constructor args like line 16 vvvv
   const creditPool = await deploy("CreditPool") // <-- add in constructor args like line 16 vvvv
-  const interestRateStrategy = await deploy("InterestRateStrategy", [80, 4, 2, 75])
+  const interestRateStrategy = await deploy("InterestRateStrategy", [ethers.utils.parseEther('0.80'), ethers.utils.parseEther('0.04'), ethers.utils.parseEther('0.02'), ethers.utils.parseEther('0.75')])
   const marginPool = await deploy("MarginPool", [creditPool.address, 115, interestRateStrategy.address])
 
 
