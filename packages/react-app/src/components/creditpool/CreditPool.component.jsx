@@ -10,7 +10,7 @@ export default function CreditPool({mainnetWETHAaveContract,
                                        totalDelegation,
                                        depositors,
                                        withdrawnEvent,
-                                       IERC20Contract,
+                                       aWethContract,
                                        setDepositEvent,
                                        totalDeposit, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
@@ -61,7 +61,7 @@ export default function CreditPool({mainnetWETHAaveContract,
                         console.log("amountToDelegate", parseEther(amountToDelegate));
                         console.log("amountToDeposit", parseEther(amountToDeposit));
                         console.log("marginPoolAddress:", marginPoolAddress);
-                        await tx(IERC20Contract.approve(readContracts.CreditPool.address, parseEther(amountToDeposit)));
+                        await tx(aWethContract.approve(readContracts.CreditPool.address, parseEther(amountToDeposit)));
                         await tx(writeContracts.CreditPool.deposit(parseEther(amountToDeposit), aTokenAddress, marginPoolAddress, parseEther(amountToDelegate), debtTokenAddress))
                     }}>Set Deposit</Button>
                 </div>

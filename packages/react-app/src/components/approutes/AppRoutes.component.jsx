@@ -115,7 +115,7 @@ export function AppRoutes(props) {
                     totalDeposit={props.totalDeposit}
                     withdrawnEvent={props.withdrawnEvent}
                     mainnetWETHAaveContract={props.mainnetWETHAaveContract}
-                    IERC20Contract={props.IERC20Contract}
+                    aWethContract={props.aWethContract}
                     totalDelegation={props.totalDelegation}
                     depositors={props.depositors}
                 />

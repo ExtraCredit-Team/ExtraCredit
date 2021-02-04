@@ -3,7 +3,7 @@
 import React, {useState} from "react";
 import {Button, Divider, Input} from "antd";
 import {Address} from "../../components";
-import {parseEther} from "@ethersproject/units";
+import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 import {FormGroup, Label} from "reactstrap";
 
@@ -22,6 +22,10 @@ export default function MarginPool({
     const [investDuration, setInvestDuration] = useState(1);
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
     const [daiAmountBorrowed, setdaiAmountBorrowed] = useState("loading...");
+
+    if(delegateeDeposits)
+        console.log(delegateeDeposits);
+
 
     return (
         <div>
@@ -49,12 +53,16 @@ export default function MarginPool({
 
                 <Divider/>
 
-                <div>totalBorrowedAmount: {totalBorrowedAmount && totalBorrowedAmount.toString()}</div>
+                <div>totalBorrowedAmount: {totalBorrowedAmount && formatEther(totalBorrowedAmount.toString())}</div>
 
                 <Divider/>
 
-                <div>delegateeDeposits: {delegateeDeposits && delegateeDeposits[0].toString()}</div>
-
+                <div>Duration (EPOCH Seconds): {delegateeDeposits && formatEther(delegateeDeposits[0].toString())}</div>
+                <div>Margin: {delegateeDeposits && formatEther(delegateeDeposits[1])}</div>
+                <div>Investment: {delegateeDeposits && formatEther(delegateeDeposits[2].toString())}</div>
+                <div>Yield acquired: {delegateeDeposits && formatEther(delegateeDeposits[3].toString())}</div>
+                <div>Interest Paid for delegation: {delegateeDeposits && formatEther(delegateeDeposits[4].toString())}</div>
+                <div>Has Borrowed: {delegateeDeposits && delegateeDeposits[5].toString()}</div>
                 <Divider/>
 
                 <div style={{margin: 8}}>
@@ -74,7 +82,7 @@ export default function MarginPool({
                                id="exampleRange"/>
                         Weeks : {investDuration}
                     </FormGroup>
-                    <Button disabled={!marginAmount} onClick={async () => {
+                    <Button onClick={async () => {
                         /* look how you call setDeposit on your contract: */
                         let amount = 10;
                         let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
@@ -82,8 +90,9 @@ export default function MarginPool({
                         let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
                         console.log("investDuration", investDuration);
                         console.log("amountToInvest", amountToInvest);
-                        await tx(IERC20Contract.approve(readContracts.MarginPool.address, parseEther("10")));
-                        await tx(writeContracts.MarginPool.invest(parseEther("1"), daiToken, parseEther(marginAmount), parseEther("1"), investDuration))
+                        console.log("marginAmount : ", marginAmount);
+                        await tx(IERC20Contract.approve(readContracts.MarginPool.address, parseEther("1000")));
+                        await tx(writeContracts.MarginPool.invest(parseEther(amountToInvest), daiToken, parseEther(marginAmount), parseEther("1"), investDuration))
                     }}>Invest</Button>
                 </div>
 
@@ -140,3 +149,6 @@ export default function MarginPool({
         </div>
     );
 }
+
+
+

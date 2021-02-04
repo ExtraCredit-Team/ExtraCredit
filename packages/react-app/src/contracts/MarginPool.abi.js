@@ -31,6 +31,11 @@ module.exports = [
         "internalType": "uint256",
         "name": "_ytokenBalance",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_investedAmount",
+        "type": "uint256"
       }
     ],
     "name": "calculateRewardSplit",
@@ -101,6 +106,19 @@ module.exports = [
         "internalType": "bool",
         "name": "hasBorrowed",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalBorrowed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

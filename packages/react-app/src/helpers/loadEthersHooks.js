@@ -73,7 +73,10 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     //console.log("aaveLendingPool :", aaveLendingPool);
 
 
-    const IERC20Contract = useExternalContractLoader(userProvider, "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e", IERC20.abi);
+    const aWethContract = useExternalContractLoader(userProvider, "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e", IERC20.abi);
+    //console.log("IERC20Contract:", aWethContract)
+
+    const IERC20Contract = useExternalContractLoader(userProvider, "0x6b175474e89094c44da98b954eedeac495271d0f", IERC20.abi);
     //console.log("IERC20Contract:", IERC20Contract)
 
 
@@ -150,6 +153,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         totalDeposit,
         totalDelegation,
         depositors,
-        aaveLendingPool
+        aaveLendingPool,
+        aWethContract,
     };
 }

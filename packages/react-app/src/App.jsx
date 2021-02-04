@@ -70,6 +70,7 @@ function App(props) {
         address,
         totalDeposit,
         IERC20Contract,
+        aWethContract,
         depositors,
         delegateeDeposits,
         withdrawnEvent,
@@ -123,6 +124,7 @@ function App(props) {
                                totalDelegation={totalDelegation}
                                depositors={depositors}
                                aaveLendingPool={aaveLendingPool}
+                               aWethContract={aWethContract}
                                totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
