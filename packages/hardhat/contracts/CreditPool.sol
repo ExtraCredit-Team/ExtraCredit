@@ -2,7 +2,7 @@ pragma solidity >=0.6.0 <0.7.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
-import { ILendingPool, IProtocolDataProvider, IStableDebtToken } from "contracts/Interfaces.sol";
+import { ILendingPool, IProtocolDataProvider, IStableDebtToken, AggregatorInterface } from "contracts/Interfaces.sol";
 
 contract CreditPool {
   using SafeERC20 for IERC20;
@@ -19,11 +19,17 @@ contract CreditPool {
   //mapping(address => uint256) public delegatedAmounts;
   uint256 public totalDeposit;
   uint256 public totalDelegation;
+  uint256 public ethRate;
+  uint256 public daiRate;
 
   ILendingPool constant lendingPool = ILendingPool(address(0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9)); // on mainnet
   IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
+  AggregatorInterface constant fiatDaiRef = AggregatorInterface(address(0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9)); // on mainnet
+  AggregatorInterface constant fiatEthRef = AggregatorInterface(address(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419)); // on mainnet
+
   event Deposited(uint256 amount, address aToken);
   event Withdrawn(uint256 amount, address aToken);
+
   /**
     * @param _debtToken The asset allowed to borrow
   */
@@ -83,6 +89,18 @@ contract CreditPool {
 
   function getTotalDeposit() public view returns(uint256) {
     return totalDeposit;
+  }
+
+  function getTotalDelegation() public view returns(uint256) {
+    return totalDelegation;
+  }
+  // the eth rate and dai rate will be multiplied by 10 ** 8 form that's done on chainlink side we need to handle it on front end
+  function getETHRate() public view returns(uint256) {
+    return uint256(fiatEthRef.latestAnswer());
+  }
+
+  function getDAIRate() public view returns(uint256) {
+    return uint256(fiatDaiRef.latestAnswer());
   }
 	/*
   function getUserInfo(address _user) external view returns(uint256 totalCollateral, ) {
