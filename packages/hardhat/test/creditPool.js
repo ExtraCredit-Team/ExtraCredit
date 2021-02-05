@@ -1,4 +1,5 @@
 const { ContractFactory } = require("ethers");
+const { time } =  require("@openzeppelin/test-helpers");
 const { ethers } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
@@ -146,6 +147,14 @@ describe("Credit Delegation flow", function() {
         console.log(
           depositRate
         );
+
+        await time.increase(time.duration.days(1));
+        await marginPool.repay(
+          daiAddress,
+          ethers.utils.parseEther('23')
+      );
+
+
     });
 
 
@@ -316,5 +325,60 @@ describe("Credit Delegation flow", function() {
          172800
      );
    });
+
+   it("6) should deposit ETH and let whale invest DAI and withdraw the investment", async function () {
+    const whaleSigner = await impersonateAddress(whaleEthPax);
+
+    let wEthGateway = await ethers.getContractAt('IWETHGateway', '0xDcD33426BA191383f1c9B431A342498fdac73488');
+    let aweth = new ethers.Contract(awethAddress, Token.abi, whaleSigner);
+    let dataProvider = new ethers.Contract(dataProviderAddress, dataproviderABI.abi, whaleSigner);
+    wEthGateway = wEthGateway.connect(whaleSigner);
+
+    console.log(
+      'address is:',
+      ethers.utils.getAddress(depositor.address)
+    );
+    await wEthGateway.depositETH(whaleEthPax, '0', {value: ethers.utils.parseEther('50')});
+
+    aweth = aweth.connect(whaleSigner);
+    let aEthBalance = aweth.balanceOf(whaleEthPax);
+
+// approve credit pool to spend your aweth
+   await aweth.approve(creditPool.address, ethers.utils.parseEther('10000'));
+
+    creditPool = creditPool.connect(whaleSigner);
+
+    // last argument is the debt of aWEth token
+    await creditPool.deposit(ethers.utils.parseEther('50'), awethAddress, marginPool.address, ethers.utils.parseEther('50'), daiAddress);
+
+
+   const reserveData = await dataProvider.getReserveTokensAddresses(wethAddress);
+
+   const debtTokenAddress = reserveData.stableDebtTokenAddress;
+   debtToken = await ethers.getContractAt('IStableDebtToken', debtTokenAddress);
+   const allowance = await debtToken.borrowAllowance(creditPool.address, marginPool.address)
+   console.log('allowance', allowance.toString())
+
+    const daiwhaleSigner = await impersonateAddress(whalePax);
+    let dai = new ethers.Contract(daiAddress, Token.abi, daiwhaleSigner);
+
+    await dai.approve(marginPool.address, ethers.utils.parseEther('10000'));
+    marginPool = marginPool.connect(daiwhaleSigner);
+    await marginPool.invest(
+        ethers.utils.parseEther('20'),
+        dai.address,
+        ethers.utils.parseEther('2'),
+        ethers.utils.parseEther('1'),
+        172800
+    );
+
+    await time.increase(time.duration.days(2));
+    await marginPool.repay(
+      daiAddress,
+      ethers.utils.parseEther('23')
+  );
+
+});
+
 
 });

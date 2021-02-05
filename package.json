@@ -55,5 +55,8 @@
       "**/@graphprotocol/graph-ts",
       "**/@graphprotocol/graph-ts/**"
     ]
+  },
+  "dependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10"
   }
 }
