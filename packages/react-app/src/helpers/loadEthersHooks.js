@@ -124,13 +124,30 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
      const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
      //console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
 
-    const delegateeDeposits = useContractReader(readContracts, "MarginPool", "delegateeDeposits", [address]);
+    const delegateeDeposits = useContractReader(readContracts, "MarginPool", "delegateeDeposits");
     //console.log("delegateeDeposits: ", delegateeDeposits);
 
     /*
       const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
       console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
       */
+
+
+    //// INTEREST RATE STATEGY
+    const optimalUtilization = useContractReader(readContracts, "InterestRateStrategy", "optimalUtilization");
+    //console.log("optimalUtilization: ", optimalUtilization);
+
+    const excessRate = useContractReader(readContracts, "InterestRateStrategy", "excessRate");
+    //console.log("excessRate: ", excessRate);
+
+    const baseStableRate = useContractReader(readContracts, "InterestRateStrategy", "baseStableRate");
+    //console.log("baseStableRate: ", baseStableRate);
+
+    const slope1StableRate = useContractReader(readContracts, "InterestRateStrategy", "slope1StableRate");
+    //console.log("slope1StableRate: ", slope1StableRate);
+
+    const slope2StableRate = useContractReader(readContracts, "InterestRateStrategy", "slope2StableRate");
+    //console.log("slope2StableRate: ", slope2StableRate);
 
     return {
         price,
@@ -155,5 +172,10 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         depositors,
         aaveLendingPool,
         aWethContract,
+        optimalUtilization,
+        excessRate,
+        baseStableRate,
+        slope1StableRate,
+        slope2StableRate
     };
 }

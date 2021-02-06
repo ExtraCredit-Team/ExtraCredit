@@ -8,6 +8,7 @@ import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.componen
 import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
+import {InterestRatesStrategy} from "../interestratestrategy/InterestRateStategy.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -125,9 +126,6 @@ export function AppRoutes(props) {
                     address={props.address}
                     userProvider={props.userProvider}
                     mainnetProvider={props.mainnetProvider}
-                    localProvider={props.localProvider}
-                    yourLocalBalance={props.yourLocalBalance}
-                    price={props.price}
                     tx={props.tx}
                     writeContracts={props.writeContracts}
                     readContracts={props.readContracts}
@@ -136,6 +134,24 @@ export function AppRoutes(props) {
                     IERC20Contract={props.IERC20Contract}
                     delegateeDeposits={props.delegateeDeposits}
                     aaveLendingPool={props.aaveLendingPool}
+                />
+            </Route>
+            <Route path="/interestrates">
+                <InterestRatesStrategy
+                    address={props.address}
+                    userProvider={props.userProvider}
+                    mainnetProvider={props.mainnetProvider}
+                    localProvider={props.localProvider}
+                    yourLocalBalance={props.yourLocalBalance}
+                    price={props.price}
+                    tx={props.tx}
+                    writeContracts={props.writeContracts}
+                    readContracts={props.readContracts}
+                    optimalUtilization={props.optimalUtilization}
+                    excessRate={props.excessRate}
+                    baseStableRate={props.baseStableRate}
+                    slope1StableRate={props.slope1StableRate}
+                    slope2StableRate={props.slope2StableRate}
                 />
             </Route>
             <Route path="/subgraph">

@@ -76,13 +76,18 @@ const routes = [
     },
     {
         path: "/creditpool-ui",
-        name: "Credit Pool ui",
+        name: "Credit Pool",
         icon: "fas fa-coins text-yellow",
     },
     {
         path: "/marginpool-ui",
-        name: "Margin Pool ui",
+        name: "Margin Pool",
         icon: "fas fa-plane text-yellow",
+    },
+    {
+        path: "/interestrates",
+        name: "Interest Rates Stats",
+        icon: "fas fa-plane text-green",
     }
 ];
 

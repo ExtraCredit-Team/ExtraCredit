@@ -14,7 +14,7 @@ export default function MarginPool({
                                        minSolvencyRatio,
                                        totalBorrowedAmount,
                                        aaveLendingPool,
-                                       address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
+                                       address, mainnetProvider, tx, readContracts, writeContracts
                                    }) {
 
     const [amountToInvest, setNewAmountToInvest] = useState("loading...");
@@ -22,11 +22,6 @@ export default function MarginPool({
     const [investDuration, setInvestDuration] = useState(1);
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
     const [daiAmountBorrowed, setdaiAmountBorrowed] = useState("loading...");
-
-    if(delegateeDeposits)
-        console.log(delegateeDeposits);
-
-
     return (
         <div>
             {/*

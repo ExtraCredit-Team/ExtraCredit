@@ -65,6 +65,11 @@ function App(props) {
     const [metaMaskAddressChange, setmetaMaskAddressChange] = useState();
 
     const {
+        optimalUtilization,
+        excessRate,
+        baseStableRate,
+        slope1StableRate,
+        slope2StableRate,
         aaveLendingPool,
         totalDelegation,
         address,
@@ -76,7 +81,7 @@ function App(props) {
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount, price, gasPrice, userProvider, tx, yourLocalBalance, readContracts, writeContracts, purpose, setPurposeEvents, depositBalances, setDepositEvent
-        , getDepositPerUser,mainnetWETHAaveContract
+        , getDepositPerUser, mainnetWETHAaveContract
     } = LoadEthersHooks(injectedProvider, mainnetProvider, localProvider, DEBUG, metaMaskAddressChange);
 
     const loadWeb3Modal = useCallback(async () => {
@@ -125,7 +130,13 @@ function App(props) {
                                depositors={depositors}
                                aaveLendingPool={aaveLendingPool}
                                aWethContract={aWethContract}
-                               totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser} mainnetWETHAaveContract={mainnetWETHAaveContract}/>
+                               optimalUtilization={optimalUtilization}
+                               excessRate={excessRate}
+                               baseStableRate={baseStableRate}
+                               slope1StableRate={slope1StableRate}
+                               slope2StableRate={slope2StableRate}
+                               totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser}
+                               mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
                     {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
                     {showEthereumTools && <>  <EthereumAccount localProvider={localProvider}
