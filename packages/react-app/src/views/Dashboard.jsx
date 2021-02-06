@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import DepositedPosition from "../components/dashboard/depositedPosition/depositedPosition";
-import WithdrawModal from "../components/dashboard/withdrawModal/withdrawModal";
-import { Col, Row } from "reactstrap";
-import ProtocolCard from "../components/dashboard/protocolCard/protocolCard";
+import "./dashboard.scss";
+import DepositContent from "../components/dashboard/depositContent/despositContent";
+import CreditContent from "../components/dashboard/creditContent/creditContent";
 
 const Dashboard = () => {
   const [display, setDisplay] = useState(false);
-
+  const [activeTab, setActiveTab] = useState("deposit");
   const onShow = () => {
     setDisplay(() => true);
   };
@@ -16,13 +15,19 @@ const Dashboard = () => {
 
   return (
     <div>
-      <WithdrawModal display={display} onClose={onClose} />
-      <div style={{ display: "flex", justifyContent: "space-between", margin: "1rem 0" }}>
-        <ProtocolCard title="Total deposited" value="200$" />
-        <ProtocolCard title="Interest earned" value="200$" />
-        <ProtocolCard title="% delegated" value="200$" />
+      <div className="tab-selector">
+        <span onClick={() => setActiveTab("deposit")} className={activeTab === "deposit" ? "tab-active" : "tab"}>
+          My deposits
+        </span>
+        <span onClick={() => setActiveTab("credit")} className={activeTab === "credit" ? "tab-active" : "tab"}>
+          My credits
+        </span>
       </div>
-      <DepositedPosition onShow={onShow} />
+      {activeTab === "deposit" ? (
+        <DepositContent display={display} onShow={onShow} onClose={onClose} />
+      ) : (
+        <CreditContent display={display} onShow={onShow} onClose={onClose} />
+      )}
     </div>
   );
 };

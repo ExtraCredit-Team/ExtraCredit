@@ -6,6 +6,7 @@
   width: 90%;
   background-color: #fff;
   box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  margin: 0.5rem 0;
   .protocol-value {
     text-align: center;
     margin: 0;
@@ -15,5 +16,6 @@
 @media (min-width: 768px) {
   .protocol-card {
     width: 200px;
+    margin-right: 2rem;
   }
 }
