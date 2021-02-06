@@ -41,10 +41,6 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
     const yourLocalBalance = useBalance(localProvider, address);
     //if (DEBUG) console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...")
 
-    // just plug in different 🛰 providers to get your balance on different chains:
-    const yourMainnetBalance = useBalance(mainnetProvider, address);
-    //if (DEBUG) console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...")
-
     // Load in your local 📝 contract and read a value from it:
     const readContracts = useContractLoader(localProvider);
     //if (DEBUG) console.log("📝 readContracts", readContracts)
@@ -78,16 +74,6 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
 
     const IERC20Contract = useExternalContractLoader(userProvider, "0x6b175474e89094c44da98b954eedeac495271d0f", IERC20.abi);
     //console.log("IERC20Contract:", IERC20Contract)
-
-
-    //SCAFFOLD EXAMPLE
-    // keep track of a variable from the contract in the local React state:
-    const purpose = useContractReader(readContracts, "YourContract", "purpose")
-    //console.log("🤗 purpose:", purpose)
-
-    //📟 Listen for broadcast events
-    const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
-    //console.log("📟 SetPurpose events:", setPurposeEvents)
 
     //CREDIT POOL
 
@@ -159,8 +145,6 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
         readContracts,
         writeContracts,
         setDepositEvent,
-        purpose,
-        setPurposeEvents,
         withdrawnEvent,
         minSolvencyRatio,
         totalBorrowedAmount,

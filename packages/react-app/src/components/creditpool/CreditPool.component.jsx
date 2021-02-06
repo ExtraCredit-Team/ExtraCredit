@@ -6,17 +6,16 @@ import {Address, Balance} from "../index";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 
-export default function CreditPool({mainnetWETHAaveContract,
+export default function CreditPool({
+                                       mainnetWETHAaveContract,
                                        totalDelegation,
                                        depositors,
-                                       withdrawnEvent,
                                        aWethContract,
                                        setDepositEvent,
-                                       totalDeposit, address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
+                                       totalDeposit, address, mainnetProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
 
     const [amountToDeposit, setNewAmountToDeposit] = useState("loading...");
-    const [amountToWithdraw, setNewAmountToWithdraw] = useState("loading...");
     const [ethAmountToDepositToAave, setethAmountToDepositToAave] = useState("loading...")
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
 
@@ -33,7 +32,7 @@ export default function CreditPool({mainnetWETHAaveContract,
                         setethAmountToDepositToAave(e.target.value)
                     }}/>
                     <Button onClick={() => {
-                        tx( mainnetWETHAaveContract.depositETH(address,"0",{
+                        tx(mainnetWETHAaveContract.depositETH(address, "0", {
                             value: parseEther(ethAmountToDepositToAave.toString())
                         }))
                     }}>Deposit to AAVE</Button>
@@ -140,7 +139,6 @@ export default function CreditPool({mainnetWETHAaveContract,
                     }}
                 />
             </div>
-
 
 
         </div>

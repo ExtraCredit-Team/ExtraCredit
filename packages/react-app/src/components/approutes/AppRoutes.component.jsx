@@ -1,7 +1,6 @@
 import {Route, Switch} from "react-router-dom";
 import {AppMenu} from "../appmenu/AppMenu.component";
-import {Contract} from "../index";
-import {ExampleUI, Hints, Subgraph} from "../../views";
+import {Hints, Subgraph} from "../../views";
 import React from "react";
 import * as PropTypes from "prop-types";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
@@ -24,8 +23,6 @@ AppRoutes.propTypes = {
     tx: PropTypes.any,
     writeContracts: PropTypes.any,
     readContracts: PropTypes.any,
-    purpose: PropTypes.any,
-    purposeEvents: PropTypes.any,
     subgraphUri: PropTypes.any,
     mainnetProvider: PropTypes.any,
     localProvider: PropTypes.any,
@@ -46,29 +43,7 @@ export function AppRoutes(props) {
 
         <Switch>
             <Route exact path="/">
-                {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-                <Contract
-                    name="YourContract"
-                    signer={props.userProvider.getSigner()}
-                    provider={props.localProvider}
-                    address={props.address}
-                    blockExplorer={props.blockExplorer}
-                />
-
-                { /* Uncomment to display and interact with an external contract (DAI on mainnet):
-            <Contract
-              name="DAI"
-              customContract={mainnetDAIContract}
-              signer={userProvider.getSigner()}
-              provider={mainnetProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
-            */}
+                <BorrowerDashboard/>
             </Route>
             <Route path="/borrower">
                 <BorrowerDashboard/>
@@ -85,21 +60,6 @@ export function AppRoutes(props) {
                     yourLocalBalance={props.yourLocalBalance}
                     mainnetProvider={props.mainnetProvider}
                     price={props.price}
-                />
-            </Route>
-            <Route path="/exampleui">
-                <ExampleUI
-                    address={props.address}
-                    userProvider={props.userProvider}
-                    mainnetProvider={props.mainnetProvider}
-                    localProvider={props.localProvider}
-                    yourLocalBalance={props.yourLocalBalance}
-                    price={props.price}
-                    tx={props.tx}
-                    writeContracts={props.writeContracts}
-                    readContracts={props.readContracts}
-                    purpose={props.purpose}
-                    setPurposeEvents={props.purposeEvents}
                 />
             </Route>
             <Route path="/creditpool-ui">

@@ -6,9 +6,6 @@ import {Address} from "../../components";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 import {FormGroup, Label} from "reactstrap";
-import {useQuery, gql} from '@apollo/client';
-
-
 
 
 export default function MarginPool({
@@ -85,10 +82,9 @@ export default function MarginPool({
                     </FormGroup>
                     <Button onClick={async () => {
                         /* look how you call setDeposit on your contract: */
-                        let amount = 10;
                         let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
-                        let wethAsset = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-                        let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
+                        //let wethAsset = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+                        //let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
                         console.log("investDuration", investDuration);
                         console.log("amountToInvest", amountToInvest);
                         console.log("marginAmount : ", marginAmount);
@@ -119,9 +115,8 @@ export default function MarginPool({
                     </FormGroup>
                     <Button onClick={() => {
                         /* look how you call setDeposit on your contract: */
-                        let amount = 10;
                         let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
-                        let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
+                        //let debtToken = "0x778A13D3eeb110A4f7bb6529F99c000119a08E92";
                         console.log("amountToInvest", parseEther(amountToInvest));
                         console.log("amountToDelegate", parseEther(amountToDelegate));
                         console.log("marginPoolAddress:", marginPoolAddress);

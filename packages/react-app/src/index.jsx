@@ -4,7 +4,7 @@ import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import "./index.css";
 import App from "./App";
 
-let subgraphUri = "https://api.thegraph.com/subgraphs/name/aave/protocol-v2";
+let subgraphUri = "https://api.thegraph.com/subgraphs/name/aave/protocol\n";
 
 const client = new ApolloClient({
     uri: subgraphUri,

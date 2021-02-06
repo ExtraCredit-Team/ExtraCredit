@@ -60,21 +60,6 @@ const routes = [
         icon: "far fa-handshake text-orange",
     },
     {
-        path: "/ethereum",
-        name: "Show eth tools",
-        icon: "fab fa-ethereum text-orange",
-    },
-    {
-        path: "/old-menu",
-        name: "Plain Scaffold App",
-        icon: "fas fa-bolt text-black",
-    },
-    {
-        path: "/exampleui",
-        name: "Plain Scaffold App",
-        icon: "fas fa-hand-holding text-green",
-    },
-    {
         path: "/creditpool-ui",
         name: "Credit Pool",
         icon: "fas fa-coins text-yellow",
