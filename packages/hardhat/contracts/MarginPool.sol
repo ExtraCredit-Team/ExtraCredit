@@ -32,9 +32,10 @@ contract MarginPool {
         uint256 interestAmount;
         bool hasBorrowed;
     }
-
+    
     uint256 public pendingDepositRate;
     uint256 public pendingBorrowingRate;
+
     mapping(address => Borrower) public delegateeDeposits;
 
     InterestRateStrategy public interestRateStrategy;
@@ -159,16 +160,20 @@ contract MarginPool {
         borrower.investment = 0;
         borrower.solvencyRatio = 0;
         borrower.hasBorrowed = false;
+        console.log(IERC20(_asset).balanceOf(address(this)), "dai balance before withdraw");
 
-        //below would give negative number and multiplication overflow
-        //totalBorrowedAmount -= investment.sub(margin);
+        (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
+
         // withdrawing yield amount from yearn
         YearnVault(daiVault).withdraw(_ytokenBalance);
+        console.log(IERC20(_asset).balanceOf(address(this)), "dai balance after withdraw");
         // get reward split
-        (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
         totalBorrowedAmount -= investment.sub(margin);
-        // repaying credit  pool the borrowed funds
-        lendingPool.repay(_asset, creditPoolReward.sub(margin), 1, creditPool);
+        // repaying the borrowed credit with interest
+        lendingPool.repay(_asset, investment.sub(margin), 1, creditPool);
+        // repaying the applicable reward amount to credit pool
+        IERC20(_asset).safeTransfer(creditPool, creditPoolReward);
+        // repaying the applicable reward amount + margin to borrower
         IERC20(_asset).safeTransfer(msg.sender, margin.add(borrowerReward));
     }
 
@@ -179,8 +184,8 @@ contract MarginPool {
      * @param _investedAmount  initial invested amount in yearn.
      */
     function calculateRewardSplit(address _asset, uint256 _ytokenBalance, uint256 _investedAmount) public returns (uint, uint) {
-        uint256 reward = getYearnVaultLiquidityValue(_ytokenBalance);
-        console.log("pending reward is", reward);
+        uint256 totalReturn = getYearnBorrowerShare(_ytokenBalance);
+        console.log("total returns principal + rewards", totalReturn);
         // get atoken address
         (, address _debtToken,) = dataProvider.getReserveTokensAddresses(
             _asset
@@ -203,54 +208,56 @@ contract MarginPool {
             totalBorrowedAmount,
             _delegatedAmount
         );
+
         pendingDepositRate = depositRate;
         console.log("pending borrowing rate is", pendingDepositRate);
-
+        
+        // getting the rewards earned = total returns - investedAmount
+        // the tx reverts because due to some reason even after 1 day the totalReturn is 22.99 dai and _investedAmount was 23 dai 
+        uint256 reward = totalReturn.sub(_investedAmount);
+        // calculating the reward amount only for both credit pool and borrower
         uint256 creditPoolReward = reward.mul(depositRate);
-        uint256 borrowerReward = reward.sub(_investedAmount).mul(borrowRate);
+        uint256 borrowerReward = reward.mul(borrowRate);
         return (creditPoolReward, borrowerReward);
     }
 
     /**
-     * @dev getYearnVaultLiquidityValue which returns the invested liquidity
+     * @dev getYearnBorrowerShare which returns the total user returns
+     * @param _ytokenBalance  calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
+     */
+    function getYearnBorrowerShare(uint256 _ytokenBalance) public view returns(uint256) {
+        uint balance = YearnVault(daiVault).balance();
+        uint supply = YearnVault(daiVault).totalSupply();
+        uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
+        return _userReturns;
+    }
+
+    /**
+     * @dev getYearnVaultLiquidityValue which returns the liquidity value of the amount in usd invested by the borrower
      * @param _ytokenBalance  calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
      */
     function getYearnVaultLiquidityValue(uint256 _ytokenBalance)
-        public
+        public view
         returns (uint256)
     {
-        address controller = YearnVault(daiVault).controller();
-        address token = YearnVault(daiVault).token();
-        uint256 _userReturns = (
-            YearnVault(daiVault).balance().mul(_ytokenBalance)
-        )
-            .div(YearnVault(daiVault).totalSupply());
-
-        // Check balance
-        uint256 vaultBalance = IERC20(token).balanceOf(address(this));
-        if (vaultBalance < _userReturns) {
-            uint256 _withdraw = _userReturns.sub(vaultBalance);
-            YearnController(controller).withdraw(address(token), _withdraw);
-            uint256 _after = IERC20(token).balanceOf(address(this));
-            uint256 _diff = _after.sub(vaultBalance);
-            if (_diff < _withdraw) {
-                _userReturns = _userReturns.add(_diff);
-            }
-        }
+        uint balance = YearnVault(daiVault).balance();
+        uint supply = YearnVault(daiVault).totalSupply();
+        uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
+        // this is multiplied by 10 ^ 8 so needs to be divided by 10 ^ 8 and then converted to eth format on front end
         uint256 usdQuote = uint256(fiatDaiRef.latestAnswer());
         usdQuote = usdQuote.mul(_userReturns);
-        return usdQuote;
+        return _userReturns;
     }
 
     function getTotalBorrowed() public view returns(uint256) {
       return totalBorrowedAmount;
     }
 
-    function getPendingDepositRate() public returns(uint256) {
+    function getPendingDepositRate() public view returns(uint256) {
       return pendingDepositRate;
     }
 
-    function getPendingBorrowingRate() public returns(uint256) {
+    function getPendingBorrowingRate() public view returns(uint256) {
       return pendingBorrowingRate;
     }
 }

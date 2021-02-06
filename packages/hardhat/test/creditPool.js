@@ -109,11 +109,6 @@ describe("Credit Delegation flow", function() {
        const allowance = await debtToken.borrowAllowance(creditPool.address, marginPool.address)
        console.log('allowance', allowance.toString())
 
-//    expect(await debtToken.borrowAllowance(creditPool.address, marginPool.address))
-//   .to.be.gt(0);
-
-
-
         const daiwhaleSigner = await impersonateAddress(whalePax);
         let dai = new ethers.Contract(daiAddress, Token.abi, daiwhaleSigner);
 
@@ -127,7 +122,6 @@ describe("Credit Delegation flow", function() {
             172800
         );
 
-        //const userinfo = await marginPool.delegateeDeposits();
 
         const resultBorrow = await creditPool.getTotalDelegation();
         const result = await marginPool.getTotalBorrowed();
@@ -149,19 +143,17 @@ describe("Credit Delegation flow", function() {
         );
 
         await time.increase(time.duration.days(1));
+        // tried increasing blocks still the same issue
+        // let block = await time.latestBlock();
+        // await time.advanceBlockTo(parseInt(block) + 100);
+        
+        let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', Token.abi, daiwhaleSigner);
+        const ytokenbal = await ytoken.balanceOf(marginPool.address)
         await marginPool.repay(
           daiAddress,
-          ethers.utils.parseEther('23')
+          ytokenbal
       );
 
-      const pendingDepRate = marginPool.getPendingDepositRate();
-      console.log(
-        pendingDepRate
-      );
-      const pendingBorRate = marginPool.getPendingBorrowingRate();
-      console.log(
-        pendingBorRate
-      );
     });
 
     /*
