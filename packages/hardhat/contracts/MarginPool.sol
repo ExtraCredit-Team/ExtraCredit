@@ -13,6 +13,8 @@ import {
 } from "contracts/Interfaces.sol";
 import {SafeERC20} from "contracts/Libraries.sol";
 import {InterestRateStrategy} from "./InterestRateStrategy.sol";
+import "hardhat/console.sol";
+
 
 contract MarginPool {
     using SafeMath for uint256;
@@ -31,6 +33,8 @@ contract MarginPool {
         bool hasBorrowed;
     }
 
+    uint256 public pendingDepositRate;
+    uint256 public pendingBorrowingRate;
     mapping(address => Borrower) public delegateeDeposits;
 
     InterestRateStrategy public interestRateStrategy;
@@ -155,11 +159,14 @@ contract MarginPool {
         borrower.investment = 0;
         borrower.solvencyRatio = 0;
         borrower.hasBorrowed = false;
-        totalBorrowedAmount -= investment.sub(margin);
+
+        //below would give negative number and multiplication overflow
+        //totalBorrowedAmount -= investment.sub(margin);
         // withdrawing yield amount from yearn
         YearnVault(daiVault).withdraw(_ytokenBalance);
         // get reward split
         (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
+        totalBorrowedAmount -= investment.sub(margin);
         // repaying credit  pool the borrowed funds
         lendingPool.repay(_asset, creditPoolReward.sub(margin), 1, creditPool);
         IERC20(_asset).safeTransfer(msg.sender, margin.add(borrowerReward));
@@ -173,7 +180,7 @@ contract MarginPool {
      */
     function calculateRewardSplit(address _asset, uint256 _ytokenBalance, uint256 _investedAmount) public returns (uint, uint) {
         uint256 reward = getYearnVaultLiquidityValue(_ytokenBalance);
-
+        console.log("pending reward is", reward);
         // get atoken address
         (, address _debtToken,) = dataProvider.getReserveTokensAddresses(
             _asset
@@ -188,7 +195,18 @@ contract MarginPool {
             totalBorrowedAmount,
             _delegatedAmount
         );
-        uint256 creditPoolReward = reward.mul(uint256(1).sub(borrowRate));
+        pendingBorrowingRate = borrowRate;
+        console.log("pending borrowing rate is", pendingBorrowingRate);
+
+        //method below is preferred, else we get substraction overflow
+        uint256 depositRate = interestRateStrategy.computeDepositRewardRate(
+            totalBorrowedAmount,
+            _delegatedAmount
+        );
+        pendingDepositRate = depositRate;
+        console.log("pending borrowing rate is", pendingDepositRate);
+
+        uint256 creditPoolReward = reward.mul(depositRate);
         uint256 borrowerReward = reward.sub(_investedAmount).mul(borrowRate);
         return (creditPoolReward, borrowerReward);
     }
@@ -226,5 +244,13 @@ contract MarginPool {
 
     function getTotalBorrowed() public view returns(uint256) {
       return totalBorrowedAmount;
+    }
+
+    function getPendingDepositRate() public returns(uint256) {
+      return pendingDepositRate;
+    }
+
+    function getPendingBorrowingRate() public returns(uint256) {
+      return pendingBorrowingRate;
     }
 }

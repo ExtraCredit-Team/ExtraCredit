@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1612432965792,
+      "lastModificationDate": 1612608834189,
       "contentHash": "8249cfea935d5aefb2a42004e7441dfc",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
@@ -263,8 +263,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612368863081,
-      "contentHash": "990be48a870c2d67ceef18ad237efd37",
+      "lastModificationDate": 1612611563217,
+      "contentHash": "0991613d15a975d3f027d7bc054adf9e",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -293,7 +293,8 @@
         "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
         "contracts/Interfaces.sol",
         "contracts/Libraries.sol",
-        "./InterestRateStrategy.sol"
+        "./InterestRateStrategy.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         ">=0.6.0 <0.7.0"

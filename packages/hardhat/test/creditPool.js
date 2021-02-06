@@ -154,10 +154,17 @@ describe("Credit Delegation flow", function() {
           ethers.utils.parseEther('23')
       );
 
-
+      const pendingDepRate = marginPool.getPendingDepositRate();
+      console.log(
+        pendingDepRate
+      );
+      const pendingBorRate = marginPool.getPendingBorrowingRate();
+      console.log(
+        pendingBorRate
+      );
     });
 
-
+    /*
      it("2) should deposit ETH, get WETH, deposit WETH, delegates WETH and borrower to borrow DAI", async function () {
        const whaleSigner = await impersonateAddress(whaleEthPax);
 
@@ -379,6 +386,8 @@ describe("Credit Delegation flow", function() {
   );
 
 });
+
+*/
 
 
 });
