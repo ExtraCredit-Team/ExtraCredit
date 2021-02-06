@@ -110,7 +110,7 @@ export default function LoadEthersHooks(injectedProvider, mainnetProvider, local
      const totalBorrowedAmount = useContractReader(readContracts, "MarginPool", "totalBorrowedAmount");
      //console.log("🤗 totalBorrowedAmount Balances:", totalBorrowedAmount);
 
-    const delegateeDeposits = useContractReader(readContracts, "MarginPool", "delegateeDeposits");
+    const delegateeDeposits = useContractReader(readContracts, "MarginPool", "delegateeDeposits", [address]);
     //console.log("delegateeDeposits: ", delegateeDeposits);
 
     /*
