@@ -9,6 +9,7 @@ import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
 import {InterestRatesStrategy} from "../interestratestrategy/InterestRateStategy.component";
+import {HomeMadeSubGraph} from "../../views/homeMadeSubGraph";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -120,6 +121,10 @@ export function AppRoutes(props) {
                     totalDelegation={props.totalDelegation}
                     depositors={props.depositors}
                 />
+            </Route>
+
+            <Route path="/homesubgraph">
+                <HomeMadeSubGraph {...props}/>
             </Route>
             <Route path="/marginpool-ui">
                 <MarginPool

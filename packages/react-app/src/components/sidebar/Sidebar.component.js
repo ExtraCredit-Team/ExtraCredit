@@ -88,8 +88,15 @@ const routes = [
         path: "/interestrates",
         name: "Interest Rates Stats",
         icon: "fas fa-plane text-green",
+    },
+    {
+        path: "/homesubgraph",
+        name: "SubGraph",
+        icon: "fas fa-plane text-orange",
     }
 ];
+
+
 
 class Sidebar extends React.Component {
     state = {

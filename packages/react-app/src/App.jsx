@@ -115,7 +115,7 @@ function App(props) {
                     {/* ✏️ Edit the header and change the title to your project name */}
                     <Header/>
                     <Button onClick={() => toggle()}>Show Eth Tools</Button>
-                    <AppRoutes localProvider={localProvider} mainnetProvider={mainnetProvider}
+                    <AppRoutes {...props} localProvider={localProvider} mainnetProvider={mainnetProvider}
                                blockExplorer={blockExplorer}
                                userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance}
                                price={price} tx={tx}

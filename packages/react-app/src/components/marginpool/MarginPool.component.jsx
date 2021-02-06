@@ -6,6 +6,9 @@ import {Address} from "../../components";
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address"
 import {FormGroup, Label} from "reactstrap";
+import {useQuery, gql} from '@apollo/client';
+
+
 
 
 export default function MarginPool({
@@ -22,6 +25,8 @@ export default function MarginPool({
     const [investDuration, setInvestDuration] = useState(1);
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
     const [daiAmountBorrowed, setdaiAmountBorrowed] = useState("loading...");
+
+
     return (
         <div>
             {/*
@@ -56,7 +61,8 @@ export default function MarginPool({
                 <div>Margin: {delegateeDeposits && formatEther(delegateeDeposits[1])}</div>
                 <div>Investment: {delegateeDeposits && formatEther(delegateeDeposits[2].toString())}</div>
                 <div>Yield acquired: {delegateeDeposits && formatEther(delegateeDeposits[3].toString())}</div>
-                <div>Interest Paid for delegation: {delegateeDeposits && formatEther(delegateeDeposits[4].toString())}</div>
+                <div>Interest Paid for
+                    delegation: {delegateeDeposits && formatEther(delegateeDeposits[4].toString())}</div>
                 <div>Has Borrowed: {delegateeDeposits && delegateeDeposits[5].toString()}</div>
                 <Divider/>
 
