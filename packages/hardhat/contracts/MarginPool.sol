@@ -32,7 +32,7 @@ contract MarginPool {
         uint256 interestAmount;
         bool hasBorrowed;
     }
-    
+
     uint256 public pendingDepositRate;
     uint256 public pendingBorrowingRate;
 
@@ -211,9 +211,9 @@ contract MarginPool {
 
         pendingDepositRate = depositRate;
         console.log("pending borrowing rate is", pendingDepositRate);
-        
+
         // getting the rewards earned = total returns - investedAmount
-        // the tx reverts because due to some reason even after 1 day the totalReturn is 22.99 dai and _investedAmount was 23 dai 
+        // the tx reverts because due to some reason even after 1 day the totalReturn is 22.99 dai and _investedAmount was 23 dai
         uint256 reward = totalReturn.sub(_investedAmount);
         // calculating the reward amount only for both credit pool and borrower
         uint256 creditPoolReward = reward.mul(depositRate);

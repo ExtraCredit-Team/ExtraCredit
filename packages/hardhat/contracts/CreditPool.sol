@@ -1,11 +1,13 @@
 pragma solidity >=0.6.0 <0.7.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import { ILendingPool, IProtocolDataProvider, IStableDebtToken, AggregatorInterface } from "contracts/Interfaces.sol";
 
 contract CreditPool {
   using SafeERC20 for IERC20;
+  using SafeMath for uint256;
   //mapping(address => uint256) public depositBalances;
 
   struct Depositor {
@@ -14,6 +16,7 @@ contract CreditPool {
   }
 
   mapping(address => Depositor) public depositors;
+  mapping (address => uint256) public checkpoints;
 
   //mapping(address => mapping(uint256 => uint256)) public delegatedAmounts;
   //mapping(address => uint256) public delegatedAmounts;
@@ -21,11 +24,14 @@ contract CreditPool {
   uint256 public totalDelegation;
   uint256 public ethRate;
   uint256 public daiRate;
+  uint public reward;
+  uint constant public REWARD_MULTIPLIER = 1/uint256(2);
 
   ILendingPool constant lendingPool = ILendingPool(address(0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9)); // on mainnet
   IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d)); //on mainnet
   AggregatorInterface constant fiatDaiRef = AggregatorInterface(address(0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9)); // on mainnet
   AggregatorInterface constant fiatEthRef = AggregatorInterface(address(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419)); // on mainnet
+  address public dai = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
 
   event Deposited(uint256 amount, address aToken);
   event Withdrawn(uint256 amount, address aToken);
@@ -34,6 +40,9 @@ contract CreditPool {
     * @param _debtToken The asset allowed to borrow
   */
   function deposit(uint256 _amount, address _aToken, address _delegatee, uint256 _delegatedAmount, address _debtToken) external {
+    if(checkpoints[msg.sender] == 0) {
+      checkpoints[msg.sender] = block.number;
+    }
     Depositor storage depositor = depositors[msg.sender];
 	  depositor.depositAmount += _amount;
 	  depositor.delegatedAmount += _delegatedAmount;
@@ -69,11 +78,25 @@ contract CreditPool {
 
   function withdraw(uint256 _amount, address _aToken) external {
     require(depositors[msg.sender].depositAmount > _amount, "you didnt deposit enough");
+
+    uint256 checkpoint = checkpoints[msg.sender];
+    uint256 balance = IERC20(dai).balanceOf(address(this));
+    uint256 ratio = depositors[msg.sender].delegatedAmount / totalDelegation;
+
+    //applying a simple multiplier with 40320 ~ 7days
+    if ( (block.number - checkpoint) < 40320) {
+      reward = balance * ratio * REWARD_MULTIPLIER;
+    } else {
+      reward = balance * ratio;
+    }
+
     depositors[msg.sender].depositAmount -= _amount;
     //below is TBD
     //depositors[msg.sender].delegatedAmount -= 0;
     totalDeposit -= _amount;
-    IERC20(_aToken).transfer(msg.sender, _amount);
+    checkpoints[msg.sender] = 0;
+    IERC20(_aToken).safeTransfer(msg.sender, _amount);
+    IERC20(dai).safeTransfer(msg.sender, reward);
     emit Withdrawn(_amount, _aToken);
   }
 

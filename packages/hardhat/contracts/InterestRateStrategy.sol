@@ -2,7 +2,7 @@ pragma solidity >=0.6.0 <0.7.0;
 
 import "./WadRayMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import { SafeMath} from "contracts/Libraries.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract InterestRateStrategy is Ownable {
 using SafeMath for uint256;
