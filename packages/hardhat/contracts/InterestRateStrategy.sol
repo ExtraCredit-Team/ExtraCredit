@@ -2,7 +2,7 @@ pragma solidity >=0.6.0 <0.7.0;
 
 import "./WadRayMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import { SafeMath} from "contracts/Libraries.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract InterestRateStrategy is Ownable {
 using SafeMath for uint256;
@@ -13,6 +13,7 @@ uint256 public excessRate;
 uint256 public baseStableRate;
 uint256 public slope1StableRate;
 uint256 public slope2StableRate;
+uint256 public a = 1000000000000000000;
 
 constructor(uint256 _optimalUtilization, uint256 _baseStableRate,
   uint256 _slope1StableRate, uint256 _slope2StableRate) public
@@ -48,7 +49,7 @@ function getUtilisation(uint256 _totalBorrowed, uint256 _totalCreditAvailable) p
   * @param _totalCreditAvailable The total amount of credit delegated in the CreditPool
 */
 function computeBorrowingRewardRate(uint256 _totalBorrowed, uint256 _totalCreditAvailable) public view returns(uint256) {
-  return WadRayMath.ray().sub(computeDepositRewardRate(_totalBorrowed, _totalCreditAvailable));
+  return a.sub(computeDepositRewardRate(_totalBorrowed, _totalCreditAvailable));
 }
 
 /**
