@@ -184,12 +184,12 @@ export default function MarginPoolInvest({
                         <Formik
                             onSubmit={async (values) => {
                                 console.log(values);
-                                await tx(IERC20Contract.approve(readContracts.MarginPool.address, parseEther("1000")));
-                                await tx(writeContracts.MarginPool.invest(parseEther(values.amountToBorrow), debtTokenAddress, parseEther(values.marginAmount), parseEther("1"), values.investDuration))
+                                await tx(IERC20Contract.approve(readContracts.MarginPool.address, parseEther("10000")));
+                                await tx(writeContracts.MarginPool.invest(parseEther(values.amountToBorrow.toString()), debtTokenAddress, parseEther(values.persoMarginAmount.toString()), parseEther(values.interestMarginAmount.toString()), (values.investDuration*604800).toString()))
                             }}
                             initialValues={{
                                 amountToBorrow: "",
-                                investDuration: "1",
+                                investDuration: "0",
                                 interestMarginAmount: "",
                                 persoMarginAmount: ""
                             }}
@@ -197,11 +197,10 @@ export default function MarginPoolInvest({
                                 const errors = {};
                                 if (values.amountToBorrow <= 0) {
                                     errors.amountToBorrow = 'Borrow at least 1!';
-                                } else if (values.amountToBorrow > parseInt(formatEther(totalBorrowedAmount.toString()))) {
-                                    errors.amountToDelegate = 'You cant borrow more than what is avaible in the Pool :('
-                                } else if ((values.persoMarginAmount + values.interestMarginAmount) <= (values.amountToBorrow / 10)) {
+                                } else if (((values.persoMarginAmount + values.interestMarginAmount + values.amountToBorrow) / (values.amountToBorrow)) * 100 < 1.15) {
                                     errors.persoMarginAmount = 'Your total margin needs to be at least a tenth of the borrowed amount!'
-                                }
+                                } else if (values.investDuration < 1)
+                                    errors.investDuration = "Too short duration";
                                 return errors;
                             }}
                         >
@@ -218,12 +217,11 @@ export default function MarginPoolInvest({
                                                                 borrow in the Pool :{"  "}</label>
                                                             {!totalDelegation ?
                                                                 <Spinner type="grow" color="success"/> :
-                                                                <strong>{formatEther(totalDelegation.toString()) * 1700}</strong>}
+                                                                <strong>{formatEther(totalDelegation.toString())}</strong>}
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <label className="form-control-label"
-                                                                   htmlFor="input-amountToBorrow">Current DAI borrowing
-                                                                rate :{"  "}</label>
+                                                                   htmlFor="input-amountToBorrow">Current DAI borrow rate from AAVE  : {"  "}</label>
                                                             {(error || loading) ?
                                                                 <Spinner type="grow" color="success"/> :
                                                                 <strong>{(daiBorrowInterestRate * 100).toFixed(2)}</strong>}
@@ -240,7 +238,7 @@ export default function MarginPoolInvest({
                                                                 name={"amountToBorrow"}
                                                                 id="input-amountToBorrow"
                                                                 placeholder="100 DAI"
-                                                                type="text"
+                                                                type="number"
                                                                 value={values.amountToBorrow}
                                                                 onChange={handleChange}
                                                                 onBlur={handleBlur}
@@ -300,6 +298,19 @@ export default function MarginPoolInvest({
                                                 <Row>
                                                     <Col>
                                                         <FormGroup>
+                                                            <h3>
+                                                                Total Margin amount + interest : {(parseInt(values.persoMarginAmount) + parseFloat(values.interestMarginAmount)).toFixed(3).toString()}
+                                                            </h3>
+                                                            <ErrorMessage name={`persoMarginAmount`}>
+                                                                {msg => <div style={{color: "#f5141b"}}
+                                                                             className="error-message">{msg}</div>}
+                                                            </ErrorMessage>
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <FormGroup>
                                                             <label
                                                                 className="form-control-label"
                                                                 htmlFor="input-investDuration"
@@ -326,7 +337,6 @@ export default function MarginPoolInvest({
                                                 </Row>
                                             </Form>
                                         </Col>
-                                        <DisplayVerificationProperties values={values} errors={errors}/>
                                     </Row>
                                 </>
                             )}

@@ -12,12 +12,14 @@ export default function CreditPool({
                                        depositors,
                                        aWethContract,
                                        setDepositEvent,
+                                       aaveLendingPool,
                                        totalDeposit, address, mainnetProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts
                                    }) {
 
     const [amountToDeposit, setNewAmountToDeposit] = useState("loading...");
     const [ethAmountToDepositToAave, setethAmountToDepositToAave] = useState("loading...")
     const [amountToDelegate, setNewAmountToDelegate] = useState("loading...");
+    const [daiAmountBorrowed, setdaiAmountBorrowed] = useState("loading...");
 
     return (
         <div>
@@ -36,6 +38,18 @@ export default function CreditPool({
                             value: parseEther(ethAmountToDepositToAave.toString())
                         }))
                     }}>Deposit to AAVE</Button>
+                </div>
+
+                <Divider/>
+
+                <div style={{margin: 8}}>
+                    <Input onChange={(e) => {
+                        setdaiAmountBorrowed(e.target.value)
+                    }}/>
+                    <Button onClick={() => {
+                        let daiToken = "0x6b175474e89094c44da98b954eedeac495271d0f";
+                        tx(aaveLendingPool.borrow(daiToken, parseEther(daiAmountBorrowed), 1, 0, address))
+                    }}>Borrow DAI</Button>
                 </div>
 
                 <Divider/>

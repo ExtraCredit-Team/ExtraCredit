@@ -82,6 +82,7 @@ export function AppRoutes(props) {
                     aWethContract={props.aWethContract}
                     totalDelegation={props.totalDelegation}
                     depositors={props.depositors}
+                    aaveLendingPool={props.aaveLendingPool}
                 />
             </Route>
             <Route path="/marginpool-ui">

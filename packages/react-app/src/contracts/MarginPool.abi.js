@@ -113,6 +113,19 @@ module.exports = [
   },
   {
     "inputs": [],
+    "name": "getMinimumSolvencyRatio",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getPendingBorrowingRate",
     "outputs": [
       {
@@ -140,6 +153,19 @@ module.exports = [
   {
     "inputs": [],
     "name": "getTotalBorrowed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getUserSolvencyRatio",
     "outputs": [
       {
         "internalType": "uint256",

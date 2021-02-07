@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, {useEffect, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Modal, Row} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Modal, Row, Spinner} from "reactstrap";
 import {ErrorMessage, Form, Formik} from 'formik';
 import {formatEther, parseEther} from "@ethersproject/units";
 import marginPoolAddress from "../../contracts/MarginPool.address";
@@ -112,11 +112,24 @@ export default function CreditPoolDepositor({
 
     const [showPerformance, setShowPerformance] = useState(false);
     const [showEventDeposited, setShowEventDeposited] = useState(false);
+    const [ethRate, setEthRate] = useState("Loading....");
+
 
     useEffect(() => {
-        console.log("setDepoEvent")
-        if(setDepositEvent)
-        setShowEventDeposited(true);
+
+        async function getEthRateFromContract(){
+            if(readContracts)
+            {
+                const rate = await readContracts.CreditPool.getETHRate();
+                setEthRate(parseFloat(formatEther(rate)*10000000000).toFixed(2));
+            }
+        }
+        getEthRateFromContract();
+    }, [readContracts])
+
+    useEffect(() => {
+        if (setDepositEvent)
+            setShowEventDeposited(true);
     }, [setDepositEvent]);
 
     return (
@@ -125,9 +138,9 @@ export default function CreditPoolDepositor({
                 <EventDepositedModal open={showEventDeposited} toggle={() => setShowEventDeposited(!showEventDeposited)}
                                      dataSource={setDepositEvent} renderItem={(item) => {
                     return (
-                            <List.Item key={item.amount}>
-                                {formatEther(item[0].toString())}
-                            </List.Item>
+                        <List.Item key={item.amount}>
+                            {formatEther(item[0].toString())}
+                        </List.Item>
                     )
                 }} onClick={() => setShowEventDeposited(false)}/>
                 <DepositPerformanceModal open={showPerformance} toggle={() => setShowPerformance(!showPerformance)}
@@ -161,7 +174,7 @@ export default function CreditPoolDepositor({
                                 const errors = {};
                                 if (values.amountToDeposit <= 0) {
                                     errors.amountToDeposit = 'Deposit at least 1!';
-                                } else if (values.amountToDelegate > values.amountToDeposit) {
+                                } else if (values.amountToDelegate > values.amountToDeposit * 1700) {
                                     errors.amountToDelegate = 'You cant delegate more than what you deposited'
                                 } else if (values.amountToDelegate <= 0) {
                                     errors.amountToDelegate = 'Please delegate some of your funds!'
@@ -204,16 +217,24 @@ export default function CreditPoolDepositor({
                                                 <Row>
                                                     <Col>
                                                         <FormGroup>
+
                                                             <label
-                                                                className="form-control-label"
+                                                                className="form-control-label mr-2"
                                                                 htmlFor="input-delegatedAmount"
                                                             >
-                                                                Amount to Delegate
+                                                                Amount of DAI to Delegate
+                                                            </label>
+                                                            <label
+                                                            >
+                                                            <em>
+                                                                {readContracts ? " (current rate: 1 ETH = " + ethRate +")" :
+                                                                    <Spinner type="grow" color="success"/>}
+                                                            </em>
                                                             </label>
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 id="input-delegatedAmount"
-                                                                placeholder="50 aWETH"
+                                                                placeholder="600 DAI"
                                                                 type="number"
                                                                 name={"amountToDelegate"}
                                                                 value={values.amountToDelegate}
