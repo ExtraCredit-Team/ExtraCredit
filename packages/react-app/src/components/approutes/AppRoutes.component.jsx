@@ -9,6 +9,7 @@ import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
 import {InterestRatesStrategy} from "../interestratestrategy/InterestRateStategy.component";
 import {HomeMadeSubGraph} from "../../views/homeMadeSubGraph";
+import CreditPoolDepositor from "../creditpool/CreditPoolDepositor.component";
 
 AppRoutes.propTypes = {
     route: PropTypes.any,
@@ -99,6 +100,19 @@ export function AppRoutes(props) {
                     IERC20Contract={props.IERC20Contract}
                     delegateeDeposits={props.delegateeDeposits}
                     aaveLendingPool={props.aaveLendingPool}
+                />
+            </Route>
+            <Route path="/new-depositor">
+                <CreditPoolDepositor
+                    address={props.address}
+                    userProvider={props.userProvider}
+                    mainnetProvider={props.mainnetProvider}
+                    localProvider={props.localProvider}
+                    tx={props.tx}
+                    setDepositEvent={props.setDepositEvent}
+                    writeContracts={props.writeContracts}
+                    readContracts={props.readContracts}
+                    aWethContract={props.aWethContract}
                 />
             </Route>
             <Route path="/interestrates">
