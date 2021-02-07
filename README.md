@@ -22,9 +22,9 @@ ExtraCredit connects these different profiles. On one hand, it helps Aave deposi
 
 The vision of the project long term revolves around solving 2 main concerns:
 
-      - [x] Ensuring the safety of Aave depositors who delegate their credit lines to the protocol
+- [x] Ensuring the safety of Aave depositors who delegate their credit lines to the protocol
 
-      - [x] Offering a suite a vaults that will keep up to date with the current market trends while ensuring that the underlying integrated protocols are considered safe enough to be whitelisted by ExtraCredit
+- [x] Offering a suite a vaults that will keep up to date with the current market trends while ensuring that the underlying integrated protocols are considered safe enough to be whitelisted by ExtraCredit
 
 The first point will benefit from integrating Aave Credit Delegation. Aave currently has billions of $ in its protocol and we believe that their efforts around ensuring the safety of its users funds will be key to ensuring proper liquidity to our platform. The user experience on the depositor side will also need to be very seamless and, just with a click of one or two buttons, Aave depositors should be able to boost their yield by a few percents.
 
