@@ -40,7 +40,6 @@
     "chart.js": "2.9.3",
     "dotenv": "^8.2.0",
     "eth-hooks": "^1.1.2",
-    "formik": "^2.2.6",
     "graphiql": "^1.0.5",
     "graphql": "^15.5.0",
     "isomorphic-fetch": "^3.0.0",

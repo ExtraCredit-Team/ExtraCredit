@@ -1,0 +1,29 @@
+@import "../../../styles/styles.scss";
+
+.amount-input-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .amount-input {
+    -webkit-appearance: none !important;
+    background: #fff;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ececec;
+    height: 30px;
+    outline: none;
+    width: 90%;
+  }
+  .amount-input:focus {
+    border: 1px solid #307dd8;
+  }
+  .amount-input:active {
+    outline: none;
+  }
+
+  @media (min-width: 768px) {
+    .amount-input {
+      width: 300px;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.protocol-card-wrapper {
+  display: flex;
+  margin: 1rem 0.5rem;
+  flex-wrap: wrap;
+  flex-flow: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .protocol-card-wrapper {
+    flex-flow: row;
+  }
+}

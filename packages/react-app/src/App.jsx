@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import "antd/dist/antd.css";
 import {Router} from 'react-router-dom';
-import {Button, Col, Container, Row} from "reactstrap";
+import {Button, Container} from "reactstrap";
 import {JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import "./App.css";
 import {web3Modal} from "./components/web3modals/web3Modals.component"
@@ -109,16 +109,12 @@ function App(props) {
     return (
         <Router history={history}>
             <Sidebar/>
-            <Header localProvider={localProvider}
-                    mainnetProvider={mainnetProvider}
-                    blockExplorer={blockExplorer}
-                    address={address} userProvider={userProvider}
-                    price={price}
-                    loadWeb3Modal={loadWeb3Modal}
-                    gasPrice={gasPrice}
-            />
             <Container className="main-content">
+
                 <Container className="pt-7" fluid>
+                    {/* ✏️ Edit the header and change the title to your project name */}
+                    <Header/>
+                    <Button onClick={() => toggle()}>Show Eth Tools</Button>
                     <AppRoutes {...props} localProvider={localProvider} mainnetProvider={mainnetProvider}
                                blockExplorer={blockExplorer}
                                userProvider={userProvider} address={address} yourLocalBalance={yourLocalBalance}
@@ -142,6 +138,20 @@ function App(props) {
                                totalBorrowedAmount={totalBorrowedAmount} getDepositPerUser={getDepositPerUser}
                                mainnetWETHAaveContract={mainnetWETHAaveContract}/>
 
+                    {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
+                    {showEthereumTools && <>  <EthereumAccount localProvider={localProvider}
+                                                               mainnetProvider={mainnetProvider}
+                                                               blockExplorer={blockExplorer}
+                                                               address={address} userProvider={userProvider}
+                                                               price={price}
+                                                               loadWeb3Modal={loadWeb3Modal}/>
+
+                        {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
+                        <EthereumDetails localProvider={localProvider} mainnetProvider={mainnetProvider}
+                                         blockExplorer={blockExplorer}
+                                         price={price} address={address} gasPrice={gasPrice} onClick={() => {
+                            window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
+                        }}/></>}
                 </Container>
             </Container>
         </Router>
