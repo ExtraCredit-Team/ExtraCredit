@@ -1,10 +1,11 @@
 import React from "react";
 
 import {Button, Card, CardHeader, Col, Container, Row, Table} from "reactstrap";
+import {formatEther} from "@ethersproject/units";
 
 // core components
 
-export function BorrowerAssets() {
+export function BorrowerAssets({props}) {
 
     return (
         <Row className="mt-5">
@@ -35,42 +36,18 @@ export function BorrowerAssets() {
                             <th scope="col">Borrowing rate</th>
                             <th scope="col">Borrowed value</th>
                             <th scope="col">Held Amount</th>
-                            <th scope="col">Held Value</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">WBTC</th>
-                            <td>32.212$</td>
-                            <td>2.8%</td>
-                            <td>
-                                <i className="fas fa-arrow-up text-success mr-3"/>{" "}
-                                10$
-                            </td>
-                            <td>0.000021</td>
-                            <td>$6</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">USDC</th>
-                            <td>1$</td>
-                            <td>11.8%</td>
-                            <td>
-                                <i className="fas fa-arrow-up text-success mr-3"/>{" "}
-                                10$
-                            </td>
-                            <td>0.0</td>
-                            <td>$0</td>
-                        </tr>
                         <tr>
                             <th scope="row">DAI</th>
                             <td>1$</td>
                             <td>10.1%</td>
                             <td>
                                 <i className="fas fa-equals text-warning mr-3"/>{" "}
-                                0$
+                                ${props.totalBorrowedAmount && parseFloat(formatEther(props.totalBorrowedAmount.toString()))}
                             </td>
-                            <td>0</td>
-                            <td>$0</td>
+                            <td>{props.totalBorrowedAmount && parseFloat(formatEther(props.totalBorrowedAmount.toString()))}</td>
                         </tr>
                         </tbody>
                     </Table>

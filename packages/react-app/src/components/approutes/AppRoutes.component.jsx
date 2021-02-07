@@ -1,17 +1,16 @@
-import { Route, Switch } from "react-router-dom";
-import { AppMenu } from "../appmenu/AppMenu.component";
-import { Hints, Subgraph } from "../../views";
+import {Route, Switch} from "react-router-dom";
+import {AppMenu} from "../appmenu/AppMenu.component";
+import {Hints, Subgraph} from "../../views";
 import React from "react";
 import * as PropTypes from "prop-types";
-import { BorrowerDashboard } from "../borrowerdashboard/BorrowerDashboard.component";
-import { DelegateCredit } from "../delegatecredit/DelegateCredit.component";
+import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
+import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
-import { InterestRatesStrategy } from "../interestratestrategy/InterestRateStategy.component";
-import { HomeMadeSubGraph } from "../../views/homeMadeSubGraph";
+import {InterestRatesStrategy} from "../interestratestrategy/InterestRateStategy.component";
 import CreditPoolDepositor from "../creditpool/CreditPoolDepositor.component";
-import MarginPoolInvest from "../marginpool/MarginPoolInvest.component";
 import Dashboard from "../../views/dashboard";
+import MarginPoolInvest from "../marginpool/MarginPoolInvest.component";
 
 AppRoutes.propTypes = {
   route: PropTypes.any,
@@ -67,6 +66,9 @@ export function AppRoutes(props) {
             totalDelegation={props.totalDelegation}
             depositors={props.depositors}
             aaveLendingPool={props.aaveLendingPool}
+            minSolvencyRatio={props.minSolvencyRatio}
+            totalBorrowedAmount={props.totalBorrowedAmount}
+            delegateeDeposits={props.delegateeDeposits}
           />
         </Route>
         <Route path="/borrower">
@@ -121,6 +123,22 @@ export function AppRoutes(props) {
             delegateeDeposits={props.delegateeDeposits}
             aaveLendingPool={props.aaveLendingPool}
             totalDelegation={props.totalDelegation}
+          />
+        </Route>
+        <Route path="/old-margin">
+          <MarginPool
+              address={props.address}
+              userProvider={props.userProvider}
+              mainnetProvider={props.mainnetProvider}
+              tx={props.tx}
+              writeContracts={props.writeContracts}
+              readContracts={props.readContracts}
+              minSolvencyRatio={props.minSolvencyRatio}
+              totalBorrowedAmount={props.totalBorrowedAmount}
+              IERC20Contract={props.IERC20Contract}
+              delegateeDeposits={props.delegateeDeposits}
+              aaveLendingPool={props.aaveLendingPool}
+              totalDelegation={props.totalDelegation}
           />
         </Route>
         <Route path="/new-depositor">

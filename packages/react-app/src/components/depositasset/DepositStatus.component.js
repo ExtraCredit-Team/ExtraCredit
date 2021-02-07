@@ -1,9 +1,9 @@
 import {Button, Card, CardBody, CardTitle, Col, Row} from "reactstrap";
 import React from "react";
-import {LottieController} from "../lottiecontroller/LottieController";
 import {formatEther} from "@ethersproject/units";
+import DepositCard from "../dashboardComponents/depositCard/depositCard";
 
-export function BorrowerStatus({props}) {
+export function DepositStatus(props) {
     return <Row>
         <Col lg="6">
             <Card className="card-stats mt-2 mb-4 mb-xl-0">
@@ -14,10 +14,10 @@ export function BorrowerStatus({props}) {
                                 tag="h5"
                                 className="text-uppercase text-muted mb-0"
                             >
-                                Total Borrowed
+                                Total deposited
                             </CardTitle>
                             <span className="h2 font-weight-bold mb-0">
-                            ${props.totalBorrowedAmount && parseFloat(formatEther(props.totalBorrowedAmount.toString()))}
+                            $0
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -42,9 +42,9 @@ export function BorrowerStatus({props}) {
                                 tag="h5"
                                 className="text-uppercase text-muted mb-0"
                             >
-                                Total Account Holdings
+                                Total Delegated
                             </CardTitle>
-                            <span className="h2 font-weight-bold mb-0">${props.delegateeDeposits && formatEther(props.delegateeDeposits[2].toString())}</span>
+                            <span className="h2 font-weight-bold mb-0">${props.protocolProps.totalDelegation && formatEther(props.protocolProps.totalDelegation.toString())}</span>
                         </div>
                         <Col className="col-auto">
                             <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -63,34 +63,11 @@ export function BorrowerStatus({props}) {
             <Button className={"mt-4"} size="lg" color="warning">Repay</Button>
         </Col>
         <Col lg="4">
-            <Card className="card-stats mt-2 mb-4 mb-xl-0">
-                <CardBody>
-                    <Row>
-                        <div className="col text-center">
-                            <CardTitle
-                                tag="h5"
-                                className="text-uppercase text-muted mb-0"
-                            >
-                                Solvency Ratio
-                            </CardTitle>
-                            <LottieController selectedAnimation={0}/>
-                            <br/>
-                            <span className="h1 font-weight-bold mb-0">
-                                {props.totalBorrowedAmount && props.delegateeDeposits && ((parseFloat(formatEther(props.delegateeDeposits[2].toString()))).toFixed(1)*100) / parseInt(formatEther(props.totalBorrowedAmount.toString()))}%
-                          </span>
-                            <h5>
-                                Minimum solvency ratio is: {props.minSolvencyRatio && (parseFloat(formatEther(props.minSolvencyRatio.toString()))*100).toFixed(1)}
-                            </h5>
-                        </div>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                        <span className="text-danger mr-2">
-                          <i className="fas fa-arrow-down"/> 3.48%
-                        </span>{" "}
-                        <span className="text-nowrap">Since last week</span>
-                    </p>
-                </CardBody>
-            </Card>
+            {props.totalDelegation && formatEther(props.protocolProps.totalDeposit.toString()) ? (
+                <DepositCard onShow={props.onShow} protocolProps={props.protocolProps} />
+            ) : (
+                <p>Go to Deposit section in order to deposit some amount, and start earning interest</p>
+            )}
         </Col>
     </Row>;
 }

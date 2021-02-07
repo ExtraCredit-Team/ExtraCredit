@@ -46,11 +46,11 @@ export default function MarginPool({
                 <Divider/>
 
                 <div><strong>Invest credit loans into Vaults</strong></div>
-                <div>minSolvencyRatio: {minSolvencyRatio && minSolvencyRatio.toString()}</div>
+                <div>minSolvencyRatio: {minSolvencyRatio && formatEther(minSolvencyRatio.toString())}</div>
 
                 <Divider/>
 
-                <div>totalBorrowedAmount: {totalBorrowedAmount && formatEther(totalBorrowedAmount.toString())}</div>
+                <div>totalBorrowedAmount: {totalBorrowedAmount && parseFloat(formatEther(totalBorrowedAmount.toString()))}</div>
 
                 <Divider/>
 

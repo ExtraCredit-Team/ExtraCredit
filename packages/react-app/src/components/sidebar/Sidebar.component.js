@@ -47,11 +47,6 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "fas fa-chart-line text-primary",
-  },
-  {
-    path: "/delegate-credit",
-    name: "Delegate Credit",
     icon: "fab fa-bitcoin text-blue",
   },
   {
@@ -70,6 +65,11 @@ const routes = [
     icon: "fas fa-plane text-yellow",
   },
   {
+    path: "/old-margin",
+    name: "Old Margin",
+    icon: "fas fa-plane text-orange",
+  },
+  {
     path: "/interestrates",
     name: "Interest Rates Stats",
     icon: "fas fa-plane text-green",
@@ -78,7 +78,7 @@ const routes = [
     path: "/new-depositor",
     name: "Deposit",
     icon: "fas fa-plane text-orange",
-  },
+  }
 ];
 
 class Sidebar extends React.Component {

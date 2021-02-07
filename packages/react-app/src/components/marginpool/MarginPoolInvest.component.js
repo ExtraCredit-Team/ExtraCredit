@@ -141,8 +141,7 @@ DelegationInterestRates.propTypes = {
     values: PropTypes.any,
     daiBorrowInterestRate: PropTypes.any
 };
-export default function MarginPoolInvest({
-                                             totalDelegation,
+export default function MarginPoolInvest({totalDelegation,
                                              delegateeDeposits,
                                              IERC20Contract,
                                              minSolvencyRatio,

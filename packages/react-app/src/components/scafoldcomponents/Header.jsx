@@ -15,11 +15,12 @@ export default function Header(props) {
     return (
         <div>
             <PageHeader
+                className={"header-bar"}
                 title="Extra Credit"
                 subTitle="Make use of Credit delegation"
                 style={{cursor: "pointer"}}
             />
-            <Button onClick={() => toggle()}>Show Eth Tools</Button>
+            <Button  className={"header-bar"} onClick={() => toggle()}>Show Eth Tools</Button>
             {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
             {showEthereumTools && <>  <EthereumAccount localProvider={props.localProvider}
                                                        mainnetProvider={props.mainnetProvider}
