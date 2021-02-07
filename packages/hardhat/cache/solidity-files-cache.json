@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/CreditPool.sol": {
-      "lastModificationDate": 1612641056153,
-      "contentHash": "36fb3fb2f442489b9e3379adb57032ef",
+      "lastModificationDate": 1612735009140,
+      "contentHash": "1d8b1449bc3f31f0ee2cfb02e8b5ce83",
       "sourceName": "contracts/CreditPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -264,7 +264,7 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612712971279,
+      "lastModificationDate": 1612734854553,
       "contentHash": "cf45d787c3138fa2ede1f9067f5e2817",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
