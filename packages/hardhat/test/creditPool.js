@@ -58,7 +58,7 @@ describe("Credit Delegation flow", function() {
         interestRateStrategy = await ethers.getContractFactory('InterestRateStrategy');
         interestRateStrategy = await interestRateStrategy.deploy(ethers.utils.parseEther('0.80'), ethers.utils.parseEther('0.04'), ethers.utils.parseEther('0.02'), ethers.utils.parseEther('0.75'))
         marginPool = await ethers.getContractFactory('MarginPool');
-        marginPool = await marginPool.deploy(creditPool.address, '1', interestRateStrategy.address);
+        marginPool = await marginPool.deploy(creditPool.address, ethers.utils.parseEther('1.05'), interestRateStrategy.address);
 
         //  debtWEth = await ethers.getContractAt('IStableDebtToken', '0x4e977830ba4bd783C0BB7F15d3e243f73FF57121');
 
@@ -121,6 +121,16 @@ describe("Credit Delegation flow", function() {
             ethers.utils.parseEther('2'),
             ethers.utils.parseEther('1'),
             864000
+        );
+
+        const ratio = await marginPool.getMinimumSolvencyRatio();
+        const userRatio = await marginPool.getUserSolvencyRatio();
+
+        console.log(
+          ratio
+        );
+        console.log(
+          userRatio
         );
 
         creditPool = creditPool.connect(daiwhaleSigner);

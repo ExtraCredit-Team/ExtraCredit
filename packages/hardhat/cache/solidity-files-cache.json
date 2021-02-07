@@ -264,8 +264,8 @@
       ]
     },
     "/home/thibault/Documents/Ethereum/Hackathon/MarketMake/ExtraCreditProd/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612698347854,
-      "contentHash": "dbd9022c8e423d1d067886e7e17fb21b",
+      "lastModificationDate": 1612712971279,
+      "contentHash": "cf45d787c3138fa2ede1f9067f5e2817",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -290,6 +290,7 @@
         }
       },
       "imports": [
+        "./WadRayMath.sol",
         "@openzeppelin/contracts/math/SafeMath.sol",
         "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
         "contracts/Interfaces.sol",
