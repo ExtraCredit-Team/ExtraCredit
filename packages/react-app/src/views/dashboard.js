@@ -13,8 +13,6 @@ const Dashboard = props => {
     setDisplay(() => false);
   };
 
-  console.log("PROPS IN DASH -> ", props);
-
   return (
     <div>
       <div className="tab-selector">
@@ -26,9 +24,9 @@ const Dashboard = props => {
         </span>
       </div>
       {activeTab === "deposit" ? (
-        <DepositContent display={display} onShow={onShow} onClose={onClose} />
+        <DepositContent display={display} onShow={onShow} onClose={onClose} protocolProps={props} />
       ) : (
-        <CreditContent display={display} onShow={onShow} onClose={onClose} />
+        <CreditContent display={display} onShow={onShow} onClose={onClose} protocolProps={props} />
       )}
     </div>
   );

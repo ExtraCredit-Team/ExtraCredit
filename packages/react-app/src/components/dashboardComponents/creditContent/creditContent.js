@@ -2,18 +2,25 @@ import React from "react";
 import CreditCard from "../creditCard/creditCard";
 import WithdrawModal from "../withdrawModal/withdrawModal";
 import ProtocolCard from "../protocolCard/protocolCard";
+import { formatEther } from "@ethersproject/units";
 import "./creditContent.scss";
 
-const CreditContent = ({ display, onShow, onClose }) => {
+const CreditContent = ({ protocolProps, display, onShow, onClose }) => {
+  console.log("🚀 ~ file: creditContent.js ~ line 8 ~ CreditContent ~ protocolProps", protocolProps);
   return (
     <div>
-      <WithdrawModal display={display} onClose={onClose} />
+      <WithdrawModal display={display} onClose={onClose} protocolProps={protocolProps} />
       <div className="protocol-card-wrapper">
-        <ProtocolCard title="Total deposited" value="200$" />
-        <ProtocolCard title="Interest earned" value="200$" />
-        <ProtocolCard title="% delegated" value="200$" />
+        <ProtocolCard
+          title="Total borrowed"
+          value={protocolProps.totalBorrowedAmount && formatEther(protocolProps.totalBorrowedAmount.toString())}
+        />
       </div>
-      <CreditCard onShow={onShow} />
+      {protocolProps.totalBorrowedAmount && formatEther(protocolProps.totalBorrowedAmount.toString()) ? (
+        <CreditCard onShow={onShow} protocolProps={protocolProps} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
