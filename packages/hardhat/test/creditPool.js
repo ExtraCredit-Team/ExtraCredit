@@ -123,8 +123,9 @@ describe("Credit Delegation flow", function() {
             864000
         );
 
-
+        creditPool = creditPool.connect(daiwhaleSigner);
         const resultBorrow = await creditPool.getTotalDelegation();
+        marginPool = marginPool.connect(daiwhaleSigner);
         const result = await marginPool.getTotalBorrowed();
         console.log(
           resultBorrow
@@ -153,12 +154,27 @@ describe("Credit Delegation flow", function() {
         // let block = await time.latestBlock();
         // await time.advanceBlockTo(parseInt(block) + 100);
         const yearnstrategySigner = await impersonateAddress('0x2839df1f230deda9fddbf1bcb0d4eb1ee1f7b7d0');
-
-        let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', ytokenABI, yearnstrategySigner);
+        let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', Token.abi, daiwhaleSigner);
+        //let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', ytokenABI, yearnstrategySigner);
         let daiVaultStrategy = new ethers.Contract('0x932fc4fd0eee66f22f1e23fba74d7058391c0b15', ytokenABI, yearnstrategySigner);
         console.log('here')
-       
-      console.log('here2')
+
+        let balanceVault = await ytoken.balanceOf(marginPool.address);
+        console.log(
+          balanceVault
+        );
+
+        console.log('here2')
+
+        let underlying = await daiVaultStrategy.getUnderlyingDai();
+        let debt = await daiVaultStrategy.getTotalDebtAmount();
+
+        console.log(
+          underlying
+        );
+        console.log(
+          debt
+        );
 
         await daiVaultStrategy.harvest();
         console.log('here1')
