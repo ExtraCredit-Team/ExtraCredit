@@ -15,24 +15,24 @@ const WithdrawModal = props => {
     });
   };
   return (
-    <div className={display ? "modal" : "no-modal"}>
-      <div className="modal-back"></div>
-      <div className="container">
-        <div className="info">
-          <div className="close-wrapper">
+    <div className={display ? "withdraw-modal" : "no-modal"}>
+      <div className="withdraw-modal-back"></div>
+      <div className="withdraw-container">
+        <div className="withdraw-info">
+          <div className="withdraw-close-wrapper">
             <button
-              className="close-btn"
+              className="withdraw-close-btn"
               onClick={() => {
                 onClose();
               }}
             >
-              <CloseOutlined className="x" />
+              <CloseOutlined className="withdraw-x" />
             </button>
           </div>
-          <div className="info-title">
+          <div className="withdraw-info-title">
             <h3>Deposited</h3>
           </div>
-          <div className="info-content">
+          <div className="withdraw-info-content">
             <AmountInput name="withdraw" value={withdraw.withdraw} onChange={onChange} />
             <RangeInput name="withdraw" value={withdraw.withdraw} onChange={onChange} />
           </div>
