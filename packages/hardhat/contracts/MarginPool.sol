@@ -1,5 +1,6 @@
 pragma solidity >=0.6.0 <0.7.0;
 
+import "./WadRayMath.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {
@@ -19,6 +20,7 @@ import "hardhat/console.sol";
 contract MarginPool {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
+    using WadRayMath for uint256;
 
     address public creditPool;
     uint256 public minSolvencyRatio;
@@ -97,13 +99,13 @@ contract MarginPool {
             _delegatedAmount >= totalBorrowedAmount,
             "MarginPool: insufficient debt allowance"
         );
-        // compute the solvency ratio added this buffere 10^5 since solidity does not handle decimal places
-        // so to render solvency ratio on ui we need to divide by 10^5 in the js code
-        uint256 solvencyRatio = (_amount.mul(100000))
-            .add(_marginAmount.add(_interestAmount))
-            .div(_amount);
+
+        uint256 solvencyRatio = (_amount
+            .add(_marginAmount.add(_interestAmount)))
+            .rayDiv(_amount)
+            .rayToWad();
         require(
-            solvencyRatio >= minSolvencyRatio.mul(100000),
+            solvencyRatio >= minSolvencyRatio,
             "MarginPool: insufficient margin amount"
         );
         // getting the actual timestamp for the duration
@@ -136,7 +138,7 @@ contract MarginPool {
             _amount.add(_marginAmount.add(_interestAmount))
         );
         // investing to yearn vault
-        YearnVault(daiVault).deposit(
+        daiVault.deposit(
             _amount.add(_marginAmount.add(_interestAmount))
         );
     }
@@ -165,7 +167,7 @@ contract MarginPool {
         (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
 
         // withdrawing yield amount from yearn
-        YearnVault(daiVault).withdraw(_ytokenBalance);
+        daiVault.withdraw(_ytokenBalance);
         console.log(IERC20(_asset).balanceOf(address(this)), "dai balance after withdraw");
         // get reward split
         totalBorrowedAmount -= investment.sub(margin);
@@ -226,8 +228,8 @@ contract MarginPool {
      * @param _ytokenBalance  calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
      */
     function getYearnBorrowerShare(uint256 _ytokenBalance) public view returns(uint256) {
-        uint balance = YearnVault(daiVault).balance();
-        uint supply = YearnVault(daiVault).totalSupply();
+        uint balance = daiVault.balance();
+        uint supply = daiVault.totalSupply();
         uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
         return _userReturns;
     }
@@ -240,9 +242,8 @@ contract MarginPool {
         public view
         returns (uint256)
     {
-        uint balance = YearnVault(daiVault).balance();
-        uint supply = YearnVault(daiVault).totalSupply();
-        uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
+
+        uint _userReturns = getYearnBorrowerShare(_ytokenBalance);
         // this is multiplied by 10 ^ 8 so needs to be divided by 10 ^ 8 and then converted to eth format on front end
         uint256 usdQuote = uint256(fiatDaiRef.latestAnswer());
         usdQuote = usdQuote.mul(_userReturns);
@@ -259,5 +260,13 @@ contract MarginPool {
 
     function getPendingBorrowingRate() public view returns(uint256) {
       return pendingBorrowingRate;
+    }
+
+    function getMinimumSolvencyRatio() public view returns(uint256) {
+      return minSolvencyRatio;
+    }
+
+    function getUserSolvencyRatio() public view returns(uint256) {
+      return delegateeDeposits[msg.sender].solvencyRatio;
     }
 }
