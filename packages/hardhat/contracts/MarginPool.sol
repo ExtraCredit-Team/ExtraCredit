@@ -136,7 +136,7 @@ contract MarginPool {
             _amount.add(_marginAmount.add(_interestAmount))
         );
         // investing to yearn vault
-        YearnVault(daiVault).deposit(
+        daiVault.deposit(
             _amount.add(_marginAmount.add(_interestAmount))
         );
     }
@@ -165,7 +165,7 @@ contract MarginPool {
         (uint creditPoolReward, uint borrowerReward) = calculateRewardSplit(_asset, _ytokenBalance, investment);
 
         // withdrawing yield amount from yearn
-        YearnVault(daiVault).withdraw(_ytokenBalance);
+        daiVault.withdraw(_ytokenBalance);
         console.log(IERC20(_asset).balanceOf(address(this)), "dai balance after withdraw");
         // get reward split
         totalBorrowedAmount -= investment.sub(margin);
@@ -226,8 +226,8 @@ contract MarginPool {
      * @param _ytokenBalance  calculated with borrower invested amount and duration they choose to boorow and taking in consideration the 1 year apy fetched from the api.
      */
     function getYearnBorrowerShare(uint256 _ytokenBalance) public view returns(uint256) {
-        uint balance = YearnVault(daiVault).balance();
-        uint supply = YearnVault(daiVault).totalSupply();
+        uint balance = daiVault.balance();
+        uint supply = daiVault.totalSupply();
         uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
         return _userReturns;
     }
@@ -240,9 +240,8 @@ contract MarginPool {
         public view
         returns (uint256)
     {
-        uint balance = YearnVault(daiVault).balance();
-        uint supply = YearnVault(daiVault).totalSupply();
-        uint _userReturns = (balance.mul(_ytokenBalance)).div(supply);
+       
+        uint _userReturns = getYearnBorrowerShare(_ytokenBalance);
         // this is multiplied by 10 ^ 8 so needs to be divided by 10 ^ 8 and then converted to eth format on front end
         uint256 usdQuote = uint256(fiatDaiRef.latestAnswer());
         usdQuote = usdQuote.mul(_userReturns);

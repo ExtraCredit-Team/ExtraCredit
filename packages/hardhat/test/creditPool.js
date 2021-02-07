@@ -20,6 +20,7 @@ var Token = require("../artifacts/contracts/Interfaces.sol/IERC20.json");
 var lendingPoolABI = require("../artifacts/contracts/Interfaces.sol/ILendingPool.json");
 var debttokenABI = require("../artifacts/contracts/Interfaces.sol/IStableDebtToken.json");
 var dataproviderABI = require("../artifacts/contracts/Interfaces.sol/IProtocolDataProvider.json");
+var ytokenABI = require("./constant/ytoken.json")
 var AaveWETH = require("../artifacts/contracts/Interfaces.sol/IWETHGateway.json");
 use(solidity);
 const url = "http://127.0.0.1:8545/";
@@ -119,7 +120,7 @@ describe("Credit Delegation flow", function() {
             dai.address,
             ethers.utils.parseEther('2'),
             ethers.utils.parseEther('1'),
-            172800
+            864000
         );
 
 
@@ -141,13 +142,26 @@ describe("Credit Delegation flow", function() {
         console.log(
           depositRate
         );
+        const controller = '0x9e65ad11b299ca0abefc2799ddb6314ef2d91080';
+      //   await daiwhaleSigner.sendTransaction({
+      //     to: controller,
+      //     value: ethers.utils.parseEther("2")
+      // });
 
-        await time.increase(time.duration.days(1));
+        await time.increase(time.duration.days(6));
         // tried increasing blocks still the same issue
         // let block = await time.latestBlock();
         // await time.advanceBlockTo(parseInt(block) + 100);
-        
-        let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', Token.abi, daiwhaleSigner);
+        const yearnstrategySigner = await impersonateAddress('0x2839df1f230deda9fddbf1bcb0d4eb1ee1f7b7d0');
+
+        let ytoken = new ethers.Contract('0xacd43e627e64355f1861cec6d3a6688b31a6f952', ytokenABI, yearnstrategySigner);
+        let daiVaultStrategy = new ethers.Contract('0x932fc4fd0eee66f22f1e23fba74d7058391c0b15', ytokenABI, yearnstrategySigner);
+        console.log('here')
+       
+      console.log('here2')
+
+        await daiVaultStrategy.harvest();
+        console.log('here1')
         const ytokenbal = await ytoken.balanceOf(marginPool.address)
         await marginPool.repay(
           daiAddress,
