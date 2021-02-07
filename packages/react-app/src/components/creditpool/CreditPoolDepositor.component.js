@@ -174,7 +174,7 @@ export default function CreditPoolDepositor({
                                 const errors = {};
                                 if (values.amountToDeposit <= 0) {
                                     errors.amountToDeposit = 'Deposit at least 1!';
-                                } else if (values.amountToDelegate > values.amountToDeposit * 1700) {
+                                } else if (values.amountToDelegate > values.amountToDeposit * ethRate) {
                                     errors.amountToDelegate = 'You cant delegate more than what you deposited'
                                 } else if (values.amountToDelegate <= 0) {
                                     errors.amountToDelegate = 'Please delegate some of your funds!'
@@ -227,7 +227,7 @@ export default function CreditPoolDepositor({
                                                             <label
                                                             >
                                                             <em>
-                                                                {readContracts ? " (current rate: 1 ETH = " + ethRate +")" :
+                                                                {readContracts ? " (current rate: 1 ETH = " + ethRate +" DAI)" :
                                                                     <Spinner type="grow" color="success"/>}
                                                             </em>
                                                             </label>

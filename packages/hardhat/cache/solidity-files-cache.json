@@ -114,8 +114,8 @@
       ]
     },
     "/mnt/f/Personnal/Documents/Pro/EthGlobal/Hackathon_15012020/ExtraCredit/packages/hardhat/contracts/MarginPool.sol": {
-      "lastModificationDate": 1612647220869,
-      "contentHash": "71b480c46e6bff5b0123e1627a780940",
+      "lastModificationDate": 1612720595299,
+      "contentHash": "fd9340547419eeeb60ae154ea70ee5bb",
       "sourceName": "contracts/MarginPool.sol",
       "solcConfig": {
         "version": "0.6.7",
@@ -140,6 +140,7 @@
         }
       },
       "imports": [
+        "./WadRayMath.sol",
         "@openzeppelin/contracts/math/SafeMath.sol",
         "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
         "contracts/Interfaces.sol",

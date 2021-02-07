@@ -224,7 +224,7 @@ export default function MarginPoolInvest({
                                                                    htmlFor="input-amountToBorrow">Current DAI borrow rate from AAVE  : {"  "}</label>
                                                             {(error || loading) ?
                                                                 <Spinner type="grow" color="success"/> :
-                                                                <strong>{(daiBorrowInterestRate * 100).toFixed(2)}</strong>}
+                                                                <strong>{(daiBorrowInterestRate * 100).toFixed(2)} %</strong>}
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <label
