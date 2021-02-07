@@ -1,0 +1,20 @@
+.withdraw-button {
+  width: 90%;
+  max-width: 300px;
+  cursor: pointer;
+  border-width: 0px;
+  border-style: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background: linear-gradient(90.07deg, #f75353 0%, #ad0000 99.89%);
+  color: #fff;
+}
+
+.withdraw-button:hover {
+  background: linear-gradient(90.07deg, #ad0000 0%, #f75353 99.89%);
+}
+
+.withdraw-button:active {
+  background: #ad0000;
+}

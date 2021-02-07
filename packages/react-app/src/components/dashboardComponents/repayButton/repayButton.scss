@@ -1,0 +1,22 @@
+@import "../../../styles/styles.scss";
+
+.repay-button {
+  width: 90%;
+  max-width: 300px;
+  cursor: pointer;
+  border-width: 0px;
+  border-style: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background: $gradient-primary;
+  color: #fff;
+}
+
+.repay-button:hover {
+  background: $gradient-primary-inverted;
+}
+
+.repay-button:active {
+  background: #77e38b;
+}
