@@ -1,4 +1,4 @@
-.modal {
+.withdraw-modal {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -6,7 +6,7 @@
   align-items: center;
   top: 0;
 
-  .modal-back {
+  .withdraw-modal-back {
     width: 100%;
     height: 130%;
     position: fixed;
@@ -15,14 +15,14 @@
     z-index: 2;
     top: 0;
   }
-  .container {
+  .withdraw-container {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-evenly;
     z-index: 4;
 
-    .info {
+    .withdraw-info {
       border-radius: 6px;
       background-color: #fff;
       width: 70%;
@@ -35,28 +35,28 @@
       flex-wrap: wrap;
       flex-direction: column;
       margin-top: 20px;
-      .close-wrapper {
+      .withdraw-close-wrapper {
         width: 100%;
         justify-content: flex-end;
         display: flex;
-        .close-btn {
+        .withdraw-close-btn {
           outline: none;
           background-color: #fff;
           border: 0;
           cursor: pointer;
         }
-        .close-btn:active {
-          .x {
+        .withdraw-close-btn:active {
+          .withdraw-x {
             color: #43b9a9;
           }
         }
       }
-      .info-title {
+      .withdraw-info-title {
         display: flex;
         width: 100%;
         justify-content: center;
       }
-      .info-content {
+      .withdraw-info-content {
         display: flex;
         width: 100%;
         justify-content: center;
@@ -76,9 +76,9 @@
 }
 
 @media (min-width: 768px) {
-  .modal {
-    .container {
-      .info {
+  .withdraw-modal {
+    .withdraw-container {
+      .withdraw-info {
         width: 50%;
         min-width: 450px;
         height: 60%;
