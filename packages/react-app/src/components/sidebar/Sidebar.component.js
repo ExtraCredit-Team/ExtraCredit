@@ -75,8 +75,8 @@ const routes = [
     icon: "fas fa-plane text-green",
   },
   {
-    path: "/homesubgraph",
-    name: "SubGraph",
+    path: "/new-depositor",
+    name: "Deposit",
     icon: "fas fa-plane text-orange",
   },
 ];

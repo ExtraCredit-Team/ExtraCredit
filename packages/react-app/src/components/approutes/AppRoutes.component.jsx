@@ -10,6 +10,8 @@ import MarginPool from "../marginpool/MarginPool.component";
 import Dashboard from "../../views/dashboard";
 import { InterestRatesStrategy } from "../interestratestrategy/InterestRateStategy.component";
 import { HomeMadeSubGraph } from "../../views/homeMadeSubGraph";
+import CreditPoolDepositor from "../creditpool/CreditPoolDepositor.component";
+import MarginPoolInvest from "../marginpool/MarginPoolInvest.component";
 
 AppRoutes.propTypes = {
   route: PropTypes.any,
@@ -63,6 +65,9 @@ export function AppRoutes(props) {
             depositors={props.depositors}
           />
         </Route>
+        <Route exact path="/">
+          <BorrowerDashboard />
+        </Route>
         <Route path="/borrower">
           <BorrowerDashboard />
         </Route>
@@ -100,12 +105,8 @@ export function AppRoutes(props) {
             depositors={props.depositors}
           />
         </Route>
-
-        <Route path="/homesubgraph">
-          <HomeMadeSubGraph {...props} />
-        </Route>
         <Route path="/marginpool-ui">
-          <MarginPool
+          <MarginPoolInvest
             address={props.address}
             userProvider={props.userProvider}
             mainnetProvider={props.mainnetProvider}
@@ -117,6 +118,20 @@ export function AppRoutes(props) {
             IERC20Contract={props.IERC20Contract}
             delegateeDeposits={props.delegateeDeposits}
             aaveLendingPool={props.aaveLendingPool}
+            totalDelegation={props.totalDelegation}
+          />
+        </Route>
+        <Route path="/new-depositor">
+          <CreditPoolDepositor
+            address={props.address}
+            userProvider={props.userProvider}
+            mainnetProvider={props.mainnetProvider}
+            localProvider={props.localProvider}
+            tx={props.tx}
+            setDepositEvent={props.setDepositEvent}
+            writeContracts={props.writeContracts}
+            readContracts={props.readContracts}
+            aWethContract={props.aWethContract}
           />
         </Route>
         <Route path="/interestrates">
