@@ -47,27 +47,22 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    icon: "fab fa-bitcoin text-blue",
-  },
-  {
-    path: "/creditpool-ui",
-    name: "Credit Pool",
-    icon: "fas fa-coins text-yellow",
+    icon: "fab fa-bitcoin text-yellow",
   },
   {
     path: "/marginpool-ui",
     name: "Margin Pool",
-    icon: "fas fa-plane text-yellow",
-  },
-  {
-    path: "/old-margin",
-    name: "Old Margin",
-    icon: "fas fa-plane text-orange",
+    icon: "fas fa-plane text-blue",
   },
   {
     path: "/new-depositor",
     name: "Deposit",
-    icon: "fas fa-plane text-orange",
+    icon: "fas fa-equals text-orange",
+  },
+  {
+    path: "/creditpool-ui",
+    name: "Tools",
+    icon: "fas fa-coins text-grey",
   }
 ];
 
