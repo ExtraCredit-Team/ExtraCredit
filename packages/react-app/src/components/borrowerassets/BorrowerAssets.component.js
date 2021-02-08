@@ -1,11 +1,27 @@
 import React from "react";
 
-import {Button, Card, CardHeader, Col, Container, Row, Table} from "reactstrap";
+import {Button, Card, CardHeader, Col, Row, Table} from "reactstrap";
 import {formatEther} from "@ethersproject/units";
+import {gql, useQuery} from "@apollo/client";
 
 // core components
 
+
+const aaveDaiInterest = gql`{
+  reserve(id: "0x6b175474e89094c44da98b954eedeac495271d0f") {
+    symbol
+    liquidityRate
+  }
+}
+`;
+
 export function BorrowerAssets({props}) {
+
+    const {data} = useQuery(aaveDaiInterest);
+    let daiBorrowInterestRate=0;
+
+    if (data)
+        daiBorrowInterestRate = data.reserve.liquidityRate;
 
     return (
         <Row className="mt-5">
@@ -42,7 +58,7 @@ export function BorrowerAssets({props}) {
                         <tr>
                             <th scope="row">DAI</th>
                             <td>1$</td>
-                            <td>10.1%</td>
+                            <td><strong>{(daiBorrowInterestRate * 100).toFixed(2)} %</strong></td>
                             <td>
                                 <i className="fas fa-equals text-warning mr-3"/>{" "}
                                 ${props.totalBorrowedAmount && parseFloat(formatEther(props.totalBorrowedAmount.toString()))}

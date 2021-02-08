@@ -45,14 +45,9 @@ import {
 
 const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     name: "Dashboard",
     icon: "fab fa-bitcoin text-blue",
-  },
-  {
-    path: "/borrower",
-    name: "Borrower",
-    icon: "far fa-handshake text-orange",
   },
   {
     path: "/creditpool-ui",
@@ -68,11 +63,6 @@ const routes = [
     path: "/old-margin",
     name: "Old Margin",
     icon: "fas fa-plane text-orange",
-  },
-  {
-    path: "/interestrates",
-    name: "Interest Rates Stats",
-    icon: "fas fa-plane text-green",
   },
   {
     path: "/new-depositor",

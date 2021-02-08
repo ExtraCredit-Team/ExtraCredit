@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import "antd/dist/antd.css";
 import {Router} from 'react-router-dom';
-import {Button, Col, Container, Row} from "reactstrap";
+import {Container} from "reactstrap";
 import {JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import "./App.css";
 import {web3Modal} from "./components/web3modals/web3Modals.component"
@@ -30,9 +30,6 @@ import "./theme/scss/argon-dashboard-react.scss";
     (and then use the `useExternalContractLoader()` hook!)
 */
 import {INFURA_ID} from "./constants";
-
-import {EthereumDetails} from "./components/ethereumdetails/EthereumDetails.component";
-import {EthereumAccount} from "./components/ethereumaccount/EthereumAccount.component";
 import LoadEthersHooks from "./helpers/loadEthersHooks";
 import {AppRoutes} from "./components/approutes/AppRoutes.component";
 import Sidebar from "./components/sidebar/Sidebar.component";
@@ -60,7 +57,6 @@ const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
 
 function App(props) {
     const [injectedProvider, setInjectedProvider] = useState();
-    const [showEthereumTools, setShowEthereumTools] = useState(false);
     const [metaProvider, setmetaProvider] = useState();
     const [metaMaskAddressChange, setmetaMaskAddressChange] = useState();
 
@@ -101,10 +97,6 @@ function App(props) {
             setmetaMaskAddressChange(accounts[0]);
         });
     }, [metaProvider]);
-
-    const toggle = () => {
-        setShowEthereumTools(!showEthereumTools);
-    }
 
     return (
         <Router history={history}>

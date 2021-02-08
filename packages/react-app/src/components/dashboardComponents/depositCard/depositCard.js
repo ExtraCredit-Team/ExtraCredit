@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { formatEther, parseEther } from "@ethersproject/units";
+import React from "react";
+import {formatEther} from "@ethersproject/units";
 import daiLogo from "../../../images/multi-collateral-dai-dai-logo.svg";
 import PositionInfo from "../positionInfo/positionInfo";
 import WithdrawButton from "../withdrawButton/withdrawButton";

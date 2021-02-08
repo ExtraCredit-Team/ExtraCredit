@@ -1,14 +1,32 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, {useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, FormGroup, Input, Modal, Row, Spinner} from "reactstrap";
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    FormGroup,
+    Input,
+    Modal,
+    Row,
+    Spinner,
+    UncontrolledDropdown, UncontrolledTooltip
+} from "reactstrap";
 import {ErrorMessage, Form, Formik} from 'formik';
 import {formatEther, parseEther} from "@ethersproject/units";
 import {List} from "antd";
 import * as PropTypes from "prop-types";
 import {gql, useQuery} from "@apollo/client";
+import yearlLogo from "../../images/yearn-finance-yfi-logo.svg";
+import rookLogo from "../../images/z8n7Rb13.jpg";
+import sushiSwap from "../../images/512x512 Logo.png";
 
-const aTokenAddress = "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e";
+
 const debtTokenAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 
@@ -21,7 +39,7 @@ const aaveDaiInterest = gql`{
 `;
 
 function WeekOrWeeks(props) {
-    if (props.investDuration == 1)
+    if (props.investDuration === 1)
         return <strong>{props.investDuration} week</strong>
     return <strong>{props.investDuration} weeks</strong>
 }
@@ -141,7 +159,43 @@ DelegationInterestRates.propTypes = {
     values: PropTypes.any,
     daiBorrowInterestRate: PropTypes.any
 };
-export default function MarginPoolInvest({totalDelegation,
+
+function ListOfVault(props) {
+    return <UncontrolledDropdown>
+
+        <DropdownToggle
+            className="btn-icon-only text-light"
+            href="#pablo"
+            role="button"
+            size="md"
+            color=""
+            onClick={props.onClick}
+        >
+            Investment Platforms
+           <img className={"ml-1"} src={yearlLogo} alt="yearnLogo"/>
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-menu-arrow" right>
+            <DropdownItem
+                href="#pablo"
+                onClick={props.onClick}
+            >
+                <img className={"ml-1 mr-2"} width={"20px"} height={"20px"} src={rookLogo} alt="rookLogo"/>
+                HNS Farms
+            </DropdownItem>
+            <DropdownItem
+                href="#pablo"
+                onClick={props.onClick}
+            >
+                <img className={"ml-1 mr-2"} width={"20px"} height={"20px"} src={sushiSwap} alt="sushiSwap"/>
+                DDT Yielders
+            </DropdownItem>
+        </DropdownMenu>
+    </UncontrolledDropdown>;
+}
+
+ListOfVault.propTypes = {onClick: PropTypes.func};
+export default function MarginPoolInvest({
+                                             totalDelegation,
                                              delegateeDeposits,
                                              IERC20Contract,
                                              minSolvencyRatio,
@@ -159,16 +213,19 @@ export default function MarginPoolInvest({totalDelegation,
 
     return (
         <Row className={"credit-pool-card"}>
-            <Col lg={6}>
+            <Col lg={7}>
                 <DepositPerformanceModal open={showPerformance} toggle={() => setShowPerformance(!showPerformance)}
                                          onClick={() => setShowPerformance(false)}/>
                 <Card className="bg-secondary shadow">
                     <CardHeader className="bg-white border-0">
                         <Row className="align-items-center">
-                            <Col lg={6}>
+                            <Col lg={4}>
                                 <h3 className="mb-0">Borrow and Invest</h3>
                             </Col>
-                            <Col className="text-right" lg="6">
+                            <Col lg={4}>
+                                <ListOfVault onClick={e => e.preventDefault()}/>
+                            </Col>
+                            <Col className="text-right" lg="4">
                                 <Button
                                     color="primary"
                                     onClick={() => setShowPerformance(!showPerformance)}
@@ -184,7 +241,7 @@ export default function MarginPoolInvest({totalDelegation,
                             onSubmit={async (values) => {
                                 console.log(values);
                                 await tx(IERC20Contract.approve(readContracts.MarginPool.address, parseEther("10000")));
-                                await tx(writeContracts.MarginPool.invest(parseEther(values.amountToBorrow.toString()), debtTokenAddress, parseEther(values.persoMarginAmount.toString()), parseEther(values.interestMarginAmount.toString()), (values.investDuration*604800).toString()))
+                                await tx(writeContracts.MarginPool.invest(parseEther(values.amountToBorrow.toString()), debtTokenAddress, parseEther(values.persoMarginAmount.toString()), parseEther(values.interestMarginAmount.toString()), (values.investDuration * 604800).toString()))
                             }}
                             initialValues={{
                                 amountToBorrow: "",
@@ -220,18 +277,27 @@ export default function MarginPoolInvest({totalDelegation,
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <label className="form-control-label"
-                                                                   htmlFor="input-amountToBorrow">Current DAI borrow rate from AAVE  : {"  "}</label>
+                                                                   htmlFor="input-amountToBorrow">Current DAI borrow
+                                                                rate from AAVE : {"  "}</label>
                                                             {(error || loading) ?
                                                                 <Spinner type="grow" color="success"/> :
                                                                 <strong>{(daiBorrowInterestRate * 100).toFixed(2)} %</strong>}
                                                         </FormGroup>
                                                         <FormGroup>
                                                             <label
+                                                                id={"amtToBorrow"}
                                                                 className="form-control-label"
                                                                 htmlFor="input-amountToBorrow"
                                                             >
                                                                 Amount to Borrow
                                                             </label>
+                                                            <UncontrolledTooltip
+                                                                delay={0}
+                                                                placement="top"
+                                                                target="amtToBorrow"
+                                                            >
+                                                                You can borrow DAI from our CreditPool in order to invest them in a Yield Farming platform.
+                                                            </UncontrolledTooltip>
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 name={"amountToBorrow"}
@@ -254,11 +320,19 @@ export default function MarginPoolInvest({totalDelegation,
                                                     <Col>
                                                         <FormGroup>
                                                             <label
+                                                                id={"marginAmount"}
                                                                 className="form-control-label"
                                                                 htmlFor="input-persoMarginAmount"
                                                             >
                                                                 Margin Amount
                                                             </label>
+                                                            <UncontrolledTooltip
+                                                                delay={0}
+                                                                placement="top"
+                                                                target="marginAmount"
+                                                            >
+                                                                This is the top-up margin you can add in order to avoid rapid liquidation.
+                                                            </UncontrolledTooltip>
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 id="input-persoMarginAmount"
@@ -297,9 +371,17 @@ export default function MarginPoolInvest({totalDelegation,
                                                 <Row>
                                                     <Col>
                                                         <FormGroup>
-                                                            <h3>
-                                                                Total Margin amount + interest : {(parseInt(values.persoMarginAmount) + parseFloat(values.interestMarginAmount)).toFixed(3).toString()}
+                                                            <h3 id={"totalCredit"}>
+                                                                Total Margin amount + interest
+                                                                : {(parseInt(values.persoMarginAmount) + parseFloat(values.interestMarginAmount)).toFixed(3).toString()}
                                                             </h3>
+                                                            <UncontrolledTooltip
+                                                                delay={0}
+                                                                placement="top"
+                                                                target="totalCredit"
+                                                            >
+                                                                The total margin amount will also be invested in the platform of your choice.
+                                                            </UncontrolledTooltip>
                                                             <ErrorMessage name={`persoMarginAmount`}>
                                                                 {msg => <div style={{color: "#f5141b"}}
                                                                              className="error-message">{msg}</div>}

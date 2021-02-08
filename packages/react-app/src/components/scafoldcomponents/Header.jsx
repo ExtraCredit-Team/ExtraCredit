@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {PageHeader} from "antd";
-import {Button, Container} from "reactstrap";
+import {Button} from "reactstrap";
 import {EthereumAccount} from "../ethereumaccount/EthereumAccount.component";
 import {EthereumDetails} from "../ethereumdetails/EthereumDetails.component";
 

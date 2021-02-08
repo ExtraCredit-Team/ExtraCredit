@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Button, Card, CardBody, CardTitle, Col, Row } from "reactstrap";
+import React from "react";
 import daiLogo from "../../../images/multi-collateral-dai-dai-logo.svg";
 import PositionInfo from "../positionInfo/positionInfo";
 import RepayButton from "../repayButton/repayButton";

@@ -4,10 +4,8 @@ import {Hints, Subgraph} from "../../views";
 import React from "react";
 import * as PropTypes from "prop-types";
 import {BorrowerDashboard} from "../borrowerdashboard/BorrowerDashboard.component";
-import {DelegateCredit} from "../delegatecredit/DelegateCredit.component";
 import CreditPool from "../creditpool/CreditPool.component";
 import MarginPool from "../marginpool/MarginPool.component";
-import {InterestRatesStrategy} from "../interestratestrategy/InterestRateStategy.component";
 import CreditPoolDepositor from "../creditpool/CreditPoolDepositor.component";
 import Dashboard from "../../views/dashboard";
 import MarginPoolInvest from "../marginpool/MarginPoolInvest.component";
@@ -45,9 +43,6 @@ export function AppRoutes(props) {
     <>
       <Switch>
         <Route exact path="/">
-          <BorrowerDashboard />
-        </Route>
-        <Route path="/dashboard">
           <Dashboard
             address={props.address}
             userProvider={props.userProvider}
@@ -70,12 +65,6 @@ export function AppRoutes(props) {
             totalBorrowedAmount={props.totalBorrowedAmount}
             delegateeDeposits={props.delegateeDeposits}
           />
-        </Route>
-        <Route path="/borrower">
-          <BorrowerDashboard />
-        </Route>
-        <Route path="/delegate">
-          <DelegateCredit />
         </Route>
         <Route path={"/old-menu"}>
           <AppMenu route={props.route} />
@@ -152,24 +141,6 @@ export function AppRoutes(props) {
             writeContracts={props.writeContracts}
             readContracts={props.readContracts}
             aWethContract={props.aWethContract}
-          />
-        </Route>
-        <Route path="/interestrates">
-          <InterestRatesStrategy
-            address={props.address}
-            userProvider={props.userProvider}
-            mainnetProvider={props.mainnetProvider}
-            localProvider={props.localProvider}
-            yourLocalBalance={props.yourLocalBalance}
-            price={props.price}
-            tx={props.tx}
-            writeContracts={props.writeContracts}
-            readContracts={props.readContracts}
-            optimalUtilization={props.optimalUtilization}
-            excessRate={props.excessRate}
-            baseStableRate={props.baseStableRate}
-            slope1StableRate={props.slope1StableRate}
-            slope2StableRate={props.slope2StableRate}
           />
         </Route>
         <Route path="/subgraph">

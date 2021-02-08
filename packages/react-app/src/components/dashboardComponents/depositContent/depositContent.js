@@ -1,8 +1,4 @@
 import React from "react";
-import DepositCard from "../depositCard/depositCard";
-import WithdrawModal from "../withdrawModal/withdrawModal";
-import ProtocolCard from "../protocolCard/protocolCard";
-import { formatEther } from "@ethersproject/units";
 import "./depositContent.scss";
 import {DepositStatus} from "../../depositasset/DepositStatus.component";
 
